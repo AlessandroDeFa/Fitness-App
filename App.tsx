@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import { Navbar } from "./components/Navbar";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Fitness-app</Text>
+      <Text>Fitness-app!</Text>
       <StatusBar style="auto" />
+      <Navbar />
     </View>
   );
 }
