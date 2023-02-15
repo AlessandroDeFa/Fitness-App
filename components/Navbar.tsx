@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
+    borderWidth: 1,
+    borderTopColor: "#888",
+    paddingBottom: Platform.OS === "ios" ? 15 : 0,
   },
   containerLink: {
     paddingHorizontal: 15,

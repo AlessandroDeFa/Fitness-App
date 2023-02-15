@@ -1,12 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { Navbar } from "./components/Navbar";
+import { Header } from "./components/Header";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Fitness-app!</Text>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
+      <View style={styles.padding}>
+        <Header />
+      </View>
+
       <Navbar />
     </View>
   );
@@ -15,8 +19,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#182935",
+  },
+  padding: {
+    paddingHorizontal: 16,
   },
 });
