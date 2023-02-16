@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, Platform, TextInput } from "react-native";
+import { globalStyles } from "../components/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { Exercise } from "../components/Exercise";
 
 export const Exercises = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
+    <View style={globalStyles.container}>
+      <View style={globalStyles.main}>
         <View style={styles.header}>
           <View style={styles.spacingTitle}>
             <Text style={styles.textTitle}>Esercizi</Text>
@@ -31,14 +32,6 @@ export const Exercises = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#010300",
-  },
-  main: {
-    paddingHorizontal: 16,
-    flex: 1,
-  },
   header: {
     marginTop: Platform.OS === "ios" ? 90 : 60,
     borderBottomWidth: 0.5,
