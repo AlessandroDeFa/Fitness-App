@@ -6,14 +6,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#182935",
+    backgroundColor: "#121212",
     flexDirection: "row",
     justifyContent: "center",
     position: "absolute",
     bottom: 0,
     width: "100%",
-    borderWidth: 1,
-    borderTopColor: "#888",
+    borderWidth: 0.5,
+    borderTopColor: "#38383A",
     paddingBottom: Platform.OS === "ios" ? 15 : 0,
   },
   containerLink: {
@@ -23,13 +23,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textNav: {
-    color: "#FFF",
+    color: "#888",
     fontSize: 12,
     fontWeight: "400",
   },
   icon: {
-    color: "#FFF",
-    fontSize: 20,
+    color: "#888",
+    fontSize: 25,
+    marginBottom: 5,
+  },
+  selectedIcon: {
+    color: "#3B82F7",
+    fontSize: 25,
+    marginBottom: 5,
+  },
+  selectedTextNav: {
+    color: "#3B82F7",
+    fontSize: 12,
+    fontWeight: "400",
   },
 });
 
@@ -46,10 +57,10 @@ export const Navbar = () => {
       </View>
       <View style={styles.containerLink}>
         <View>
-          <FontAwesome name="plus" style={styles.icon} />
+          <FontAwesome name="plus" style={styles.selectedIcon} />
         </View>
         <View>
-          <Text style={styles.textNav}>Inizia allenamento</Text>
+          <Text style={styles.selectedTextNav}>Inizia allenamento</Text>
         </View>
       </View>
       <View style={styles.containerLink}>
