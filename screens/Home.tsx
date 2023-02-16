@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Navbar } from "../components/Navbar";
 import { Header } from "../components/Header";
 import { Programs } from "../components/Programs";
 
@@ -11,7 +10,6 @@ export const Home = () => {
         <Header />
         <Programs />
       </View>
-      <Navbar />
     </View>
   );
 };
@@ -19,6 +17,7 @@ export const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#010300",
   },
   main: {
     paddingHorizontal: 16,

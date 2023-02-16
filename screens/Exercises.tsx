@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Platform, TextInput } from "react-native";
-import { Navbar } from "../components/Navbar";
 import { Ionicons } from "@expo/vector-icons";
 import { Exercise } from "../components/Exercise";
 
@@ -27,8 +26,6 @@ export const Exercises = () => {
           <Exercise />
         </View>
       </View>
-
-      <Navbar />
     </View>
   );
 };
@@ -36,6 +33,7 @@ export const Exercises = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#010300",
   },
   main: {
     paddingHorizontal: 16,

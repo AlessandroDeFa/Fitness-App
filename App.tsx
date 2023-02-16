@@ -1,21 +1,13 @@
 import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
-import { Home } from "./screens/Home";
-import { Exercises } from "./screens/Exercises";
+import BottomTabNavigator from "./Navigation/TabNavigator";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <Home />
-      {/* <Exercises /> */}
-    </View>
+    <NavigationContainer>
+      {/* <StatusBar style="light" /> */}
+      <BottomTabNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#010300",
-  },
-});
