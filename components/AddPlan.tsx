@@ -8,7 +8,10 @@ import {
   Platform,
   TextInput,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
+import { AddedExercise } from "./AddedExercise";
 import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -22,7 +25,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   setModalOpen,
 }) => {
   return (
-    <View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Modal visible={modalOpen} animationType="slide">
         <View style={[globalStyles.container, styles.modalContainer]}>
           <View style={globalStyles.main}>
@@ -49,14 +52,12 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                 <TextInput
                   style={styles.inputName}
                   multiline={true}
-                  numberOfLines={4}
                   placeholder="Nome scheda"
                   placeholderTextColor="#606669"
                 />
                 <TextInput
                   style={styles.inputNote}
                   multiline={true}
-                  numberOfLines={4}
                   placeholder="Note"
                   placeholderTextColor="#606669"
                 />
@@ -64,11 +65,12 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   <Text style={styles.textButton}>Aggiungi esercizi</Text>
                 </TouchableOpacity>
               </View>
+              <AddedExercise />
             </ScrollView>
           </View>
         </View>
       </Modal>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

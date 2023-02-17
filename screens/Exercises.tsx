@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View, Platform, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { Exercise } from "../components/Exercise";
@@ -7,26 +15,28 @@ import { Exercise } from "../components/Exercise";
 export const Exercises = () => {
   return (
     <View style={globalStyles.container}>
-      <View style={globalStyles.main}>
-        <View style={styles.header}>
-          <View style={styles.spacingTitle}>
-            <Text style={styles.textTitle}>Esercizi</Text>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={globalStyles.main}>
+          <View style={styles.header}>
+            <View style={styles.spacingTitle}>
+              <Text style={styles.textTitle}>Esercizi</Text>
+            </View>
+            <View style={styles.containerInput}>
+              <Ionicons name="search" size={16} color="#606669" />
+              <TextInput
+                placeholder="Ricerca"
+                placeholderTextColor="#606669"
+                style={styles.input}
+              />
+            </View>
           </View>
-          <View style={styles.containerInput}>
-            <Ionicons name="search" size={16} color="#606669" />
-            <TextInput
-              placeholder="Ricerca"
-              placeholderTextColor="#606669"
-              style={styles.input}
-            />
+          <View style={styles.containerExercises}>
+            <Exercise />
+            <Exercise />
+            <Exercise />
           </View>
         </View>
-        <View style={styles.containerExercises}>
-          <Exercise />
-          <Exercise />
-          <Exercise />
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
