@@ -7,12 +7,35 @@ import {
   Platform,
 } from "react-native";
 
+interface HeaderProps {
+  setModalOpen: (modalOpen: boolean) => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ setModalOpen }) => {
+  return (
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.fontTitle}>Crea la tua scheda di allenamento</Text>
+      </View>
+      <View style={styles.spacingText}>
+        <Text style={styles.fontText}>Avvio rapido</Text>
+      </View>
+      <View style={styles.spacingButton}>
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.8}
+          onPress={() => setModalOpen(true)}
+        >
+          <Text style={styles.buttonText}>Crea scheda</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     marginTop: Platform.OS === "ios" ? 90 : 60,
-  },
-  spacingTitle: {
-    marginTop: 20,
   },
   spacingText: {
     marginTop: 35,
@@ -43,21 +66,3 @@ const styles = StyleSheet.create({
     borderRadius: 9,
   },
 });
-
-export const Header = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.spacingTitle}>
-        <Text style={styles.fontTitle}>Crea la tua scheda di allenamento</Text>
-      </View>
-      <View style={styles.spacingText}>
-        <Text style={styles.fontText}>Avvio rapido</Text>
-      </View>
-      <View style={styles.spacingButton}>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-          <Text style={styles.buttonText}>Crea scheda</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
