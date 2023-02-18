@@ -1,33 +1,49 @@
 import React from "react";
-import { StyleSheet, Text, View, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  TouchableHighlight,
+} from "react-native";
 
-export const Exercise = () => {
+interface ExerciseProps {
+  exercisesInfo: boolean;
+  setExercisesInfo: (exercisesInfo: boolean) => void;
+}
+
+export const Exercise: React.FC<ExerciseProps> = ({
+  data,
+  exercisesInfo,
+  setExercisesInfo,
+}) => {
   return (
-    <View style={styles.coantainer}>
-      <View style={styles.containerImg}>
-        <Text>IMG</Text>
-      </View>
+    <TouchableHighlight
+      style={styles.container}
+      activeOpacity={1}
+      underlayColor="#323135"
+      onPress={() => {
+        setExercisesInfo(true);
+      }}
+    >
       <View style={styles.containerInfoExercise}>
         <View>
-          <Text style={styles.textTitle}>Running</Text>
+          <Text style={styles.textTitle}>{data.name}</Text>
         </View>
         <View>
-          <Text style={styles.textMuscle}>Cardio</Text>
+          <Text style={styles.textMuscle}>{data.muscle}</Text>
         </View>
       </View>
-    </View>
+    </TouchableHighlight>
   );
 };
 
 const styles = StyleSheet.create({
-  coantainer: {
+  container: {
     paddingVertical: 10,
     borderBottomWidth: 0.5,
     borderColor: "#38383A",
     flexDirection: "row",
-  },
-  containerImg: {
-    backgroundColor: "white",
   },
   containerInfoExercise: {
     flex: 1,
