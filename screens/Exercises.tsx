@@ -18,6 +18,13 @@ import { InfoExercise } from "../components/InfoExercise";
 export const Exercises = () => {
   const [data, setData] = useState([]);
   const [exercisesInfo, setExercisesInfo] = useState<boolean>(false);
+  const [infoExerciseData, setInfoExerciseData] = useState({
+    difficulty: "",
+    equipment: "",
+    instructions: "",
+    muscle: "",
+    name: "",
+  });
 
   useEffect(() => {
     const fechData = async () => {
@@ -63,6 +70,8 @@ export const Exercises = () => {
                   data={item}
                   setExercisesInfo={setExercisesInfo}
                   exercisesInfo={exercisesInfo}
+                  setInfoExerciseData={setInfoExerciseData}
+                  infoExerciseData={infoExerciseData}
                 />
               )}
             />
@@ -72,6 +81,7 @@ export const Exercises = () => {
       <InfoExercise
         exercisesInfo={exercisesInfo}
         setExercisesInfo={setExercisesInfo}
+        infoExerciseData={infoExerciseData}
       />
     </View>
   );

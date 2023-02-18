@@ -1,16 +1,32 @@
 import React from "react";
-import { StyleSheet, Text, View, Modal, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Platform,
+  ScrollView,
+} from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 
+interface ExerciseData {
+  name: string;
+  difficulty: string;
+  equipment: string;
+  muscle: string;
+  instructions: string;
+}
 interface InfoExerciseProps {
   exercisesInfo: boolean;
   setExercisesInfo: (exercisesInfo: boolean) => void;
+  infoExerciseData: ExerciseData;
 }
 
 export const InfoExercise: React.FC<InfoExerciseProps> = ({
   setExercisesInfo,
   exercisesInfo,
+  infoExerciseData,
 }) => {
   return (
     <Modal transparent={true} visible={exercisesInfo} animationType="slide">
@@ -18,7 +34,7 @@ export const InfoExercise: React.FC<InfoExerciseProps> = ({
         <View style={styles.modalContainer}>
           <View style={styles.main}>
             <View style={styles.containerHeader}>
-              <View style={styles.flex}>
+              <View>
                 <AntDesign
                   name="close"
                   size={22}
@@ -27,31 +43,34 @@ export const InfoExercise: React.FC<InfoExerciseProps> = ({
                 />
               </View>
               <View style={styles.flex}>
-                <Text style={styles.nameExercise}>Running</Text>
+                <Text style={styles.nameExercise}>{infoExerciseData.name}</Text>
               </View>
-              <View style={styles.flex}></View>
             </View>
-            <View style={styles.containerInfo}>
+            <ScrollView style={styles.containerInfo}>
               <View style={styles.imgInfo}></View>
               <View>
-                <View>
-                  <Text style={styles.fontTitle}>Difficoltá</Text>
-                  <Text style={styles.fontText}>beginner</Text>
-                </View>
-                <View>
-                  <Text style={styles.fontTitle}>Equipaggiamento</Text>
-                  <Text style={styles.fontText}>beginner</Text>
-                </View>
-                <View>
-                  <Text style={styles.fontTitle}>Muscle</Text>
-                  <Text style={styles.fontText}>beginner</Text>
-                </View>
-                <View>
-                  <Text style={styles.fontTitle}>Istrucions</Text>
-                  <Text style={styles.fontText}>beginner</Text>
-                </View>
+                <Text style={styles.fontTitle}>Difficoltá</Text>
+                <Text style={styles.fontText}>
+                  {infoExerciseData.difficulty}
+                </Text>
               </View>
-            </View>
+              <View>
+                <Text style={styles.fontTitle}>Equipaggiamento</Text>
+                <Text style={styles.fontText}>
+                  {infoExerciseData.equipment}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.fontTitle}>Muscolo</Text>
+                <Text style={styles.fontText}>{infoExerciseData.muscle}</Text>
+              </View>
+              <View>
+                <Text style={styles.fontTitle}>Istruzioni</Text>
+                <Text style={styles.fontText}>
+                  {infoExerciseData.instructions}
+                </Text>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -83,12 +102,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "right",
   },
   flex: {
     flex: 1,
   },
-
   containerInfo: {
     flex: 1,
     marginTop: 20,
@@ -96,7 +114,8 @@ const styles = StyleSheet.create({
   imgInfo: {
     backgroundColor: "white",
     width: "100%",
-    height: "40%",
+    height: 225,
+    borderRadius: 10,
     marginBottom: Platform.OS === "ios" ? 25 : 15,
   },
   fontTitle: {
@@ -110,6 +129,5 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#CACCCD",
     marginBottom: Platform.OS === "ios" ? 20 : 13,
-    // marginBottom: 20,
   },
 });

@@ -7,24 +7,48 @@ import {
   TouchableHighlight,
 } from "react-native";
 
+interface Data {
+  name: string;
+  difficulty: string;
+  equipment: string;
+  muscle: string;
+  instructions: string;
+}
+
+interface ExerciseData {
+  name: string;
+  difficulty: string;
+  equipment: string;
+  muscle: string;
+  instructions: string;
+}
+
 interface ExerciseProps {
+  data: Data;
   exercisesInfo: boolean;
   setExercisesInfo: (exercisesInfo: boolean) => void;
+  infoExerciseData: ExerciseData;
+  setInfoExerciseData: (infoExerciseData: ExerciseData) => void;
 }
 
 export const Exercise: React.FC<ExerciseProps> = ({
   data,
   exercisesInfo,
   setExercisesInfo,
+  infoExerciseData,
+  setInfoExerciseData,
 }) => {
+  const HandleClickExercise = () => {
+    setInfoExerciseData(data);
+    setExercisesInfo(true);
+  };
+
   return (
     <TouchableHighlight
       style={styles.container}
       activeOpacity={1}
       underlayColor="#323135"
-      onPress={() => {
-        setExercisesInfo(true);
-      }}
+      onPress={HandleClickExercise}
     >
       <View style={styles.containerInfoExercise}>
         <View>
