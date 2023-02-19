@@ -85,6 +85,7 @@ export const Exercises = () => {
               renderItem={({ item }) => (
                 <Exercise
                   data={item}
+                  key={item.id}
                   setExercisesInfo={setExercisesInfo}
                   exercisesInfo={exercisesInfo}
                   setInfoExerciseData={setInfoExerciseData}

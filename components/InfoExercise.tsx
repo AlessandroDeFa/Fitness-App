@@ -9,7 +9,6 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 
 interface ExerciseData {
