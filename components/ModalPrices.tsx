@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   ImageBackground,
+  SafeAreaView,
 } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
@@ -26,7 +27,7 @@ export const ModalPrices: React.FC<ModalPricesProps> = ({
         source={require("../assets/bg-prices.jpg")}
         style={styles.ImageBackground}
       >
-        <View style={[styles.modalContainer]}>
+        <SafeAreaView style={styles.flex}>
           <View style={globalStyles.main}>
             <View style={styles.containerHeader}>
               <View style={styles.flex}>
@@ -38,53 +39,62 @@ export const ModalPrices: React.FC<ModalPricesProps> = ({
                 />
               </View>
             </View>
-            <View style={styles.containerPrices}>
-              <View style={styles.containerAllButton}>
-                <TouchableOpacity
-                  style={styles.buttonPrice}
-                  activeOpacity={0.9}
-                >
-                  <View style={styles.containerTextButton}>
-                    <Text style={styles.fontPrice}>5.99 €</Text>
-                    <Text style={styles.fontText}>
-                      Mensile - Primo Mese Gratuito
-                    </Text>
+            <View style={styles.containerMain}>
+              <View>
+                <View style={styles.containerTextHeader}>
+                  <Text style={styles.fontTextHeader}>
+                    Allenati meglio con il Pro.
+                  </Text>
+                  <Text style={styles.fontTitle}>
+                    Sblocca la migliore app per i tuoi allenamenti, fatta per
+                    farti raggiungiere i tuoi obiettivi
+                  </Text>
+                </View>
+                <View>
+                  <View style={styles.containerAllButton}>
+                    <TouchableOpacity
+                      style={styles.buttonPrice}
+                      activeOpacity={0.9}
+                    >
+                      <View style={styles.containerTextButton}>
+                        <Text style={styles.fontPrice}>5.99 €</Text>
+                        <Text style={styles.fontText}>
+                          Mensile - Primo Mese Gratuito
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.buttonPrice}
+                      activeOpacity={0.9}
+                    >
+                      <View style={styles.containerTextButton}>
+                        <Text style={styles.fontPrice}>34.99 €</Text>
+                        <Text style={styles.fontText}>Iscrizione Annuale</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.buttonPrice}
+                      activeOpacity={0.9}
+                    >
+                      <View style={styles.containerTextButton}>
+                        <Text style={styles.fontPrice}>119.99 €</Text>
+                        <Text style={styles.fontText}>
+                          Sblocca il Pro Per Sempre
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.buttonPrice}
-                  activeOpacity={0.9}
-                >
-                  <View style={styles.containerTextButton}>
-                    <Text style={styles.fontPrice}>34.99 €</Text>
-                    <Text style={styles.fontText}>Iscrizione Annuale</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.buttonPrice}
-                  activeOpacity={0.9}
-                >
-                  <View style={styles.containerTextButton}>
-                    <Text style={styles.fontPrice}>119.99 €</Text>
-                    <Text style={styles.fontText}>
-                      Sblocca il Pro Per Sempre
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        </SafeAreaView>
       </ImageBackground>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    paddingTop: Platform.OS === "ios" ? 55 : 0,
-    flex: 1,
-  },
   ImageBackground: {
     flex: 1,
   },
@@ -96,10 +106,24 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  containerPrices: {
+  containerMain: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+  },
+  containerTextHeader: {
+    marginBottom: 30,
+  },
+  fontTitle: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
+    lineHeight: 30,
+  },
+  fontTextHeader: {
+    marginBottom: 10,
+    fontSize: 18,
+    color: "#CACCCD",
+    fontWeight: "500",
   },
   fontPrice: {
     color: "white",
@@ -123,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#323030",
     borderRadius: 7,
     paddingHorizontal: 8,
-    paddingVertical: 15,
+    paddingVertical: 20,
     marginBottom: 15,
   },
 });

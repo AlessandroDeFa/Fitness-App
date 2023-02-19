@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  SafeAreaView,
 } from "react-native";
 import { AddedExercise } from "./AddedExercise";
 import { globalStyles } from "../components/GlobalStyles";
@@ -27,7 +28,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Modal visible={modalOpen} animationType="slide">
-        <View style={[globalStyles.container, styles.modalContainer]}>
+        <SafeAreaView style={globalStyles.container}>
           <View style={globalStyles.main}>
             <View style={styles.containerHeader}>
               <View style={styles.flex}>
@@ -68,16 +69,13 @@ export const AddPlan: React.FC<AddPlanProps> = ({
               <AddedExercise />
             </ScrollView>
           </View>
-        </View>
+        </SafeAreaView>
       </Modal>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    paddingTop: Platform.OS === "ios" ? 55 : 0,
-  },
   containerHeader: {
     flexDirection: "row",
     alignItems: "center",

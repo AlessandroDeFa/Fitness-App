@@ -6,16 +6,19 @@ import {
   Modal,
   Platform,
   ScrollView,
+  Image,
+  ImageBackground,
 } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 
 interface ExerciseData {
-  name: string;
-  difficulty: string;
+  bodyPart: string;
   equipment: string;
-  muscle: string;
-  instructions: string;
+  gifUrl: string;
+  id: string;
+  name: string;
+  target: string;
 }
 interface InfoExerciseProps {
   exercisesInfo: boolean;
@@ -28,6 +31,16 @@ export const InfoExercise: React.FC<InfoExerciseProps> = ({
   exercisesInfo,
   infoExerciseData,
 }) => {
+  infoExerciseData.name =
+    infoExerciseData.name.charAt(0).toUpperCase() +
+    infoExerciseData.name.slice(1);
+  infoExerciseData.equipment =
+    infoExerciseData.equipment.charAt(0).toUpperCase() +
+    infoExerciseData.equipment.slice(1);
+  infoExerciseData.bodyPart =
+    infoExerciseData.bodyPart.charAt(0).toUpperCase() +
+    infoExerciseData.bodyPart.slice(1);
+
   return (
     <Modal transparent={true} visible={exercisesInfo} animationType="slide">
       <View style={styles.container}>
@@ -47,12 +60,14 @@ export const InfoExercise: React.FC<InfoExerciseProps> = ({
               </View>
             </View>
             <ScrollView style={styles.containerInfo}>
-              <View style={styles.imgInfo}></View>
+              <ImageBackground
+                imageStyle={styles.imgResize}
+                source={{ uri: `${infoExerciseData.gifUrl}` }}
+                style={styles.imgInfo}
+              />
               <View>
-                <Text style={styles.fontTitle}>Difficoltá</Text>
-                <Text style={styles.fontText}>
-                  {infoExerciseData.difficulty}
-                </Text>
+                <Text style={styles.fontTitle}>Parte del corpo</Text>
+                <Text style={styles.fontText}>{infoExerciseData.bodyPart}</Text>
               </View>
               <View>
                 <Text style={styles.fontTitle}>Equipaggiamento</Text>
@@ -62,13 +77,7 @@ export const InfoExercise: React.FC<InfoExerciseProps> = ({
               </View>
               <View>
                 <Text style={styles.fontTitle}>Muscolo</Text>
-                <Text style={styles.fontText}>{infoExerciseData.muscle}</Text>
-              </View>
-              <View>
-                <Text style={styles.fontTitle}>Istruzioni</Text>
-                <Text style={styles.fontText}>
-                  {infoExerciseData.instructions}
-                </Text>
+                <Text style={styles.fontText}>{infoExerciseData.target}</Text>
               </View>
             </ScrollView>
           </View>
@@ -117,6 +126,9 @@ const styles = StyleSheet.create({
     height: 225,
     borderRadius: 10,
     marginBottom: Platform.OS === "ios" ? 25 : 15,
+  },
+  imgResize: {
+    resizeMode: "contain",
   },
   fontTitle: {
     color: "white",

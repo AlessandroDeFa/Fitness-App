@@ -8,19 +8,21 @@ import {
 } from "react-native";
 
 interface Data {
-  name: string;
-  difficulty: string;
+  bodyPart: string;
   equipment: string;
-  muscle: string;
-  instructions: string;
+  gifUrl: string;
+  id: string;
+  name: string;
+  target: string;
 }
 
 interface ExerciseData {
-  name: string;
-  difficulty: string;
+  bodyPart: string;
   equipment: string;
-  muscle: string;
-  instructions: string;
+  gifUrl: string;
+  id: string;
+  name: string;
+  target: string;
 }
 
 interface ExerciseProps {
@@ -43,6 +45,9 @@ export const Exercise: React.FC<ExerciseProps> = ({
     setExercisesInfo(true);
   };
 
+  data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+  data.target = data.target.charAt(0).toUpperCase() + data.target.slice(1);
+
   return (
     <TouchableHighlight
       style={styles.container}
@@ -55,7 +60,7 @@ export const Exercise: React.FC<ExerciseProps> = ({
           <Text style={styles.textTitle}>{data.name}</Text>
         </View>
         <View>
-          <Text style={styles.textMuscle}>{data.muscle}</Text>
+          <Text style={styles.textMuscle}>{data.target}</Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -71,7 +76,6 @@ const styles = StyleSheet.create({
   },
   containerInfoExercise: {
     flex: 1,
-    marginLeft: 15,
   },
   textTitle: {
     color: "#fff",

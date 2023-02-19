@@ -19,22 +19,24 @@ export const Exercises = () => {
   const [data, setData] = useState([]);
   const [exercisesInfo, setExercisesInfo] = useState<boolean>(false);
   const [infoExerciseData, setInfoExerciseData] = useState({
-    difficulty: "",
+    bodyPart: "",
     equipment: "",
-    instructions: "",
-    muscle: "",
+    gifUrl: "",
+    id: "",
     name: "",
+    target: "",
   });
+  let [filteredExercises, setFilteredExercises] = useState([]);
 
   useEffect(() => {
     const fechData = async () => {
-      fetch("https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises", {
+      fetch("https://exercisedb.p.rapidapi.com/exercises", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           "X-RapidAPI-Key":
             "725db0c7a7msh6847c4a29f115cfp1cd79djsn0205ddb957c3",
-          "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com",
+          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
         },
       })
         .then((response) => response.json())
@@ -44,6 +46,20 @@ export const Exercises = () => {
 
     fechData();
   }, []);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setFilteredExercises(data);
+    }
+  }, [data]);
+
+  const filterExercises = (value: string) => {
+    setFilteredExercises(
+      data.filter((exercise) => {
+        return exercise.name.toLowerCase().startsWith(value.toLowerCase());
+      })
+    );
+  };
 
   return (
     <View style={globalStyles.container}>
@@ -59,12 +75,13 @@ export const Exercises = () => {
                 placeholder="Ricerca"
                 placeholderTextColor="#606669"
                 style={styles.input}
+                onChangeText={(value) => filterExercises(value)}
               />
             </View>
           </View>
           <View style={styles.containerExercises}>
             <FlatList
-              data={data}
+              data={filteredExercises}
               renderItem={({ item }) => (
                 <Exercise
                   data={item}
