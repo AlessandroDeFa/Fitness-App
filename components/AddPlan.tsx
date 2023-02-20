@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,15 +6,18 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
-  Platform,
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   SafeAreaView,
+  Vibration,
+  Animated,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AddedExercise } from "./AddedExercise";
 import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
+import { ListExerciseForm } from "./ListExerciseForm";
 
 interface AddPlanProps {
   modalOpen: boolean;
@@ -25,6 +28,65 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   modalOpen,
   setModalOpen,
 }) => {
+  const [buttonScale] = useState(new Animated.Value(1));
+  const [namePlan, setNamePlan] = useState<string>("");
+  const [note, setNote] = useState<string>("");
+  const [exercises, setExercises] = useState<string[]>([]);
+  const [id, setId] = useState<number>(1);
+  const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
+
+  const handleClosemodal = () => {
+    setNamePlan("");
+    setNote("");
+    setExercises([]);
+    setModalOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    if (namePlan === "") {
+      Vibration.vibrate([0, 50, 0, 0]);
+      Animated.sequence([
+        Animated.timing(buttonScale, {
+          toValue: 5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: -5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: 0,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      try {
+        let formData: any = await AsyncStorage.getItem("plansData");
+        formData = formData ? JSON.parse(formData) : [];
+
+        const planData = {
+          id: id,
+          name: namePlan,
+          note: note,
+          type: "Personal Plan",
+          exercises: exercises,
+        };
+
+        setId(id + 1);
+
+        formData.push(planData);
+
+        await AsyncStorage.setItem("plansData", JSON.stringify(formData));
+        handleClosemodal();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Modal visible={modalOpen} animationType="slide">
@@ -36,16 +98,24 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   name="close"
                   size={22}
                   color="#3B82F7"
-                  onPress={() => setModalOpen(false)}
+                  onPress={handleClosemodal}
                 />
               </View>
               <View style={styles.flex}>
                 <Text style={styles.fontTextHeader}>Nuova scheda</Text>
               </View>
               <View style={[styles.flex, styles.containerButton]}>
-                <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-                  <Text style={styles.textButton}>Salva</Text>
-                </TouchableOpacity>
+                <Animated.View
+                  style={{ transform: [{ translateX: buttonScale }] }}
+                >
+                  <TouchableOpacity
+                    style={styles.button}
+                    activeOpacity={0.8}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.textButton}>Salva</Text>
+                  </TouchableOpacity>
+                </Animated.View>
               </View>
             </View>
             <ScrollView>
@@ -55,18 +125,32 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   multiline={true}
                   placeholder="Nome scheda"
                   placeholderTextColor="#606669"
+                  onChangeText={(value) => setNamePlan(value)}
                 />
                 <TextInput
                   style={styles.inputNote}
                   multiline={true}
                   placeholder="Note"
                   placeholderTextColor="#606669"
+                  onChangeText={(value) => setNote(value)}
                 />
-                <TouchableOpacity style={styles.button} activeOpacity={0.8}>
+                <TouchableOpacity
+                  style={styles.button}
+                  activeOpacity={0.8}
+                  onPress={() => setExerciseForm(true)}
+                >
                   <Text style={styles.textButton}>Aggiungi esercizi</Text>
                 </TouchableOpacity>
               </View>
-              <AddedExercise />
+              {exercises.map((item) => (
+                <AddedExercise data={item} />
+              ))}
+              <ListExerciseForm
+                ExerciseForm={ExerciseForm}
+                setExerciseForm={setExerciseForm}
+                setExercises={setExercises}
+                exercises={exercises}
+              />
             </ScrollView>
           </View>
         </SafeAreaView>

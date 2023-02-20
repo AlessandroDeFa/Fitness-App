@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ExampleData } from "./Programs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface infoplanProps {
   InfoPlanModal: boolean;
@@ -23,11 +24,25 @@ export const InfoPlan: React.FC<infoplanProps> = ({
   setInfoPlan,
   infoPlan,
 }) => {
-  const name: string = "ciao";
-
   const resetInfoPlan = () => {
     setInfoPlanModal(false);
-    setInfoPlan({ id: 0, name: "", exercises: [] });
+    setInfoPlan({ id: 0, name: "", type: "", exercises: [] });
+  };
+
+  const deletePlan = async (id: number) => {
+    let plansData = await AsyncStorage.getItem("plansData");
+    try {
+      if (plansData) {
+        const plansDataParsed = JSON.parse(plansData);
+        const updatedPlans = plansDataParsed.filter(
+          (plan: any) => plan.id !== id
+        );
+        await AsyncStorage.setItem("plansData", JSON.stringify(updatedPlans));
+      }
+      setInfoPlanModal(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -58,9 +73,14 @@ export const InfoPlan: React.FC<infoplanProps> = ({
                   </View>
                 )}
               />
-              <TouchableOpacity style={styles.deleteButton}>
-                <Text style={styles.buttonText}>Elimina</Text>
-              </TouchableOpacity>
+              {infoPlan.type === "Personal Plan" && (
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={() => deletePlan(infoPlan.id)}
+                >
+                  <Text style={styles.buttonText}>Elimina</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>

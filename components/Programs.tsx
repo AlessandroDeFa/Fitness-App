@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -11,31 +11,15 @@ import {
 import { Plan } from "./Plan";
 import { InfoPlan } from "./InfoPlan";
 import { ExamplePlan } from "./ExamplePlan";
-
-const DATA = [
-  {
-    id: 1,
-    name: "Elemento 1",
-    exercises: ["Bench Press (Barbell)", "Bent Over Row (Barbell)"],
-  },
-  {
-    id: 2,
-    name: "Elemento 2",
-    exercises: [
-      "Bench Press (Barbell)",
-      "Bent Over Row (Barbell)",
-      "cioaaooas",
-    ],
-  },
-  { id: 3, name: "Elemento 3", exercises: ["Bench Press (Barbell)"] },
-];
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ExamplePlans = [
   {
     id: 1,
     name: "Upper Body",
+    type: "Example",
     exercises: [
-      "Bench Press (Barbell)",
+      "5 x Bench Press (Barbell)",
       "Bent Over Row (Barbell)",
       "Incline Bench Press (Dumbbell)",
       "Incline Curl (Dumbbell)",
@@ -45,6 +29,7 @@ const ExamplePlans = [
   {
     id: 2,
     name: "Lower Body",
+    type: "Example",
     exercises: [
       "Squat (Barbell)",
       "Standing Calf Raise (Dumbbell)",
@@ -54,6 +39,7 @@ const ExamplePlans = [
   {
     id: 3,
     name: "Full Body",
+    type: "Example",
     exercises: [
       "Squat (Barbell)",
       "Bench Press (Barbell)",
@@ -66,12 +52,34 @@ const ExamplePlans = [
 export interface ExampleData {
   id: number;
   name: string;
+  type: string;
   exercises?: string[];
 }
 
 export const Programs = () => {
   const [InfoPlanModal, setInfoPlanModal] = useState<boolean>(false);
   const [infoPlan, setInfoPlan] = useState<ExampleData>({});
+  const [plansData, setPlansData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fecthPlansData = async () => {
+      try {
+        const data = await AsyncStorage.getItem("plansData");
+        if (data !== null) {
+          setPlansData(JSON.parse(data));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fecthPlansData();
+  }, [plansData]);
+
+  // const prova = async () => {
+  //   await AsyncStorage.removeItem("plansData");
+  // };
+
+  // prova();
 
   return (
     <ScrollView style={styles.container}>
@@ -79,9 +87,9 @@ export const Programs = () => {
         <Text style={[styles.colorText, styles.textTitle]}>Schede</Text>
       </View>
       <View style={styles.spacingText}>
-        <Text style={styles.colorText}>Le tue schede (0)</Text>
+        <Text style={styles.colorText}>Le tue schede ({plansData.length})</Text>
         <FlatList
-          data={DATA}
+          data={plansData}
           numColumns={2}
           scrollEnabled={false}
           columnWrapperStyle={styles.row}
@@ -97,7 +105,9 @@ export const Programs = () => {
         />
       </View>
       <View>
-        <Text style={styles.colorText}>Esempi di schede (3)</Text>
+        <Text style={styles.colorText}>
+          Esempi di schede ({ExamplePlans.length})
+        </Text>
         <FlatList
           data={ExamplePlans}
           numColumns={2}

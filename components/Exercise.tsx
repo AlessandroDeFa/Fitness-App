@@ -31,6 +31,10 @@ interface ExerciseProps {
   setExercisesInfo: (exercisesInfo: boolean) => void;
   infoExerciseData: ExerciseData;
   setInfoExerciseData: (infoExerciseData: ExerciseData) => void;
+  ExerciseForm: boolean;
+  setExerciseForm: (ExerciseForm: boolean) => void;
+  exercises: string[];
+  setExercises: (exercises: string[]) => void;
 }
 
 export const Exercise: React.FC<ExerciseProps> = ({
@@ -39,10 +43,19 @@ export const Exercise: React.FC<ExerciseProps> = ({
   setExercisesInfo,
   infoExerciseData,
   setInfoExerciseData,
+  ExerciseForm,
+  setExerciseForm,
+  exercises,
+  setExercises,
 }) => {
   const HandleClickExercise = () => {
     setInfoExerciseData(data);
     setExercisesInfo(true);
+  };
+
+  const handlePressExerciseForm = () => {
+    setExercises([...exercises, data.name]);
+    setExerciseForm(false);
   };
 
   data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
@@ -53,7 +66,7 @@ export const Exercise: React.FC<ExerciseProps> = ({
       style={styles.container}
       activeOpacity={1}
       underlayColor="#323135"
-      onPress={HandleClickExercise}
+      onPress={ExerciseForm ? handlePressExerciseForm : HandleClickExercise}
     >
       <View style={styles.containerInfoExercise}>
         <View>

@@ -9,11 +9,11 @@ import {
   TextInput,
 } from "react-native";
 
-export const AddedExercise = () => {
+export const AddedExercise = ({ data }) => {
   return (
     <View style={styles.containerExercise}>
       <View>
-        <Text style={styles.fontTitle}>Running</Text>
+        <Text style={styles.fontTitle}>{data}</Text>
       </View>
       <View style={styles.containerOptions}>
         <View style={styles.option}>
