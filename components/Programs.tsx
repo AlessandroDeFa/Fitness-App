@@ -75,12 +75,6 @@ export const Programs = () => {
     fecthPlansData();
   }, [plansData]);
 
-  // const prova = async () => {
-  //   await AsyncStorage.removeItem("plansData");
-  // };
-
-  // prova();
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.spacingTitle}>

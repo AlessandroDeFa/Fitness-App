@@ -8,6 +8,7 @@ interface planProps {
   setInfoPlanModal: (infoPlanModal: boolean) => void;
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
+  data: ExampleData;
 }
 
 export const Plan: React.FC<planProps> = ({
