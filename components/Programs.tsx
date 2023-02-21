@@ -17,9 +17,10 @@ const ExamplePlans = [
   {
     id: 1,
     name: "Upper Body",
+    note: "",
     type: "Example",
     exercises: [
-      "5 x Bench Press (Barbell)",
+      "Bench Press (Barbell)",
       "Bent Over Row (Barbell)",
       "Incline Bench Press (Dumbbell)",
       "Incline Curl (Dumbbell)",
@@ -29,6 +30,7 @@ const ExamplePlans = [
   {
     id: 2,
     name: "Lower Body",
+    note: "",
     type: "Example",
     exercises: [
       "Squat (Barbell)",
@@ -39,6 +41,7 @@ const ExamplePlans = [
   {
     id: 3,
     name: "Full Body",
+    note: "",
     type: "Example",
     exercises: [
       "Squat (Barbell)",
@@ -52,13 +55,20 @@ const ExamplePlans = [
 export interface ExampleData {
   id: number;
   name: string;
+  note: string;
   type: string;
   exercises?: string[];
 }
 
 export const Programs = () => {
   const [InfoPlanModal, setInfoPlanModal] = useState<boolean>(false);
-  const [infoPlan, setInfoPlan] = useState<ExampleData>({});
+  const [infoPlan, setInfoPlan] = useState<ExampleData>({
+    id: 0,
+    name: "",
+    note: "",
+    type: "",
+    exercises: [],
+  });
   const [plansData, setPlansData] = useState<any[]>([]);
 
   useEffect(() => {

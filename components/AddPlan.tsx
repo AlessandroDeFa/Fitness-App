@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -31,7 +31,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   const [buttonScale] = useState(new Animated.Value(1));
   const [namePlan, setNamePlan] = useState<string>("");
   const [note, setNote] = useState<string>("");
-  const [exercises, setExercises] = useState<string[]>([]);
+  const [exercises, setExercises] = useState<any[]>([]);
   const [id, setId] = useState<number>(1);
   const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
 

@@ -26,7 +26,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   exercises,
   setExercises,
 }) => {
-  const { data, filteredExercises, filterExercises } = useContext(ContextApp);
+  const { filteredExercises } = useContext(ContextApp);
 
   return (
     <View>

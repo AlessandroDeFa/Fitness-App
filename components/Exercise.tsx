@@ -27,6 +27,7 @@ interface ExerciseData {
 
 interface ExerciseProps {
   data: Data;
+  key: number;
   exercisesInfo: boolean;
   setExercisesInfo: (exercisesInfo: boolean) => void;
   infoExerciseData: ExerciseData;

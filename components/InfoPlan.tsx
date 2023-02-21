@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ExampleData } from "./Programs";
@@ -26,7 +27,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
 }) => {
   const resetInfoPlan = () => {
     setInfoPlanModal(false);
-    setInfoPlan({ id: 0, name: "", type: "", exercises: [] });
+    setInfoPlan({ id: 0, name: "", note: "", type: "", exercises: [] });
   };
 
   const deletePlan = async (id: number) => {
@@ -64,6 +65,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
                   <Text style={styles.namePlan}>{infoPlan.name}</Text>
                 </View>
               </View>
+
               <FlatList
                 data={infoPlan.exercises}
                 style={styles.containerExercisePlan}
@@ -73,6 +75,13 @@ export const InfoPlan: React.FC<infoplanProps> = ({
                   </View>
                 )}
               />
+              {infoPlan.note && (
+                <View style={styles.containerNote}>
+                  <Text style={styles.fontTitle}>Note:</Text>
+                  <Text style={styles.fontTextNote}>{infoPlan.note}</Text>
+                </View>
+              )}
+
               {infoPlan.type === "Personal Plan" && (
                 <TouchableOpacity
                   style={styles.deleteButton}
@@ -119,15 +128,27 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   containerExercisePlan: {
-    marginTop: 20,
+    marginTop: 15,
     flex: 1,
   },
   exercisePlan: {
-    marginTop: 25,
+    marginVertical: 10,
   },
   textExercisePlan: {
     color: "white",
-    fontSize: 17,
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  containerNote: {
+    marginBottom: 15,
+  },
+  fontTitle: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  fontTextNote: {
+    color: "#CACCCD",
     fontWeight: "500",
   },
   deleteButton: {
