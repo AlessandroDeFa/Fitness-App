@@ -16,6 +16,7 @@ interface infoplanProps {
   setInfoPlanModal: (infoPlanModal: boolean) => void;
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
+  fecthPlansData: () => void;
 }
 
 export const InfoPlan: React.FC<infoplanProps> = ({

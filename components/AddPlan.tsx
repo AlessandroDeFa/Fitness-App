@@ -23,6 +23,7 @@ import { ExerciseData } from "./Programs";
 interface AddPlanProps {
   modalOpen: boolean;
   setModalOpen: (modalOpen: boolean) => void;
+  fecthPlansData: () => void;
 }
 
 export const AddPlan: React.FC<AddPlanProps> = ({

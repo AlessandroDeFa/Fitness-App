@@ -108,7 +108,15 @@ export interface ExampleData {
   exercises?: ExerciseData[];
 }
 
-export const Programs = ({ plansData, fecthPlansData }) => {
+interface ProgramsProps {
+  plansData: ExampleData[];
+  fecthPlansData: () => void;
+}
+
+export const Programs: React.FC<ProgramsProps> = ({
+  plansData,
+  fecthPlansData,
+}) => {
   const [InfoPlanModal, setInfoPlanModal] = useState<boolean>(false);
   const [infoPlan, setInfoPlan] = useState<ExampleData>({
     id: 0,
