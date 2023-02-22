@@ -18,6 +18,7 @@ import { AddedExercise } from "./AddedExercise";
 import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 import { ListExerciseForm } from "./ListExerciseForm";
+import { ExerciseData } from "./Programs";
 
 interface AddPlanProps {
   modalOpen: boolean;
@@ -31,7 +32,8 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   const [buttonScale] = useState(new Animated.Value(1));
   const [namePlan, setNamePlan] = useState<string>("");
   const [note, setNote] = useState<string>("");
-  const [exercises, setExercises] = useState<any[]>([]);
+  const [exercises, setExercises] = useState<ExerciseData[]>([]);
+  const [exerciseName, setExerciseName] = useState<string>("");
   const [id, setId] = useState<number>(1);
   const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
 
@@ -150,6 +152,8 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                 setExerciseForm={setExerciseForm}
                 setExercises={setExercises}
                 exercises={exercises}
+                setExerciseName={setExerciseName}
+                exerciseName={exerciseName}
               />
             </ScrollView>
           </View>

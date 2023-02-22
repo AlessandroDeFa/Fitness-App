@@ -4,11 +4,9 @@ import {
   Text,
   View,
   Platform,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,7 +17,7 @@ import { useContext } from "react";
 import { ContextApp } from "../Navigation/TabNavigator";
 
 export const Exercises = () => {
-  const { data, filteredExercises, filterExercises } = useContext(ContextApp);
+  const { filteredExercises } = useContext(ContextApp);
 
   const [exercisesInfo, setExercisesInfo] = useState<boolean>(false);
   const [infoExerciseData, setInfoExerciseData] = useState({

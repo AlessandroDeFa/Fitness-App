@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 import { ExampleData } from "./Programs";
-// cambiare exampledata con i dati veri dell utente creare quidni l interface
 
 interface planProps {
   InfoPlanModal: boolean;

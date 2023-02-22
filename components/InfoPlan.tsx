@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ExampleData } from "./Programs";
@@ -71,7 +70,13 @@ export const InfoPlan: React.FC<infoplanProps> = ({
                 style={styles.containerExercisePlan}
                 renderItem={({ item }) => (
                   <View style={styles.exercisePlan}>
-                    <Text style={styles.textExercisePlan}>{item}</Text>
+                    <Text style={styles.textSeriesReps}>
+                      [ {item.series} x {item.reps} ]
+                    </Text>
+
+                    <Text style={styles.textExercisePlan}>
+                      {item.nameExercise}
+                    </Text>
                   </View>
                 )}
               />
@@ -132,12 +137,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   exercisePlan: {
+    flexDirection: "row",
     marginVertical: 10,
   },
   textExercisePlan: {
     color: "white",
     fontSize: 16,
     fontWeight: "500",
+    flex: 3,
+  },
+  textSeriesReps: {
+    color: "white",
+    fontWeight: "500",
+    fontSize: 16,
+    flex: 1,
+    alignSelf: "center",
+    marginRight: 13,
   },
   containerNote: {
     marginBottom: 15,

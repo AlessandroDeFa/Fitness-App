@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Platform,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
 import { Plan } from "./Plan";
 import { InfoPlan } from "./InfoPlan";
 import { ExamplePlan } from "./ExamplePlan";
@@ -20,11 +12,31 @@ const ExamplePlans = [
     note: "",
     type: "Example",
     exercises: [
-      "Bench Press (Barbell)",
-      "Bent Over Row (Barbell)",
-      "Incline Bench Press (Dumbbell)",
-      "Incline Curl (Dumbbell)",
-      "Lat Pulldown (Cable)",
+      {
+        nameExercise: "Bench Press (Barbell)",
+        series: "3",
+        reps: "13",
+      },
+      {
+        nameExercise: "Bent Over Row (Barbell)",
+        series: "4",
+        reps: "12",
+      },
+      {
+        nameExercise: "Incline Bench Press (Dumbbell)",
+        series: "3",
+        reps: "10",
+      },
+      {
+        nameExercise: "Incline Curl (Dumbbell)",
+        series: "3",
+        reps: "8",
+      },
+      {
+        nameExercise: "Lat Pulldown (Cable)",
+        series: "4",
+        reps: "10",
+      },
     ],
   },
   {
@@ -33,9 +45,21 @@ const ExamplePlans = [
     note: "",
     type: "Example",
     exercises: [
-      "Squat (Barbell)",
-      "Standing Calf Raise (Dumbbell)",
-      "Romanian Deadlift (Barbell)",
+      {
+        nameExercise: "Squat (Barbell)",
+        series: "4",
+        reps: "6",
+      },
+      {
+        nameExercise: "Standing Calf Raise (Dumbbell)",
+        series: "4",
+        reps: "15",
+      },
+      {
+        nameExercise: "Romanian Deadlift (Barbell)",
+        series: "4",
+        reps: "7",
+      },
     ],
   },
   {
@@ -44,20 +68,42 @@ const ExamplePlans = [
     note: "",
     type: "Example",
     exercises: [
-      "Squat (Barbell)",
-      "Bench Press (Barbell)",
-      "Curl (Barbell)",
-      "Crunch",
+      {
+        nameExercise: "Squat (Barbell)",
+        series: "3",
+        reps: "10",
+      },
+      {
+        nameExercise: "Bench Press (Barbell)",
+        series: "4",
+        reps: "8",
+      },
+      {
+        nameExercise: "Curl (Barbell)",
+        series: "3",
+        reps: "12",
+      },
+      {
+        nameExercise: "Crunch",
+        series: "4",
+        reps: "15",
+      },
     ],
   },
 ];
+
+export interface ExerciseData {
+  nameExercise: string;
+  series: string;
+  reps: string;
+}
 
 export interface ExampleData {
   id: number;
   name: string;
   note: string;
   type: string;
-  exercises?: string[];
+  exercises?: ExerciseData[];
 }
 
 export const Programs = () => {
@@ -69,7 +115,7 @@ export const Programs = () => {
     type: "",
     exercises: [],
   });
-  const [plansData, setPlansData] = useState<any[]>([]);
+  const [plansData, setPlansData] = useState<ExampleData[]>([]);
 
   useEffect(() => {
     const fecthPlansData = async () => {

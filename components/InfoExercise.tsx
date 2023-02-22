@@ -6,7 +6,6 @@ import {
   Modal,
   Platform,
   ScrollView,
-  Image,
   ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";

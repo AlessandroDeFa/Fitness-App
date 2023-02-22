@@ -1,23 +1,20 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Modal, FlatList, Vibration } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { SearchInput } from "./SearchInput";
 import { Exercise } from "./Exercise";
 import { useContext } from "react";
 import { ContextApp } from "../Navigation/TabNavigator";
+import { AddSeriesReps } from "./AddSeriesReps";
+import { ExerciseData } from "./Programs";
 
 interface ListExerciseProps {
   ExerciseForm: boolean;
   setExerciseForm: (ExerciseForm: boolean) => void;
-  exercises: string[];
-  setExercises: (exercises: string[]) => void;
+  exercises: ExerciseData[];
+  setExercises: (exercises: ExerciseData[]) => void;
+  exerciseName: string;
+  setExerciseName: (exerciseName: string) => void;
 }
 
 export const ListExerciseForm: React.FC<ListExerciseProps> = ({
@@ -25,8 +22,26 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   setExerciseForm,
   exercises,
   setExercises,
+  setExerciseName,
+  exerciseName,
 }) => {
   const { filteredExercises } = useContext(ContextApp);
+  const [seriesRepsModal, setSeriesRepsModal] = useState<boolean>(false);
+
+  const handleSaveExercise = (series: string, reps: string) => {
+    if (series === "" || reps === "") {
+      Vibration.vibrate([0, 50, 0, 0]);
+    } else {
+      let ObjectExercise = {
+        nameExercise: exerciseName,
+        series: series,
+        reps: reps,
+      };
+
+      setExercises([...exercises, ObjectExercise]);
+      setSeriesRepsModal(false);
+    }
+  };
 
   return (
     <View>
@@ -56,6 +71,8 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
                     setExerciseForm={setExerciseForm}
                     setExercises={setExercises}
                     exercises={exercises}
+                    setExerciseName={setExerciseName}
+                    setSeriesRepsModal={setSeriesRepsModal}
                   />
                 )}
               />
@@ -63,6 +80,12 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
           </View>
         </View>
       </Modal>
+      <AddSeriesReps
+        setSeriesRepsModal={setSeriesRepsModal}
+        seriesRepsModal={seriesRepsModal}
+        exerciseName={exerciseName}
+        handleSaveExercise={handleSaveExercise}
+      />
     </View>
   );
 };

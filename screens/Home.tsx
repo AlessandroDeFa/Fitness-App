@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { Header } from "../components/Header";
 import { Programs } from "../components/Programs";

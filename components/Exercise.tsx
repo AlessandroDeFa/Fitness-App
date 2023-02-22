@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableHighlight,
 } from "react-native";
+import { ExerciseData } from "./Programs";
 
 interface Data {
   bodyPart: string;
@@ -16,7 +17,7 @@ interface Data {
   target: string;
 }
 
-interface ExerciseData {
+interface ExerciseInfoData {
   bodyPart: string;
   equipment: string;
   gifUrl: string;
@@ -27,15 +28,16 @@ interface ExerciseData {
 
 interface ExerciseProps {
   data: Data;
-  key: number;
   exercisesInfo: boolean;
   setExercisesInfo: (exercisesInfo: boolean) => void;
-  infoExerciseData: ExerciseData;
-  setInfoExerciseData: (infoExerciseData: ExerciseData) => void;
+  infoExerciseData: ExerciseInfoData;
+  setInfoExerciseData: (infoExerciseData: ExerciseInfoData) => void;
   ExerciseForm: boolean;
   setExerciseForm: (ExerciseForm: boolean) => void;
-  exercises: string[];
-  setExercises: (exercises: string[]) => void;
+  exercises: ExerciseData[];
+  setExercises: (exercises: ExerciseData[]) => void;
+  setSeriesRepsModal: (seriesRepsModal: boolean) => void;
+  setExerciseName: (value: string) => void;
 }
 
 export const Exercise: React.FC<ExerciseProps> = ({
@@ -48,6 +50,8 @@ export const Exercise: React.FC<ExerciseProps> = ({
   setExerciseForm,
   exercises,
   setExercises,
+  setSeriesRepsModal,
+  setExerciseName,
 }) => {
   const HandleClickExercise = () => {
     setInfoExerciseData(data);
@@ -55,7 +59,9 @@ export const Exercise: React.FC<ExerciseProps> = ({
   };
 
   const handlePressExerciseForm = () => {
-    setExercises([...exercises, data.name]);
+    // setExercises([...exercises, data.name]);
+    setExerciseName(data.name);
+    setSeriesRepsModal(true);
     setExerciseForm(false);
   };
 
