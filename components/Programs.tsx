@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
 import { Plan } from "./Plan";
 import { InfoPlan } from "./InfoPlan";
 import { ExamplePlan } from "./ExamplePlan";
+import { useContext } from "react";
+import { ContextApp } from "../Navigation/TabNavigator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ExamplePlans = [
@@ -106,7 +108,7 @@ export interface ExampleData {
   exercises?: ExerciseData[];
 }
 
-export const Programs = () => {
+export const Programs = ({ plansData, fecthPlansData }) => {
   const [InfoPlanModal, setInfoPlanModal] = useState<boolean>(false);
   const [infoPlan, setInfoPlan] = useState<ExampleData>({
     id: 0,
@@ -115,21 +117,23 @@ export const Programs = () => {
     type: "",
     exercises: [],
   });
-  const [plansData, setPlansData] = useState<ExampleData[]>([]);
+  // const [plansData, setPlansData] = useState<ExampleData[]>([]);
+  // const { setDataLoaded } = useContext(ContextApp);
 
-  useEffect(() => {
-    const fecthPlansData = async () => {
-      try {
-        const data = await AsyncStorage.getItem("plansData");
-        if (data !== null) {
-          setPlansData(JSON.parse(data));
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fecthPlansData();
-  }, [plansData]);
+  // const fecthPlansData = async () => {
+  //   try {
+  //     const data = await AsyncStorage.getItem("plansData");
+  //     if (data !== null) {
+  //       setPlansData(JSON.parse(data));
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fecthPlansData();
+  // }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -179,6 +183,7 @@ export const Programs = () => {
         setInfoPlan={setInfoPlan}
         InfoPlanModal={InfoPlanModal}
         setInfoPlanModal={setInfoPlanModal}
+        fecthPlansData={fecthPlansData}
       />
     </ScrollView>
   );

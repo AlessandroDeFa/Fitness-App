@@ -28,6 +28,7 @@ interface AddPlanProps {
 export const AddPlan: React.FC<AddPlanProps> = ({
   modalOpen,
   setModalOpen,
+  fecthPlansData,
 }) => {
   const [buttonScale] = useState(new Animated.Value(1));
   const [namePlan, setNamePlan] = useState<string>("");
@@ -82,6 +83,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
         formData.push(planData);
 
         await AsyncStorage.setItem("plansData", JSON.stringify(formData));
+        fecthPlansData();
         handleClosemodal();
       } catch (error) {
         console.error(error);

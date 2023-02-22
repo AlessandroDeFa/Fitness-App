@@ -23,6 +23,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
   setInfoPlanModal,
   setInfoPlan,
   infoPlan,
+  fecthPlansData,
 }) => {
   const resetInfoPlan = () => {
     setInfoPlanModal(false);
@@ -39,6 +40,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
         );
         await AsyncStorage.setItem("plansData", JSON.stringify(updatedPlans));
       }
+      fecthPlansData();
       setInfoPlanModal(false);
     } catch (error) {
       console.error(error);

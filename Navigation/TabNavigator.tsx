@@ -13,6 +13,7 @@ const Tab = createBottomTabNavigator();
 function BottomTabNavigator() {
   const [data, setData] = useState([]);
   let [filteredExercises, setFilteredExercises] = useState<object[]>([]);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     const fechData = async () => {
@@ -53,6 +54,8 @@ function BottomTabNavigator() {
         data,
         filterExercises,
         filteredExercises,
+        setDataLoaded,
+        dataLoaded,
       }}
     >
       <Tab.Navigator
