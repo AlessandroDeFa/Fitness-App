@@ -6,6 +6,7 @@ import { Premium } from "../screens/Premium";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import Constants from "expo-constants";
 
 export const ContextApp = createContext<any>(undefined);
 const Tab = createBottomTabNavigator();
@@ -14,6 +15,7 @@ function BottomTabNavigator() {
   const [data, setData] = useState([]);
   let [filteredExercises, setFilteredExercises] = useState<object[]>([]);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
+  const apiKey = Constants.manifest!.extra!.API_KEY;
 
   useEffect(() => {
     const fechData = async () => {
@@ -21,8 +23,7 @@ function BottomTabNavigator() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "X-RapidAPI-Key":
-            "725db0c7a7msh6847c4a29f115cfp1cd79djsn0205ddb957c3",
+          "X-RapidAPI-Key": apiKey,
           "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
         },
       })
