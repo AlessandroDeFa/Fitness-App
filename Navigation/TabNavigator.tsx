@@ -12,7 +12,7 @@ export const ContextApp = createContext<any>(undefined);
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-  const [data, setData] = useState([]);
+  const [dataApi, setDataApi] = useState([]);
   let [filteredExercises, setFilteredExercises] = useState<object[]>([]);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const apiKey = Constants.manifest!.extra!.API_KEY;
@@ -28,7 +28,7 @@ function BottomTabNavigator() {
         },
       })
         .then((response) => response.json())
-        .then((data) => setData(data))
+        .then((data) => setDataApi(data))
         .catch((error) => console.error(error));
     };
 
@@ -36,15 +36,15 @@ function BottomTabNavigator() {
   }, []);
 
   useEffect(() => {
-    if (data.length > 0) {
-      setFilteredExercises(data);
+    if (dataApi.length > 0) {
+      setFilteredExercises(dataApi);
     }
-  }, [data]);
+  }, [dataApi]);
 
   const filterExercises = (value: string) => {
     setFilteredExercises(
-      data.filter((exercise) => {
-        return exercise.name.toLowerCase().startsWith(value.toLowerCase());
+      dataApi.filter((exercise) => {
+        return exercise.name.toLowerCase().includes(value.toLowerCase());
       })
     );
   };
@@ -52,9 +52,10 @@ function BottomTabNavigator() {
   return (
     <ContextApp.Provider
       value={{
-        data,
+        dataApi,
         filterExercises,
         filteredExercises,
+        setFilteredExercises,
         setDataLoaded,
         dataLoaded,
       }}

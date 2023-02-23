@@ -5,8 +5,8 @@ import { useContext } from "react";
 import { ContextApp } from "../Navigation/TabNavigator";
 
 export const SearchInput = () => {
-  const { filterExercises } = useContext(ContextApp);
-
+  const { filterExercises, setFilteredExercises, dataApi } =
+    useContext(ContextApp);
   return (
     <View style={styles.containerInput}>
       <Ionicons name="search" size={16} color="#606669" />

@@ -25,7 +25,8 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   setExerciseName,
   exerciseName,
 }) => {
-  const { filteredExercises } = useContext(ContextApp);
+  const { filteredExercises, setFilteredExercises, dataApi } =
+    useContext(ContextApp);
   const [seriesRepsModal, setSeriesRepsModal] = useState<boolean>(false);
 
   const handleSaveExercise = (series: string, reps: string) => {
@@ -43,6 +44,11 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
     }
   };
 
+  const handleCloseExerciseForm = () => {
+    setExerciseForm(false);
+    setFilteredExercises(dataApi);
+  };
+
   return (
     <View>
       <Modal visible={ExerciseForm} transparent={true} animationType="slide">
@@ -55,7 +61,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
                     name="close"
                     size={22}
                     color="#3B82F7"
-                    onPress={() => setExerciseForm(false)}
+                    onPress={handleCloseExerciseForm}
                   />
                 </View>
                 <SearchInput />

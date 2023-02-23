@@ -7,6 +7,8 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { ExerciseData } from "./Programs";
+import { useContext } from "react";
+import { ContextApp } from "../Navigation/TabNavigator";
 
 interface Data {
   bodyPart: string;
@@ -53,16 +55,18 @@ export const Exercise: React.FC<ExerciseProps> = ({
   setSeriesRepsModal,
   setExerciseName,
 }) => {
+  const { setFilteredExercises, dataApi } = useContext(ContextApp);
+
   const HandleClickExercise = () => {
     setInfoExerciseData(data);
     setExercisesInfo(true);
   };
 
   const handlePressExerciseForm = () => {
-    // setExercises([...exercises, data.name]);
     setExerciseName(data.name);
     setSeriesRepsModal(true);
     setExerciseForm(false);
+    setFilteredExercises(dataApi);
   };
 
   data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
