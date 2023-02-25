@@ -10,7 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const Home = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [plansData, setPlansData] = useState<ExampleData[]>([]);
-  // const { setDataLoaded } = useContext(ContextApp);
 
   const fecthPlansData = async () => {
     try {

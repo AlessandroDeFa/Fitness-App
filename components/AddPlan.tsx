@@ -36,6 +36,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   const [note, setNote] = useState<string>("");
   const [exercises, setExercises] = useState<ExerciseData[]>([]);
   const [exerciseName, setExerciseName] = useState<string>("");
+  const [exerciseTarget, setExerciseTarget] = useState<string>("");
   const [id, setId] = useState<number>(1);
   const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
 
@@ -157,6 +158,8 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                 exercises={exercises}
                 setExerciseName={setExerciseName}
                 exerciseName={exerciseName}
+                setExerciseTarget={setExerciseTarget}
+                exerciseTarget={exerciseTarget}
               />
             </ScrollView>
           </View>

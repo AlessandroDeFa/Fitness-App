@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Modal, FlatList, Vibration } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  FlatList,
+  Vibration,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { SearchInput } from "./SearchInput";
 import { Exercise } from "./Exercise";
@@ -15,6 +22,8 @@ interface ListExerciseProps {
   setExercises: (exercises: ExerciseData[]) => void;
   exerciseName: string;
   setExerciseName: (exerciseName: string) => void;
+  exerciseTarget: string;
+  setExerciseTarget: (exerciseTarget: string) => void;
 }
 
 export const ListExerciseForm: React.FC<ListExerciseProps> = ({
@@ -24,6 +33,8 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   setExercises,
   setExerciseName,
   exerciseName,
+  setExerciseTarget,
+  exerciseTarget,
 }) => {
   const { filteredExercises, setFilteredExercises, dataApi } =
     useContext(ContextApp);
@@ -37,6 +48,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         nameExercise: exerciseName,
         series: series,
         reps: reps,
+        target: exerciseTarget,
       };
 
       setExercises([...exercises, ObjectExercise]);
@@ -49,6 +61,8 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
     setFilteredExercises(dataApi);
   };
 
+  const handleNewExerciseForm = () => {};
+
   return (
     <View>
       <Modal visible={ExerciseForm} transparent={true} animationType="slide">
@@ -58,10 +72,19 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
               <View>
                 <View style={styles.containerButton}>
                   <AntDesign
+                    style={styles.flex}
                     name="close"
                     size={22}
                     color="#3B82F7"
                     onPress={handleCloseExerciseForm}
+                  />
+                  <Text style={styles.fontTitle}>Seleziona esercizio</Text>
+                  <AntDesign
+                    style={[styles.flex, styles.iconPlus]}
+                    name="plus"
+                    size={22}
+                    color="#3B82F7"
+                    onPress={handleNewExerciseForm}
                   />
                 </View>
                 <SearchInput />
@@ -79,6 +102,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
                     exercises={exercises}
                     setExerciseName={setExerciseName}
                     setSeriesRepsModal={setSeriesRepsModal}
+                    setExerciseTarget={setExerciseTarget}
                   />
                 )}
               />
@@ -113,7 +137,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   containerButton: {
-    marginBottom: 10,
+    marginBottom: 15,
+    flexDirection: "row",
+  },
+  flex: {
+    flex: 1,
+  },
+  fontTitle: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 16,
+    fontWeight: "500",
+    flex: 2,
+  },
+  iconPlus: {
+    textAlign: "right",
   },
   exercisePlan: {
     marginTop: 10,

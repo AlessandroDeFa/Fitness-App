@@ -40,6 +40,7 @@ interface ExerciseProps {
   setExercises: (exercises: ExerciseData[]) => void;
   setSeriesRepsModal: (seriesRepsModal: boolean) => void;
   setExerciseName: (value: string) => void;
+  setExerciseTarget: (value: string) => void;
 }
 
 export const Exercise: React.FC<ExerciseProps> = ({
@@ -54,6 +55,7 @@ export const Exercise: React.FC<ExerciseProps> = ({
   setExercises,
   setSeriesRepsModal,
   setExerciseName,
+  setExerciseTarget,
 }) => {
   const { setFilteredExercises, dataApi } = useContext(ContextApp);
 
@@ -64,6 +66,7 @@ export const Exercise: React.FC<ExerciseProps> = ({
 
   const handlePressExerciseForm = () => {
     setExerciseName(data.name);
+    setExerciseTarget(data.target);
     setSeriesRepsModal(true);
     setExerciseForm(false);
     setFilteredExercises(dataApi);

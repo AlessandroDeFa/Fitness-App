@@ -76,10 +76,14 @@ export const InfoPlan: React.FC<infoplanProps> = ({
                     <Text style={styles.textSeriesReps}>
                       [ {item.series} x {item.reps} ]
                     </Text>
-
-                    <Text style={styles.textExercisePlan}>
-                      {item.nameExercise}
-                    </Text>
+                    <View style={styles.textExercisePlan}>
+                      <Text style={styles.textExerciseName}>
+                        {item.nameExercise}
+                      </Text>
+                      <Text style={styles.textExerciseTarget}>
+                        {item.target}
+                      </Text>
+                    </View>
                   </View>
                 )}
               />
@@ -144,10 +148,16 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   textExercisePlan: {
+    flex: 3,
+  },
+  textExerciseName: {
     color: "white",
     fontSize: 16,
     fontWeight: "500",
-    flex: 3,
+  },
+  textExerciseTarget: {
+    color: "#CACCCD",
+    fontWeight: "500",
   },
   textSeriesReps: {
     color: "white",

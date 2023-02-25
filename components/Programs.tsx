@@ -18,26 +18,31 @@ const ExamplePlans = [
         nameExercise: "Bench Press (Barbell)",
         series: "3",
         reps: "13",
+        target: "Pectorals",
       },
       {
         nameExercise: "Bent Over Row (Barbell)",
         series: "4",
         reps: "12",
+        target: "Upper Back",
       },
       {
         nameExercise: "Incline Bench Press (Dumbbell)",
         series: "3",
         reps: "10",
+        target: "Pectorals",
       },
       {
         nameExercise: "Incline Curl (Dumbbell)",
         series: "3",
         reps: "8",
+        target: "Biceps",
       },
       {
         nameExercise: "Lat Pulldown (Cable)",
         series: "4",
         reps: "10",
+        target: "Lats",
       },
     ],
   },
@@ -51,16 +56,19 @@ const ExamplePlans = [
         nameExercise: "Squat (Barbell)",
         series: "4",
         reps: "6",
+        target: "Legs",
       },
       {
         nameExercise: "Standing Calf Raise (Dumbbell)",
         series: "4",
         reps: "15",
+        target: "Legs",
       },
       {
         nameExercise: "Romanian Deadlift (Barbell)",
         series: "4",
         reps: "7",
+        target: "Legs",
       },
     ],
   },
@@ -74,21 +82,25 @@ const ExamplePlans = [
         nameExercise: "Squat (Barbell)",
         series: "3",
         reps: "10",
+        target: "Legs",
       },
       {
         nameExercise: "Bench Press (Barbell)",
         series: "4",
         reps: "8",
+        target: "Pectorals",
       },
       {
         nameExercise: "Curl (Barbell)",
         series: "3",
         reps: "12",
+        target: "Biceps",
       },
       {
         nameExercise: "Crunch",
         series: "4",
         reps: "15",
+        target: "Abs",
       },
     ],
   },
@@ -98,6 +110,7 @@ export interface ExerciseData {
   nameExercise: string;
   series: string;
   reps: string;
+  target: string;
 }
 
 export interface ExampleData {
@@ -125,23 +138,6 @@ export const Programs: React.FC<ProgramsProps> = ({
     type: "",
     exercises: [],
   });
-  // const [plansData, setPlansData] = useState<ExampleData[]>([]);
-  // const { setDataLoaded } = useContext(ContextApp);
-
-  // const fecthPlansData = async () => {
-  //   try {
-  //     const data = await AsyncStorage.getItem("plansData");
-  //     if (data !== null) {
-  //       setPlansData(JSON.parse(data));
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fecthPlansData();
-  // }, []);
 
   return (
     <ScrollView style={styles.container}>
