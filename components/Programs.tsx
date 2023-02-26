@@ -1,44 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
 import { Plan } from "./Plan";
 import { InfoPlan } from "./InfoPlan";
 import { ExamplePlan } from "./ExamplePlan";
-import { useContext } from "react";
-import { ContextApp } from "../Navigation/TabNavigator";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ExamplePlans = [
   {
-    id: 1,
+    id: "1",
     name: "Upper Body",
     note: "",
     type: "Example",
     exercises: [
       {
+        id: "115",
         nameExercise: "Bench Press (Barbell)",
         series: "3",
         reps: "13",
         target: "Pectorals",
       },
       {
+        id: "116",
         nameExercise: "Bent Over Row (Barbell)",
         series: "4",
         reps: "12",
         target: "Upper Back",
       },
       {
+        id: "117",
         nameExercise: "Incline Bench Press (Dumbbell)",
         series: "3",
         reps: "10",
         target: "Pectorals",
       },
       {
+        id: "118",
         nameExercise: "Incline Curl (Dumbbell)",
         series: "3",
         reps: "8",
         target: "Biceps",
       },
       {
+        id: "119",
         nameExercise: "Lat Pulldown (Cable)",
         series: "4",
         reps: "10",
@@ -47,24 +49,27 @@ const ExamplePlans = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     name: "Lower Body",
     note: "",
     type: "Example",
     exercises: [
       {
+        id: "120",
         nameExercise: "Squat (Barbell)",
         series: "4",
         reps: "6",
         target: "Legs",
       },
       {
+        id: "121",
         nameExercise: "Standing Calf Raise (Dumbbell)",
         series: "4",
         reps: "15",
         target: "Legs",
       },
       {
+        id: "122",
         nameExercise: "Romanian Deadlift (Barbell)",
         series: "4",
         reps: "7",
@@ -73,30 +78,34 @@ const ExamplePlans = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     name: "Full Body",
     note: "",
     type: "Example",
     exercises: [
       {
+        id: "123",
         nameExercise: "Squat (Barbell)",
         series: "3",
         reps: "10",
         target: "Legs",
       },
       {
+        id: "124",
         nameExercise: "Bench Press (Barbell)",
         series: "4",
         reps: "8",
         target: "Pectorals",
       },
       {
+        id: "125",
         nameExercise: "Curl (Barbell)",
         series: "3",
         reps: "12",
         target: "Biceps",
       },
       {
+        id: "126",
         nameExercise: "Crunch",
         series: "4",
         reps: "15",
@@ -107,6 +116,7 @@ const ExamplePlans = [
 ];
 
 export interface ExerciseData {
+  id: string;
   nameExercise: string;
   series: string;
   reps: string;
@@ -114,7 +124,7 @@ export interface ExerciseData {
 }
 
 export interface ExampleData {
-  id: number;
+  id: string;
   name: string;
   note: string;
   type: string;
@@ -132,7 +142,7 @@ export const Programs: React.FC<ProgramsProps> = ({
 }) => {
   const [InfoPlanModal, setInfoPlanModal] = useState<boolean>(false);
   const [infoPlan, setInfoPlan] = useState<ExampleData>({
-    id: 0,
+    id: "",
     name: "",
     note: "",
     type: "",

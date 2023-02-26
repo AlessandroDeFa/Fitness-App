@@ -1,24 +1,38 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  Platform,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Text, View, Platform } from "react-native";
 import { ExerciseData } from "./Programs";
+import { Ionicons } from "@expo/vector-icons";
 
 interface AddedExerciseProps {
   data: ExerciseData;
+  exercises: ExerciseData[];
+  setExercises: (exercises: ExerciseData[]) => void;
 }
 
-export const AddedExercise: React.FC<AddedExerciseProps> = ({ data }) => {
+export const AddedExercise: React.FC<AddedExerciseProps> = ({
+  data,
+  setExercises,
+  exercises,
+}) => {
+  const handleRemoveExercise = (id: string) => {
+    setExercises(exercises.filter((exercise) => exercise.id !== id));
+  };
+
   return (
     <View style={styles.containerExercise}>
       <View>
-        <Text style={styles.fontTitle}>{data.nameExercise}</Text>
+        <View style={styles.containerInfoExercise}>
+          <Text style={styles.fontTitle}>{data.nameExercise}</Text>
+          <Ionicons
+            style={styles.removeExercise}
+            name="remove-circle"
+            size={24}
+            onPress={() => handleRemoveExercise(data.id)}
+          />
+        </View>
+        <View>
+          <Text style={styles.fontTarget}>{data.target}</Text>
+        </View>
         <View style={styles.containerOptions}>
           <View style={styles.option}>
             <View>
@@ -54,10 +68,21 @@ const styles = StyleSheet.create({
   containerExercise: {
     marginTop: 25,
   },
+  containerInfoExercise: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  removeExercise: {
+    color: "#E93323",
+  },
   fontTitle: {
     color: "#3B82F7",
     fontSize: 17,
     fontWeight: "bold",
+  },
+  fontTarget: {
+    color: "white",
+    fontWeight: "500",
   },
   containerOptions: {
     flexDirection: "row",

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import {
   StyleSheet,
   Text,
@@ -37,7 +39,6 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   const [exercises, setExercises] = useState<ExerciseData[]>([]);
   const [exerciseName, setExerciseName] = useState<string>("");
   const [exerciseTarget, setExerciseTarget] = useState<string>("");
-  const [id, setId] = useState<number>(1);
   const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
 
   const handleClosemodal = () => {
@@ -71,16 +72,15 @@ export const AddPlan: React.FC<AddPlanProps> = ({
       try {
         let formData: any = await AsyncStorage.getItem("plansData");
         formData = formData ? JSON.parse(formData) : [];
+        const uniqueId = uuidv4();
 
         const planData = {
-          id: id,
+          id: uniqueId,
           name: namePlan,
           note: note,
           type: "Personal Plan",
           exercises: exercises,
         };
-
-        setId(id + 1);
 
         formData.push(planData);
 
@@ -151,7 +151,11 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                 </TouchableOpacity>
               </View>
               {exercises.map((item) => (
-                <AddedExercise data={item} />
+                <AddedExercise
+                  data={item}
+                  setExercises={setExercises}
+                  exercises={exercises}
+                />
               ))}
               <ListExerciseForm
                 ExerciseForm={ExerciseForm}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -27,9 +27,6 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
   setReps,
   setSeries,
 }) => {
-  // const [series, setSeries] = useState<string>("");
-  // const [reps, setReps] = useState<string>("");
-
   return (
     <View>
       <Modal visible={seriesRepsModal} transparent={true} animationType="slide">

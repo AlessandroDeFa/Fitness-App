@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import {
   StyleSheet,
   Text,
@@ -43,12 +45,14 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   const [newExerciseModal, setNewExerciseModal] = useState<boolean>(false);
   const [series, setSeries] = useState<string>("");
   const [reps, setReps] = useState<string>("");
+  const uniqueId = uuidv4();
 
   const handleSaveExercise = () => {
     if (series === "" || reps === "") {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
       let ObjectExercise = {
+        id: uniqueId,
         nameExercise: exerciseName,
         series: series,
         reps: reps,
@@ -70,6 +74,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
       let ObjectNewExercise = {
+        id: uniqueId,
         nameExercise: exerciseName,
         series: series,
         reps: reps,

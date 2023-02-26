@@ -4,8 +4,6 @@ import {
   View,
   Text,
   Modal,
-  FlatList,
-  ScrollView,
   TextInput,
   Platform,
   TouchableOpacity,

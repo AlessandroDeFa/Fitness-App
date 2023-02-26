@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   StyleSheet,
   Text,
@@ -28,10 +29,10 @@ export const InfoPlan: React.FC<infoplanProps> = ({
 }) => {
   const resetInfoPlan = () => {
     setInfoPlanModal(false);
-    setInfoPlan({ id: 0, name: "", note: "", type: "", exercises: [] });
+    setInfoPlan({ id: "", name: "", note: "", type: "", exercises: [] });
   };
 
-  const deletePlan = async (id: number) => {
+  const deletePlan = async (id: string) => {
     let plansData = await AsyncStorage.getItem("plansData");
     try {
       if (plansData) {
