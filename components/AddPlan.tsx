@@ -131,6 +131,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   multiline={true}
                   placeholder="Nome scheda"
                   placeholderTextColor="#606669"
+                  maxLength={30}
                   onChangeText={(value) => setNamePlan(value)}
                 />
                 <TextInput
@@ -138,6 +139,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   multiline={true}
                   placeholder="Note"
                   placeholderTextColor="#606669"
+                  maxLength={100}
                   onChangeText={(value) => setNote(value)}
                 />
                 <TouchableOpacity

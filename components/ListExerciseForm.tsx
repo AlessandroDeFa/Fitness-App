@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { ContextApp } from "../Navigation/TabNavigator";
 import { AddSeriesReps } from "./AddSeriesReps";
 import { ExerciseData } from "./Programs";
+import { AddNewExercise } from "./AddNewExercise";
 
 interface ListExerciseProps {
   ExerciseForm: boolean;
@@ -39,8 +40,11 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   const { filteredExercises, setFilteredExercises, dataApi } =
     useContext(ContextApp);
   const [seriesRepsModal, setSeriesRepsModal] = useState<boolean>(false);
+  const [newExerciseModal, setNewExerciseModal] = useState<boolean>(false);
+  const [series, setSeries] = useState<string>("");
+  const [reps, setReps] = useState<string>("");
 
-  const handleSaveExercise = (series: string, reps: string) => {
+  const handleSaveExercise = () => {
     if (series === "" || reps === "") {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
@@ -56,12 +60,36 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
     }
   };
 
+  const handleSaveNewExercise = () => {
+    if (
+      exerciseName === "" ||
+      exerciseTarget === "" ||
+      series === "" ||
+      reps === ""
+    ) {
+      Vibration.vibrate([0, 50, 0, 0]);
+    } else {
+      let ObjectNewExercise = {
+        nameExercise: exerciseName,
+        series: series,
+        reps: reps,
+        target: exerciseTarget,
+      };
+
+      setExercises([...exercises, ObjectNewExercise]);
+      setNewExerciseModal(false);
+    }
+  };
+
   const handleCloseExerciseForm = () => {
     setExerciseForm(false);
     setFilteredExercises(dataApi);
   };
 
-  const handleNewExerciseForm = () => {};
+  const handleNewExerciseForm = () => {
+    setExerciseForm(false);
+    setNewExerciseModal(true);
+  };
 
   return (
     <View>
@@ -115,6 +143,17 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         seriesRepsModal={seriesRepsModal}
         exerciseName={exerciseName}
         handleSaveExercise={handleSaveExercise}
+        setReps={setReps}
+        setSeries={setSeries}
+      />
+      <AddNewExercise
+        newExerciseModal={newExerciseModal}
+        setNewExerciseModal={setNewExerciseModal}
+        handleSaveNewExercise={handleSaveNewExercise}
+        setExerciseName={setExerciseName}
+        setExerciseTarget={setExerciseTarget}
+        setReps={setReps}
+        setSeries={setSeries}
       />
     </View>
   );

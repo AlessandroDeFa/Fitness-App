@@ -14,7 +14,9 @@ interface seriesRepsProps {
   seriesRepsModal: boolean;
   setSeriesRepsModal: (seriesRepsModal: boolean) => void;
   exerciseName: string;
-  handleSaveExercise: (series: string, reps: string) => void;
+  handleSaveExercise: () => void;
+  setReps: (value: string) => void;
+  setSeries: (value: string) => void;
 }
 
 export const AddSeriesReps: React.FC<seriesRepsProps> = ({
@@ -22,9 +24,11 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
   setSeriesRepsModal,
   exerciseName,
   handleSaveExercise,
+  setReps,
+  setSeries,
 }) => {
-  const [series, setSeries] = useState<string>("");
-  const [reps, setReps] = useState<string>("");
+  // const [series, setSeries] = useState<string>("");
+  // const [reps, setReps] = useState<string>("");
 
   return (
     <View>
@@ -48,7 +52,7 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                   <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.8}
-                    onPress={() => handleSaveExercise(series, reps)}
+                    onPress={handleSaveExercise}
                   >
                     <Text style={styles.textButton}>Salva</Text>
                   </TouchableOpacity>
