@@ -17,23 +17,23 @@ function BottomTabNavigator() {
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const apiKey = Constants.manifest!.extra!.API_KEY;
 
-  // useEffect(() => {
-  //   const fechData = async () => {
-  //     fetch("https://exercisedb.p.rapidapi.com/exercises", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "X-RapidAPI-Key": apiKey,
-  //         "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => setDataApi(data))
-  //       .catch((error) => console.error(error));
-  //   };
+  useEffect(() => {
+    const fechData = async () => {
+      fetch("https://exercisedb.p.rapidapi.com/exercises", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setDataApi(data))
+        .catch((error) => console.error(error));
+    };
 
-  //   fechData();
-  // }, []);
+    fechData();
+  }, []);
 
   useEffect(() => {
     if (dataApi.length > 0) {
