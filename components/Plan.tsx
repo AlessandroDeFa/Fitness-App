@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, TouchableHighlight } from "react-native";
 import { ExampleData } from "./Programs";
 
 interface planProps {
-  InfoPlanModal: boolean;
+  infoPlanModal: boolean;
   setInfoPlanModal: (infoPlanModal: boolean) => void;
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
@@ -11,7 +11,7 @@ interface planProps {
 }
 
 export const Plan: React.FC<planProps> = ({
-  InfoPlanModal,
+  infoPlanModal,
   setInfoPlanModal,
   setInfoPlan,
   infoPlan,

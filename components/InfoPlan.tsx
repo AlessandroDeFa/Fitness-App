@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   StyleSheet,
@@ -10,10 +10,11 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ExampleData } from "./Programs";
+import { UpdatePlan } from "./UpdatePlan";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface infoplanProps {
-  InfoPlanModal: boolean;
+  infoPlanModal: boolean;
   setInfoPlanModal: (infoPlanModal: boolean) => void;
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
@@ -21,12 +22,19 @@ interface infoplanProps {
 }
 
 export const InfoPlan: React.FC<infoplanProps> = ({
-  InfoPlanModal,
+  infoPlanModal,
   setInfoPlanModal,
   setInfoPlan,
   infoPlan,
   fecthPlansData,
 }) => {
+  const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
+
+  const handleOpenUpdateModal = () => {
+    setInfoPlanModal(false);
+    setUpdatePlanModal(true);
+  };
+
   const resetInfoPlan = () => {
     setInfoPlanModal(false);
     setInfoPlan({ id: "", name: "", note: "", type: "", exercises: [] });
@@ -48,25 +56,55 @@ export const InfoPlan: React.FC<infoplanProps> = ({
       console.error(error);
     }
   };
+  const prova = async () => {
+    const plansDataString = await AsyncStorage.getItem("plansData");
+    const plansData = JSON.parse(plansDataString);
+
+    const piano = plansData.find((piano) => piano.id === infoPlan.id);
+  };
+
+  prova();
 
   return (
     <View>
-      <Modal transparent={true} visible={InfoPlanModal} animationType="slide">
+      <Modal transparent={true} visible={infoPlanModal} animationType="slide">
         <View style={styles.container}>
           <View style={styles.modalContainer}>
             <View style={styles.main}>
               <View style={styles.containerHeader}>
-                <View>
+                <View style={styles.flex}>
                   <AntDesign
                     name="close"
                     size={22}
                     color="#3B82F7"
                     onPress={resetInfoPlan}
+                    style={styles.closeBtn}
                   />
                 </View>
-                <View style={styles.flex}>
-                  <Text style={styles.namePlan}>{infoPlan.name}</Text>
+
+                <View style={styles.flex2}>
+                  <Text
+                    style={[
+                      infoPlan.name.length < 15
+                        ? styles.namePlan
+                        : styles.namePlanLong,
+                      infoPlan.type === "Personal Plan"
+                        ? { textAlign: "center" }
+                        : { textAlign: "left" },
+                    ]}
+                  >
+                    {infoPlan.name}
+                  </Text>
                 </View>
+                {infoPlan.type === "Personal Plan" && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={handleOpenUpdateModal}
+                    style={styles.flex}
+                  >
+                    <Text style={styles.fontButton}>Modifica</Text>
+                  </TouchableOpacity>
+                )}
               </View>
 
               <FlatList
@@ -107,6 +145,11 @@ export const InfoPlan: React.FC<infoplanProps> = ({
           </View>
         </View>
       </Modal>
+      <UpdatePlan
+        updatePlanModal={updatePlanModal}
+        setUpdatePlanModal={setUpdatePlanModal}
+        infoPlan={infoPlan}
+      />
     </View>
   );
 };
@@ -131,14 +174,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  closeBtn: {
+    alignSelf: "flex-start",
+  },
+  updateBtn: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
   flex: {
     flex: 1,
   },
+  flex2: {
+    flex: 2,
+  },
+  fontButton: {
+    color: "#3B82F7",
+    fontSize: 16,
+    textAlign: "right",
+  },
   namePlan: {
     color: "white",
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "right",
+  },
+  namePlanLong: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   containerExercisePlan: {
     marginTop: 15,

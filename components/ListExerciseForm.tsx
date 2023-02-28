@@ -104,21 +104,25 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
             <View style={styles.main}>
               <View>
                 <View style={styles.containerButton}>
-                  <AntDesign
-                    style={styles.flex}
-                    name="close"
-                    size={22}
-                    color="#3B82F7"
-                    onPress={handleCloseExerciseForm}
-                  />
+                  <View style={styles.flex}>
+                    <AntDesign
+                      style={styles.closeBtn}
+                      name="close"
+                      size={22}
+                      color="#3B82F7"
+                      onPress={handleCloseExerciseForm}
+                    />
+                  </View>
                   <Text style={styles.fontTitle}>Seleziona esercizio</Text>
-                  <AntDesign
-                    style={[styles.flex, styles.iconPlus]}
-                    name="plus"
-                    size={22}
-                    color="#3B82F7"
-                    onPress={handleNewExerciseForm}
-                  />
+                  <View style={styles.flex}>
+                    <AntDesign
+                      style={styles.iconPlus}
+                      name="plus"
+                      size={22}
+                      color="#3B82F7"
+                      onPress={handleNewExerciseForm}
+                    />
+                  </View>
                 </View>
                 <SearchInput />
               </View>
@@ -184,6 +188,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     flexDirection: "row",
   },
+  closeBtn: {
+    alignSelf: "flex-start",
+  },
   flex: {
     flex: 1,
   },
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   iconPlus: {
-    textAlign: "right",
+    alignSelf: "flex-end",
   },
   exercisePlan: {
     marginTop: 10,

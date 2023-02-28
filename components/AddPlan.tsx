@@ -105,6 +105,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   size={22}
                   color="#3B82F7"
                   onPress={handleClosemodal}
+                  style={styles.closeBtn}
                 />
               </View>
               <View style={styles.flex}>
@@ -196,6 +197,9 @@ const styles = StyleSheet.create({
     color: "#3B82F7",
     fontSize: 15,
     fontWeight: "600",
+  },
+  closeBtn: {
+    alignSelf: "flex-start",
   },
   button: {
     backgroundColor: "#1C1C1E",

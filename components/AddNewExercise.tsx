@@ -46,6 +46,7 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                     size={22}
                     color="#3B82F7"
                     onPress={() => setNewExerciseModal(false)}
+                    style={styles.closeBtn}
                   />
                 </View>
                 <View style={styles.flex2}>
@@ -150,6 +151,9 @@ const styles = StyleSheet.create({
   flex2: {
     flex: 2,
   },
+  closeBtn: {
+    alignSelf: "flex-start",
+  },
   fontTextHeader: {
     color: "white",
     fontWeight: "500",
@@ -164,8 +168,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 9,

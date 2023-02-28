@@ -4,14 +4,14 @@ import { ExampleData } from "./Programs";
 
 interface examplePlanProps {
   data: ExampleData;
-  InfoPlanModal: boolean;
+  infoPlanModal: boolean;
   setInfoPlanModal: (infoPlanModal: boolean) => void;
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
 }
 
 export const ExamplePlan: React.FC<examplePlanProps> = ({
-  InfoPlanModal,
+  infoPlanModal,
   setInfoPlanModal,
   infoPlan,
   setInfoPlan,

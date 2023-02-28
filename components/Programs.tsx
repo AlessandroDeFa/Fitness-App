@@ -140,7 +140,7 @@ export const Programs: React.FC<ProgramsProps> = ({
   plansData,
   fecthPlansData,
 }) => {
-  const [InfoPlanModal, setInfoPlanModal] = useState<boolean>(false);
+  const [infoPlanModal, setInfoPlanModal] = useState<boolean>(false);
   const [infoPlan, setInfoPlan] = useState<ExampleData>({
     id: "",
     name: "",
@@ -166,7 +166,7 @@ export const Programs: React.FC<ProgramsProps> = ({
               data={item}
               infoPlan={infoPlan}
               setInfoPlan={setInfoPlan}
-              InfoPlanModal={InfoPlanModal}
+              infoPlanModal={infoPlanModal}
               setInfoPlanModal={setInfoPlanModal}
             />
           )}
@@ -186,7 +186,7 @@ export const Programs: React.FC<ProgramsProps> = ({
               data={item}
               infoPlan={infoPlan}
               setInfoPlan={setInfoPlan}
-              InfoPlanModal={InfoPlanModal}
+              infoPlanModal={infoPlanModal}
               setInfoPlanModal={setInfoPlanModal}
             />
           )}
@@ -195,7 +195,7 @@ export const Programs: React.FC<ProgramsProps> = ({
       <InfoPlan
         infoPlan={infoPlan}
         setInfoPlan={setInfoPlan}
-        InfoPlanModal={InfoPlanModal}
+        infoPlanModal={infoPlanModal}
         setInfoPlanModal={setInfoPlanModal}
         fecthPlansData={fecthPlansData}
       />

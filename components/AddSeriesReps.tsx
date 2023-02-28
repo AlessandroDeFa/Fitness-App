@@ -40,6 +40,7 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                     size={22}
                     color="#3B82F7"
                     onPress={() => setSeriesRepsModal(false)}
+                    style={styles.closeBtn}
                   />
                 </View>
                 <View style={styles.flex2}>
@@ -121,6 +122,9 @@ const styles = StyleSheet.create({
   flex2: {
     flex: 2,
   },
+  closeBtn: {
+    alignSelf: "flex-start",
+  },
   fontTextHeader: {
     color: "white",
     fontWeight: "500",
@@ -136,8 +140,6 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#1C1C1E",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 9,
