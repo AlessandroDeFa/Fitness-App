@@ -30,6 +30,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
   setUpdatePlanModal,
   infoPlan,
 }) => {
+  const [buttonScale] = useState(new Animated.Value(1));
   const [newName, setNewName] = useState<string>("");
   const [newNote, setNewNote] = useState<string>("");
   const [newExercises, setNewExercises] = useState<ExerciseData[]>([]);
@@ -37,12 +38,37 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
   useEffect(() => {
     setNewName(infoPlan.name);
     setNewNote(infoPlan.note);
-    setNewExercises(infoPlan.exercises);
+    setNewExercises([...infoPlan.exercises]);
   }, [infoPlan.name, infoPlan.note, infoPlan.exercises]);
 
-  const handleUpdatePlan = () => {};
+  const handleCloseModal = () => {
+    setUpdatePlanModal(false);
+    setNewExercises([...infoPlan.exercises]);
+  };
 
-  console.log(newName);
+  const handleUpdatePlan = () => {
+    if (newName === "") {
+      Vibration.vibrate([0, 50, 0, 0]);
+      Animated.sequence([
+        Animated.timing(buttonScale, {
+          toValue: 5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: -5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: 0,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -55,7 +81,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   name="close"
                   size={22}
                   color="#3B82F7"
-                  onPress={() => setUpdatePlanModal(false)}
+                  onPress={handleCloseModal}
                 />
               </View>
               <View style={styles.flex}>
@@ -63,12 +89,12 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
               </View>
               <View style={[styles.flex, styles.containerButton]}>
                 <Animated.View
-                // style={{ transform: [{ translateX: buttonScale }] }}
+                  style={{ transform: [{ translateX: buttonScale }] }}
                 >
                   <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.8}
-                    // onPress={prova}
+                    onPress={handleUpdatePlan}
                   >
                     <Text style={styles.textButton}>Salva</Text>
                   </TouchableOpacity>
@@ -83,7 +109,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   placeholder="Nome scheda"
                   placeholderTextColor="#606669"
                   maxLength={30}
-                  defaultValue={newName}
+                  defaultValue={infoPlan.name}
                   onChangeText={(value) => setNewName(value)}
                 />
                 <TextInput
@@ -92,7 +118,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   placeholder="Note"
                   placeholderTextColor="#606669"
                   maxLength={100}
-                  defaultValue={newNote}
+                  defaultValue={infoPlan.note}
                   onChangeText={(value) => setNewNote(value)}
                 />
                 <TouchableOpacity
@@ -107,8 +133,9 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
               {newExercises.map((item) => (
                 <AddedExercise
                   data={item}
-                  // setExercises={setExercises}
-                  // exercises={exercises}
+                  updatePlanModal={updatePlanModal}
+                  setNewExercises={setNewExercises}
+                  newExercises={newExercises}
                 />
               ))}
               {/* <ListExerciseForm

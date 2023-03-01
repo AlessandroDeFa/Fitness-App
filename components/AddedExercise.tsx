@@ -7,15 +7,25 @@ interface AddedExerciseProps {
   data: ExerciseData;
   exercises: ExerciseData[];
   setExercises: (exercises: ExerciseData[]) => void;
+  updatePlanModal: boolean;
+  newExercises: ExerciseData[];
+  setNewExercises: (newExercises: ExerciseData[]) => void;
 }
 
 export const AddedExercise: React.FC<AddedExerciseProps> = ({
   data,
   setExercises,
   exercises,
+  updatePlanModal,
+  setNewExercises,
+  newExercises,
 }) => {
   const handleRemoveExercise = (id: string) => {
     setExercises(exercises.filter((exercise) => exercise.id !== id));
+  };
+
+  const handleUpdateExercises = (id: string) => {
+    setNewExercises(newExercises.filter((exercise) => exercise.id !== id));
   };
 
   return (
@@ -27,7 +37,11 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
             style={styles.removeExercise}
             name="remove-circle"
             size={24}
-            onPress={() => handleRemoveExercise(data.id)}
+            onPress={
+              updatePlanModal
+                ? () => handleUpdateExercises(data.id)
+                : () => handleRemoveExercise(data.id)
+            }
           />
         </View>
         <View>
