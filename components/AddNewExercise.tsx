@@ -11,6 +11,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 interface AddNewExerciseProps {
+  updatePlanModal: boolean;
   newExerciseModal: boolean;
   setNewExerciseModal: (newExerciseModal: boolean) => void;
   handleSaveNewExercise: () => void;
@@ -18,6 +19,11 @@ interface AddNewExerciseProps {
   setExerciseTarget: (value: string) => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
+  setNewExerciseName: (value: string) => void;
+  setNewExerciseTarget: (value: string) => void;
+  setNewExerciseSeries: (value: string) => void;
+  setNewExerciseReps: (value: string) => void;
+  handleUpdateNewExercise: () => void;
 }
 
 export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
@@ -28,7 +34,29 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
   setExerciseTarget,
   setReps,
   setSeries,
+  updatePlanModal,
+  setNewExerciseName,
+  setNewExerciseTarget,
+  setNewExerciseSeries,
+  setNewExerciseReps,
+  handleUpdateNewExercise,
 }) => {
+  const handleCloseNewExerciseModal = () => {
+    setNewExerciseModal(false);
+    setExerciseName("");
+    setExerciseTarget("");
+    setSeries("");
+    setReps("");
+  };
+
+  const handleCloseUpdateNewExerciseModal = () => {
+    setNewExerciseModal(false);
+    setNewExerciseName("");
+    setNewExerciseTarget("");
+    setNewExerciseSeries("");
+    setNewExerciseReps("");
+  };
+
   return (
     <View>
       <Modal
@@ -45,7 +73,11 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                     name="close"
                     size={22}
                     color="#3B82F7"
-                    onPress={() => setNewExerciseModal(false)}
+                    onPress={
+                      updatePlanModal
+                        ? handleCloseUpdateNewExerciseModal
+                        : handleCloseNewExerciseModal
+                    }
                     style={styles.closeBtn}
                   />
                 </View>
@@ -58,7 +90,11 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                   <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.8}
-                    onPress={handleSaveNewExercise}
+                    onPress={
+                      updatePlanModal
+                        ? handleUpdateNewExercise
+                        : handleSaveNewExercise
+                    }
                   >
                     <Text style={styles.textButton}>Salva</Text>
                   </TouchableOpacity>
@@ -69,7 +105,11 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                   <TextInput
                     placeholder="Aggiungi nome"
                     maxLength={25}
-                    onChangeText={(value) => setExerciseName(value)}
+                    onChangeText={
+                      updatePlanModal
+                        ? (value) => setNewExerciseName(value)
+                        : (value) => setExerciseName(value)
+                    }
                     style={styles.inputNewExercise}
                   />
                 </View>
@@ -80,7 +120,11 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                     </Text>
                     <TextInput
                       maxLength={15}
-                      onChangeText={(value) => setExerciseTarget(value)}
+                      onChangeText={
+                        updatePlanModal
+                          ? (value) => setNewExerciseTarget(value)
+                          : (value) => setExerciseTarget(value)
+                      }
                       style={[styles.inputNewExercise, styles.flex]}
                     />
                   </View>
@@ -96,7 +140,11 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                       <TextInput
                         keyboardType="numeric"
                         maxLength={2}
-                        onChangeText={(value) => setSeries(value)}
+                        onChangeText={
+                          updatePlanModal
+                            ? (value) => setNewExerciseSeries(value)
+                            : (value) => setSeries(value)
+                        }
                         style={styles.inputExercise}
                       />
                     </View>
@@ -109,7 +157,11 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                       <TextInput
                         keyboardType="numeric"
                         maxLength={2}
-                        onChangeText={(value) => setReps(value)}
+                        onChangeText={
+                          updatePlanModal
+                            ? (value) => setNewExerciseReps(value)
+                            : (value) => setReps(value)
+                        }
                         style={styles.inputExercise}
                       />
                     </View>

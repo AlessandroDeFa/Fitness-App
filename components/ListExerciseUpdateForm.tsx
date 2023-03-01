@@ -19,90 +19,96 @@ import { ExerciseData } from "./Programs";
 import { AddNewExercise } from "./AddNewExercise";
 
 interface ListExerciseProps {
-  ExerciseForm: boolean;
-  setExerciseForm: (ExerciseForm: boolean) => void;
-  exercises: ExerciseData[];
-  setExercises: (exercises: ExerciseData[]) => void;
-  exerciseName: string;
-  setExerciseName: (exerciseName: string) => void;
-  exerciseTarget: string;
-  setExerciseTarget: (exerciseTarget: string) => void;
+  updatePlanModal: boolean;
+  updateExercisesForm: boolean;
+  setUpdateExercisesForm: (ExerciseForm: boolean) => void;
+  newExercises: ExerciseData[];
+  setNewExercises: (newExercises: ExerciseData[]) => void;
+  newExerciseName: string;
+  setNewExerciseName: (newExerciseName: string) => void;
+  newExerciseTarget: string;
+  setNewExerciseTarget: (newExerciseTarget: string) => void;
 }
 
-export const ListExerciseForm: React.FC<ListExerciseProps> = ({
-  ExerciseForm,
-  setExerciseForm,
-  exercises,
-  setExercises,
-  setExerciseName,
-  exerciseName,
-  setExerciseTarget,
-  exerciseTarget,
+export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
+  updateExercisesForm,
+  updatePlanModal,
+  setUpdateExercisesForm,
+  newExerciseName,
+  newExerciseTarget,
+  newExercises,
+  setNewExercises,
+  setNewExerciseTarget,
+  setNewExerciseName,
 }) => {
   const { filteredExercises, setFilteredExercises, dataApi } =
     useContext(ContextApp);
   const [seriesRepsModal, setSeriesRepsModal] = useState<boolean>(false);
   const [newExerciseModal, setNewExerciseModal] = useState<boolean>(false);
-  const [series, setSeries] = useState<string>("");
-  const [reps, setReps] = useState<string>("");
+  const [newExerciseSeries, setNewExerciseSeries] = useState<string>("");
+  const [newExerciseReps, setNewExerciseReps] = useState<string>("");
   const uniqueId = uuidv4();
 
-  const handleSaveExercise = () => {
-    if (series === "" || reps === "") {
+  const handleUpdateSaveExercise = () => {
+    if (newExerciseSeries === "" || newExerciseReps === "") {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
       let ObjectExercise = {
         id: uniqueId,
-        nameExercise: exerciseName,
-        series: series,
-        reps: reps,
-        target: exerciseTarget,
+        nameExercise: newExerciseName,
+        series: newExerciseSeries,
+        reps: newExerciseReps,
+        target: newExerciseTarget,
       };
 
-      setExercises([...exercises, ObjectExercise]);
+      setNewExercises([...newExercises, ObjectExercise]);
       setSeriesRepsModal(false);
     }
   };
 
-  const handleSaveNewExercise = () => {
+  const handleUpdateNewExercise = () => {
     if (
-      exerciseName === "" ||
-      exerciseTarget === "" ||
-      series === "" ||
-      reps === ""
+      newExerciseName === "" ||
+      newExerciseTarget === "" ||
+      newExerciseSeries === "" ||
+      newExerciseReps === ""
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
       let ObjectNewExercise = {
         id: uniqueId,
-        nameExercise: exerciseName,
-        series: series,
-        reps: reps,
-        target: exerciseTarget,
+        nameExercise: newExerciseName,
+        series: newExerciseSeries,
+        reps: newExerciseReps,
+        target: newExerciseTarget,
       };
 
-      setExercises([...exercises, ObjectNewExercise]);
+      setNewExercises([...newExercises, ObjectNewExercise]);
       setNewExerciseModal(false);
-      setExerciseName("");
-      setExerciseTarget("");
-      setSeries("");
-      setReps("");
+      setNewExerciseName("");
+      setNewExerciseTarget("");
+      setNewExerciseSeries("");
+      setNewExerciseReps("");
     }
   };
 
-  const handleCloseExerciseForm = () => {
-    setExerciseForm(false);
+  const handleCloseUpdateExerciseForm = () => {
+    setUpdateExercisesForm(false);
     setFilteredExercises(dataApi);
   };
 
   const handleNewExerciseForm = () => {
-    setExerciseForm(false);
+    setUpdateExercisesForm(false);
     setNewExerciseModal(true);
   };
 
   return (
     <View>
-      <Modal visible={ExerciseForm} transparent={true} animationType="slide">
+      <Modal
+        visible={updateExercisesForm}
+        transparent={true}
+        animationType="slide"
+      >
         <View style={styles.container}>
           <View style={styles.modalContainer}>
             <View style={styles.main}>
@@ -114,7 +120,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
                       name="close"
                       size={22}
                       color="#3B82F7"
-                      onPress={handleCloseExerciseForm}
+                      onPress={handleCloseUpdateExerciseForm}
                     />
                   </View>
                   <Text style={styles.fontTitle}>Seleziona esercizio</Text>
@@ -137,11 +143,11 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
                   <Exercise
                     data={item}
                     key={item.id}
-                    ExerciseForm={ExerciseForm}
-                    setExerciseForm={setExerciseForm}
-                    setExerciseName={setExerciseName}
+                    updatePlanModal={updatePlanModal}
+                    setUpdateExercisesForm={setUpdateExercisesForm}
+                    setNewExerciseName={setNewExerciseName}
                     setSeriesRepsModal={setSeriesRepsModal}
-                    setExerciseTarget={setExerciseTarget}
+                    setNewExerciseTarget={setNewExerciseTarget}
                   />
                 )}
               />
@@ -150,21 +156,23 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         </View>
       </Modal>
       <AddSeriesReps
+        updatePlanModal={updatePlanModal}
         setSeriesRepsModal={setSeriesRepsModal}
         seriesRepsModal={seriesRepsModal}
-        exerciseName={exerciseName}
-        handleSaveExercise={handleSaveExercise}
-        setReps={setReps}
-        setSeries={setSeries}
+        newExerciseName={newExerciseName}
+        handleUpdateSaveExercise={handleUpdateSaveExercise}
+        setNewExerciseReps={setNewExerciseReps}
+        setNewExerciseSeries={setNewExerciseSeries}
       />
       <AddNewExercise
+        updatePlanModal={updatePlanModal}
         newExerciseModal={newExerciseModal}
         setNewExerciseModal={setNewExerciseModal}
-        handleSaveNewExercise={handleSaveNewExercise}
-        setExerciseName={setExerciseName}
-        setExerciseTarget={setExerciseTarget}
-        setReps={setReps}
-        setSeries={setSeries}
+        handleUpdateNewExercise={handleUpdateNewExercise}
+        setNewExerciseName={setNewExerciseName}
+        setNewExerciseTarget={setNewExerciseTarget}
+        setNewExerciseSeries={setNewExerciseSeries}
+        setNewExerciseReps={setNewExerciseReps}
       />
     </View>
   );

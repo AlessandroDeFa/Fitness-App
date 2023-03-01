@@ -18,22 +18,30 @@ import { ExerciseData } from "./Programs";
 import { AddedExercise } from "./AddedExercise";
 import { AntDesign } from "@expo/vector-icons";
 import { globalStyles } from "../components/GlobalStyles";
+import { ListExerciseUpdateForm } from "./ListExerciseUpdateForm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface UpdatePlanProps {
   updatePlanModal: boolean;
   setUpdatePlanModal: (updatePlanModal: boolean) => void;
   infoPlan: ExampleData;
+  fecthPlansData: () => void;
 }
 
 export const UpdatePlan: React.FC<UpdatePlanProps> = ({
   updatePlanModal,
   setUpdatePlanModal,
   infoPlan,
+  fecthPlansData,
 }) => {
   const [buttonScale] = useState(new Animated.Value(1));
   const [newName, setNewName] = useState<string>("");
   const [newNote, setNewNote] = useState<string>("");
   const [newExercises, setNewExercises] = useState<ExerciseData[]>([]);
+  const [newExerciseName, setNewExerciseName] = useState<string>("");
+  const [newExerciseTarget, setNewExerciseTarget] = useState<string>("");
+  const [updateExercisesForm, setUpdateExercisesForm] =
+    useState<boolean>(false);
 
   useEffect(() => {
     setNewName(infoPlan.name);
@@ -46,7 +54,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
     setNewExercises([...infoPlan.exercises]);
   };
 
-  const handleUpdatePlan = () => {
+  const handleUpdatePlan = async () => {
     if (newName === "") {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -67,6 +75,25 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
         }),
       ]).start();
     } else {
+      try {
+        const plansDataString = await AsyncStorage.getItem("plansData");
+        const plansData = JSON.parse(plansDataString);
+
+        const planToUpdate = plansData.find(
+          (plan: ExampleData) => plan.id === infoPlan.id
+        );
+        if (planToUpdate) {
+          planToUpdate.name = newName;
+          planToUpdate.note = newNote;
+          planToUpdate.exercises = newExercises;
+
+          await AsyncStorage.setItem("plansData", JSON.stringify(plansData));
+          fecthPlansData();
+          setUpdatePlanModal(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -124,7 +151,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                 <TouchableOpacity
                   style={styles.button}
                   activeOpacity={0.8}
-                  // onPress={() => setExerciseForm(true)}
+                  onPress={() => setUpdateExercisesForm(true)}
                 >
                   <Text style={styles.textButton}>Aggiungi esercizi</Text>
                 </TouchableOpacity>
@@ -138,16 +165,17 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   newExercises={newExercises}
                 />
               ))}
-              {/* <ListExerciseForm
-              ExerciseForm={ExerciseForm}
-              setExerciseForm={setExerciseForm}
-              setExercises={setExercises}
-              exercises={exercises}
-              setExerciseName={setExerciseName}
-              exerciseName={exerciseName}
-              setExerciseTarget={setExerciseTarget}
-              exerciseTarget={exerciseTarget}
-            /> */}
+              <ListExerciseUpdateForm
+                updatePlanModal={updatePlanModal}
+                updateExercisesForm={updateExercisesForm}
+                setUpdateExercisesForm={setUpdateExercisesForm}
+                setNewExercises={setNewExercises}
+                newExercises={newExercises}
+                setNewExerciseName={setNewExerciseName}
+                newExerciseName={newExerciseName}
+                setNewExerciseTarget={setNewExerciseTarget}
+                newExerciseTarget={newExerciseTarget}
+              />
             </ScrollView>
           </View>
         </SafeAreaView>

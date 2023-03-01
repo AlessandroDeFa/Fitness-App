@@ -17,6 +17,11 @@ interface seriesRepsProps {
   handleSaveExercise: () => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
+  newExerciseName: string;
+  setNewExerciseSeries: (value: string) => void;
+  setNewExerciseReps: (value: string) => void;
+  updatePlanModal: boolean;
+  handleUpdateSaveExercise: () => void;
 }
 
 export const AddSeriesReps: React.FC<seriesRepsProps> = ({
@@ -26,6 +31,11 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
   handleSaveExercise,
   setReps,
   setSeries,
+  updatePlanModal,
+  newExerciseName,
+  setNewExerciseSeries,
+  setNewExerciseReps,
+  handleUpdateSaveExercise,
 }) => {
   return (
     <View>
@@ -50,14 +60,20 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                   <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.8}
-                    onPress={handleSaveExercise}
+                    onPress={
+                      updatePlanModal
+                        ? handleUpdateSaveExercise
+                        : handleSaveExercise
+                    }
                   >
                     <Text style={styles.textButton}>Salva</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.containerForm}>
-                <Text style={styles.fontNameExercise}>{exerciseName}</Text>
+                <Text style={styles.fontNameExercise}>
+                  {exerciseName || newExerciseName}
+                </Text>
                 <View style={styles.containerOptions}>
                   <View>
                     <View>
@@ -67,7 +83,11 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                       <TextInput
                         keyboardType="numeric"
                         maxLength={2}
-                        onChangeText={(value) => setSeries(value)}
+                        onChangeText={
+                          updatePlanModal
+                            ? (value) => setNewExerciseSeries(value)
+                            : (value) => setSeries(value)
+                        }
                         style={styles.inputExercise}
                       />
                     </View>
@@ -80,7 +100,11 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                       <TextInput
                         keyboardType="numeric"
                         maxLength={2}
-                        onChangeText={(value) => setReps(value)}
+                        onChangeText={
+                          updatePlanModal
+                            ? (value) => setNewExerciseReps(value)
+                            : (value) => setReps(value)
+                        }
                         style={styles.inputExercise}
                       />
                     </View>

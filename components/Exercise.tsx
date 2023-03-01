@@ -36,11 +36,13 @@ interface ExerciseProps {
   setInfoExerciseData: (infoExerciseData: ExerciseInfoData) => void;
   ExerciseForm: boolean;
   setExerciseForm: (ExerciseForm: boolean) => void;
-  exercises: ExerciseData[];
-  setExercises: (exercises: ExerciseData[]) => void;
   setSeriesRepsModal: (seriesRepsModal: boolean) => void;
   setExerciseName: (value: string) => void;
   setExerciseTarget: (value: string) => void;
+  updatePlanModal: boolean;
+  setNewExerciseName: (value: string) => void;
+  setNewExerciseTarget: (value: string) => void;
+  setUpdateExercisesForm: (value: boolean) => void;
 }
 
 export const Exercise: React.FC<ExerciseProps> = ({
@@ -51,11 +53,13 @@ export const Exercise: React.FC<ExerciseProps> = ({
   setInfoExerciseData,
   ExerciseForm,
   setExerciseForm,
-  exercises,
-  setExercises,
   setSeriesRepsModal,
   setExerciseName,
   setExerciseTarget,
+  updatePlanModal,
+  setNewExerciseName,
+  setNewExerciseTarget,
+  setUpdateExercisesForm,
 }) => {
   const { setFilteredExercises, dataApi } = useContext(ContextApp);
 
@@ -72,6 +76,14 @@ export const Exercise: React.FC<ExerciseProps> = ({
     setFilteredExercises(dataApi);
   };
 
+  const handlePressUpadateExerciseForm = () => {
+    setNewExerciseName(data.name);
+    setNewExerciseTarget(data.target);
+    setSeriesRepsModal(true);
+    setUpdateExercisesForm(false);
+    setFilteredExercises(dataApi);
+  };
+
   data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
   data.target = data.target.charAt(0).toUpperCase() + data.target.slice(1);
 
@@ -80,7 +92,13 @@ export const Exercise: React.FC<ExerciseProps> = ({
       style={styles.container}
       activeOpacity={1}
       underlayColor="#323135"
-      onPress={ExerciseForm ? handlePressExerciseForm : HandleClickExercise}
+      onPress={
+        updatePlanModal
+          ? handlePressUpadateExerciseForm
+          : ExerciseForm
+          ? handlePressExerciseForm
+          : HandleClickExercise
+      }
     >
       <View style={styles.containerInfoExercise}>
         <View>

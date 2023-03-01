@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
   StyleSheet,
@@ -56,14 +56,6 @@ export const InfoPlan: React.FC<infoplanProps> = ({
       console.error(error);
     }
   };
-  // const prova = async () => {
-  //   const plansDataString = await AsyncStorage.getItem("plansData");
-  //   const plansData = JSON.parse(plansDataString);
-
-  //   const piano = plansData.find((piano) => piano.id === infoPlan.id);
-  // };
-
-  // prova();
 
   return (
     <View>
@@ -149,6 +141,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
         updatePlanModal={updatePlanModal}
         setUpdatePlanModal={setUpdatePlanModal}
         infoPlan={infoPlan}
+        fecthPlansData={fecthPlansData}
       />
     </View>
   );
