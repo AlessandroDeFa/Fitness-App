@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -33,6 +33,16 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
   const [newName, setNewName] = useState<string>("");
   const [newNote, setNewNote] = useState<string>("");
   const [newExercises, setNewExercises] = useState<ExerciseData[]>([]);
+
+  useEffect(() => {
+    setNewName(infoPlan.name);
+    setNewNote(infoPlan.note);
+    setNewExercises(infoPlan.exercises);
+  }, [infoPlan.name, infoPlan.note, infoPlan.exercises]);
+
+  const handleUpdatePlan = () => {};
+
+  console.log(newName);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -73,7 +83,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   placeholder="Nome scheda"
                   placeholderTextColor="#606669"
                   maxLength={30}
-                  defaultValue={infoPlan.name}
+                  defaultValue={newName}
                   onChangeText={(value) => setNewName(value)}
                 />
                 <TextInput
@@ -82,7 +92,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   placeholder="Note"
                   placeholderTextColor="#606669"
                   maxLength={100}
-                  defaultValue={infoPlan.note}
+                  defaultValue={newNote}
                   onChangeText={(value) => setNewNote(value)}
                 />
                 <TouchableOpacity
@@ -94,7 +104,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                 </TouchableOpacity>
               </View>
               <Text></Text>
-              {infoPlan.exercises.map((item) => (
+              {newExercises.map((item) => (
                 <AddedExercise
                   data={item}
                   // setExercises={setExercises}

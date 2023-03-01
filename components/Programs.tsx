@@ -128,7 +128,7 @@ export interface ExampleData {
   name: string;
   note: string;
   type: string;
-  exercises?: ExerciseData[];
+  exercises: ExerciseData[];
 }
 
 interface ProgramsProps {

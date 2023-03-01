@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   StyleSheet,
@@ -56,14 +56,14 @@ export const InfoPlan: React.FC<infoplanProps> = ({
       console.error(error);
     }
   };
-  const prova = async () => {
-    const plansDataString = await AsyncStorage.getItem("plansData");
-    const plansData = JSON.parse(plansDataString);
+  // const prova = async () => {
+  //   const plansDataString = await AsyncStorage.getItem("plansData");
+  //   const plansData = JSON.parse(plansDataString);
 
-    const piano = plansData.find((piano) => piano.id === infoPlan.id);
-  };
+  //   const piano = plansData.find((piano) => piano.id === infoPlan.id);
+  // };
 
-  prova();
+  // prova();
 
   return (
     <View>
