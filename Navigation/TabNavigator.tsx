@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../screens/Home";
 import { Exercises } from "../screens/Exercises";
 import { Premium } from "../screens/Premium";
-import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 
 export const ContextApp = createContext<any>(undefined);
@@ -65,7 +65,7 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => {
             let iconName;
-            if (route.name === "Inizia allenamento") {
+            if (route.name === "Aggiungi programma") {
               iconName = "plus";
               return (
                 <FontAwesome
@@ -75,12 +75,13 @@ function BottomTabNavigator() {
                 />
               );
             } else if (route.name === "Esercizi") {
-              iconName = "barbell-sharp";
+              iconName = "dumbbell";
               return (
-                <Ionicons
+                <MaterialCommunityIcons
                   name={iconName}
                   size={22}
                   color={focused ? "#3B82F7" : color}
+                  style={{ transform: [{ scaleX: -1 }] }}
                 />
               );
             } else if (route.name === "Aggiorna") {
@@ -103,7 +104,7 @@ function BottomTabNavigator() {
         initialRouteName="Inizia allenamento"
       >
         <Tab.Screen name="Esercizi" component={Exercises} />
-        <Tab.Screen name="Inizia allenamento" component={Home} />
+        <Tab.Screen name="Aggiungi programma" component={Home} />
         <Tab.Screen name="Aggiorna" component={Premium} />
       </Tab.Navigator>
     </ContextApp.Provider>
