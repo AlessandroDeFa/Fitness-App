@@ -114,7 +114,7 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                   />
                 </View>
                 <View style={styles.spacingInputNewExercise}>
-                  <View style={styles.containerInputTarger}>
+                  <View style={styles.containerInputTarget}>
                     <Text style={[styles.flex, styles.textTarget]}>
                       Parte del corpo
                     </Text>
@@ -224,7 +224,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 9,
   },
-
   containerForm: {
     flex: 1,
     flexDirection: "row",
@@ -267,7 +266,7 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === "ios" ? 5 : 0,
     color: "white",
   },
-  containerInputTarger: {
+  containerInputTarget: {
     flexDirection: "row",
     alignItems: "center",
   },

@@ -59,7 +59,7 @@ export const Premium = () => {
             activeOpacity={0.9}
             onPress={() => setModalPrices(true)}
           >
-            <Text style={styles.buttonText}>See prices</Text>
+            <Text style={styles.buttonText}>Vedi prezzi</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
