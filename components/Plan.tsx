@@ -1,6 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  Modal,
+} from "react-native";
 import { ExampleData } from "./Programs";
+import { Ionicons } from "@expo/vector-icons";
 
 interface planProps {
   infoPlanModal: boolean;
@@ -33,15 +40,13 @@ export const Plan: React.FC<planProps> = ({
       onPress={handleClickPlan}
     >
       <View style={styles.containerPlan}>
-        <View>
-          <Text
-            ellipsizeMode="tail"
-            numberOfLines={2}
-            style={data.name.length < 15 ? styles.text : styles.namePlanLong}
-          >
-            {data.name}
-          </Text>
-        </View>
+        <Text
+          ellipsizeMode="tail"
+          numberOfLines={2}
+          style={data.name.length < 15 ? styles.text : styles.namePlanLong}
+        >
+          {data.name}
+        </Text>
 
         <View style={styles.containerExercises}>
           {data.exercises.length > 0 ? (
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
   containerPlan: {
     flex: 1,
     padding: 10,
+    position: "relative",
   },
   text: {
     color: "white",
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
   namePlanLong: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 13,
+    fontSize: 14,
     textAlign: "center",
   },
   containerExercises: {

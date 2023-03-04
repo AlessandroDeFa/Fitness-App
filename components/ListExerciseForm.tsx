@@ -12,6 +12,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { SearchInput } from "./SearchInput";
 import { Exercise } from "./Exercise";
+import { InfoExercise } from "./InfoExercise";
 import { useContext } from "react";
 import { ContextApp } from "../Navigation/TabNavigator";
 import { AddSeriesReps } from "./AddSeriesReps";

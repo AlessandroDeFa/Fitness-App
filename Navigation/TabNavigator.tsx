@@ -101,7 +101,7 @@ function BottomTabNavigator() {
             borderTopColor: "#38383A",
           },
         })}
-        initialRouteName="Inizia allenamento"
+        initialRouteName="Aggiungi programma"
       >
         <Tab.Screen name="Esercizi" component={Exercises} />
         <Tab.Screen name="Aggiungi programma" component={Home} />

@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { ExerciseData } from "./Programs";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
 import { ContextApp } from "../Navigation/TabNavigator";
 
@@ -101,12 +102,15 @@ export const Exercise: React.FC<ExerciseProps> = ({
       }
     >
       <View style={styles.containerInfoExercise}>
-        <View>
-          <Text style={styles.textTitle}>{data.name}</Text>
+        <View style={styles.flex}>
+          <View>
+            <Text style={styles.textTitle}>{data.name}</Text>
+          </View>
+          <View>
+            <Text style={styles.textMuscle}>{data.target}</Text>
+          </View>
         </View>
-        <View>
-          <Text style={styles.textMuscle}>{data.target}</Text>
-        </View>
+        <MaterialIcons name="keyboard-arrow-right" size={24} color="#38383A" />
       </View>
     </TouchableHighlight>
   );
@@ -120,6 +124,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   containerInfoExercise: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  flex: {
     flex: 1,
   },
   textTitle: {
