@@ -21,6 +21,7 @@ import { globalStyles } from "../components/GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 import { ListExerciseForm } from "./ListExerciseForm";
 import { ExerciseData } from "./Programs";
+import { UpdateExercise } from "./UpdateExercise";
 
 interface AddPlanProps {
   modalOpen: boolean;
@@ -40,6 +41,8 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   const [exerciseName, setExerciseName] = useState<string>("");
   const [exerciseTarget, setExerciseTarget] = useState<string>("");
   const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
+  const [updateExerciseModal, setUpdateExerciseModal] =
+    useState<boolean>(false);
 
   const handleClosemodal = () => {
     setNamePlan("");
@@ -156,6 +159,7 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                   data={item}
                   setExercises={setExercises}
                   exercises={exercises}
+                  setUpdateExerciseModal={setUpdateExerciseModal}
                 />
               ))}
               <ListExerciseForm
@@ -171,6 +175,10 @@ export const AddPlan: React.FC<AddPlanProps> = ({
             </ScrollView>
           </View>
         </SafeAreaView>
+        <UpdateExercise
+          setUpdateExerciseModal={setUpdateExerciseModal}
+          updateExerciseModal={updateExerciseModal}
+        />
       </Modal>
     </TouchableWithoutFeedback>
   );

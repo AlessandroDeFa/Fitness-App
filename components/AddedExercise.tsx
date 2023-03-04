@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
 import { ExerciseData } from "./Programs";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface AddedExerciseProps {
   data: ExerciseData;
@@ -10,6 +11,8 @@ interface AddedExerciseProps {
   updatePlanModal: boolean;
   newExercises: ExerciseData[];
   setNewExercises: (newExercises: ExerciseData[]) => void;
+  setUpdateExerciseModal: (value: boolean) => void;
+  setUpdateExerciseModalUpdate: (value: boolean) => void;
 }
 
 export const AddedExercise: React.FC<AddedExerciseProps> = ({
@@ -19,6 +22,8 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
   updatePlanModal,
   setNewExercises,
   newExercises,
+  setUpdateExerciseModal,
+  setUpdateExerciseModalUpdate,
 }) => {
   const handleRemoveExercise = (id: string) => {
     setExercises(exercises.filter((exercise) => exercise.id !== id));
@@ -33,16 +38,28 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
       <View>
         <View style={styles.containerInfoExercise}>
           <Text style={styles.fontTitle}>{data.nameExercise}</Text>
-          <Ionicons
-            style={styles.removeExercise}
-            name="remove-circle"
-            size={24}
-            onPress={
-              updatePlanModal
-                ? () => handleUpdateExercises(data.id)
-                : () => handleRemoveExercise(data.id)
-            }
-          />
+          <View style={styles.containerIcons}>
+            <MaterialCommunityIcons
+              name="square-edit-outline"
+              size={23}
+              color="#3B82F7"
+              onPress={
+                updatePlanModal
+                  ? () => setUpdateExerciseModalUpdate(true)
+                  : () => setUpdateExerciseModal(true)
+              }
+            />
+            <Ionicons
+              style={styles.removeExercise}
+              name="remove-circle"
+              size={23}
+              onPress={
+                updatePlanModal
+                  ? () => handleUpdateExercises(data.id)
+                  : () => handleRemoveExercise(data.id)
+              }
+            />
+          </View>
         </View>
         <View>
           <Text style={styles.fontTarget}>{data.target}</Text>
@@ -86,8 +103,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  containerIcons: {
+    flexDirection: "row",
+  },
   removeExercise: {
     color: "#E93323",
+    marginLeft: 20,
   },
   fontTitle: {
     color: "#3B82F7",

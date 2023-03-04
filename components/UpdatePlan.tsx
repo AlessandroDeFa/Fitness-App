@@ -19,6 +19,7 @@ import { AddedExercise } from "./AddedExercise";
 import { AntDesign } from "@expo/vector-icons";
 import { globalStyles } from "../components/GlobalStyles";
 import { ListExerciseUpdateForm } from "./ListExerciseUpdateForm";
+import { UpdateExercise } from "./UpdateExercise";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface UpdatePlanProps {
@@ -41,6 +42,8 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
   const [newExerciseName, setNewExerciseName] = useState<string>("");
   const [newExerciseTarget, setNewExerciseTarget] = useState<string>("");
   const [updateExercisesForm, setUpdateExercisesForm] =
+    useState<boolean>(false);
+  const [updateExerciseModalUpdate, setUpdateExerciseModalUpdate] =
     useState<boolean>(false);
 
   useEffect(() => {
@@ -163,6 +166,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   updatePlanModal={updatePlanModal}
                   setNewExercises={setNewExercises}
                   newExercises={newExercises}
+                  setUpdateExerciseModalUpdate={setUpdateExerciseModalUpdate}
                 />
               ))}
               <ListExerciseUpdateForm
@@ -179,6 +183,11 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
             </ScrollView>
           </View>
         </SafeAreaView>
+        <UpdateExercise
+          updatePlanModal={updatePlanModal}
+          setUpdateExerciseModalUpdate={setUpdateExerciseModalUpdate}
+          updateExerciseModalUpdate={updateExerciseModalUpdate}
+        />
       </Modal>
     </TouchableWithoutFeedback>
   );
