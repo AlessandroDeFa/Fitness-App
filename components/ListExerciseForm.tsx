@@ -28,6 +28,8 @@ interface ListExerciseProps {
   setExerciseName: (exerciseName: string) => void;
   exerciseTarget: string;
   setExerciseTarget: (exerciseTarget: string) => void;
+  exerciseNote: string;
+  setExerciseNote: (exerciseNote: string) => void;
 }
 
 export const ListExerciseForm: React.FC<ListExerciseProps> = ({
@@ -39,6 +41,8 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   exerciseName,
   setExerciseTarget,
   exerciseTarget,
+  setExerciseNote,
+  exerciseNote,
 }) => {
   const { filteredExercises, setFilteredExercises, dataApi } =
     useContext(ContextApp);
@@ -58,6 +62,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         series: series,
         reps: reps,
         target: exerciseTarget,
+        note: exerciseNote,
       };
 
       setExercises([...exercises, ObjectExercise]);
@@ -80,6 +85,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         series: series,
         reps: reps,
         target: exerciseTarget,
+        note: exerciseNote,
       };
 
       setExercises([...exercises, ObjectNewExercise]);
@@ -155,6 +161,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         seriesRepsModal={seriesRepsModal}
         exerciseName={exerciseName}
         handleSaveExercise={handleSaveExercise}
+        setExerciseNote={setExerciseNote}
         setReps={setReps}
         setSeries={setSeries}
       />
@@ -164,6 +171,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         handleSaveNewExercise={handleSaveNewExercise}
         setExerciseName={setExerciseName}
         setExerciseTarget={setExerciseTarget}
+        setExerciseNote={setExerciseNote}
         setReps={setReps}
         setSeries={setSeries}
       />

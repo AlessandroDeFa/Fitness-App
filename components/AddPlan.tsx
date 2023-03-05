@@ -40,7 +40,11 @@ export const AddPlan: React.FC<AddPlanProps> = ({
   const [exercises, setExercises] = useState<ExerciseData[]>([]);
   const [exerciseName, setExerciseName] = useState<string>("");
   const [exerciseTarget, setExerciseTarget] = useState<string>("");
+  const [exerciseNote, setExerciseNote] = useState<string>("");
   const [ExerciseForm, setExerciseForm] = useState<boolean>(false);
+
+  //Update exercise values
+  const [exerciseToUpdate, setExerciseToUpdate] = useState<ExerciseData>();
   const [updateExerciseModal, setUpdateExerciseModal] =
     useState<boolean>(false);
 
@@ -157,9 +161,11 @@ export const AddPlan: React.FC<AddPlanProps> = ({
               {exercises.map((item) => (
                 <AddedExercise
                   data={item}
+                  key={item.id}
                   setExercises={setExercises}
                   exercises={exercises}
                   setUpdateExerciseModal={setUpdateExerciseModal}
+                  setExerciseToUpdate={setExerciseToUpdate}
                 />
               ))}
               <ListExerciseForm
@@ -171,6 +177,8 @@ export const AddPlan: React.FC<AddPlanProps> = ({
                 exerciseName={exerciseName}
                 setExerciseTarget={setExerciseTarget}
                 exerciseTarget={exerciseTarget}
+                setExerciseNote={setExerciseNote}
+                exerciseNote={exerciseNote}
               />
             </ScrollView>
           </View>
@@ -178,6 +186,9 @@ export const AddPlan: React.FC<AddPlanProps> = ({
         <UpdateExercise
           setUpdateExerciseModal={setUpdateExerciseModal}
           updateExerciseModal={updateExerciseModal}
+          exerciseToUpdate={exerciseToUpdate}
+          setExercises={setExercises}
+          exercises={exercises}
         />
       </Modal>
     </TouchableWithoutFeedback>

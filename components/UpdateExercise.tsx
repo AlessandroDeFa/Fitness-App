@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Modal,
-  Platform,
   SafeAreaView,
   TouchableOpacity,
+  TextInput,
   Animated,
+  Vibration,
 } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { ExerciseData } from "./Programs";
 
 interface UpdateExerciseProps {
   updateExerciseModal: boolean;
@@ -19,6 +20,9 @@ interface UpdateExerciseProps {
   updateExerciseModalUpdate: boolean;
   setUpdateExerciseModalUpdate: (updateExerciseModal: boolean) => void;
   updatePlanModal: boolean;
+  exerciseToUpdate: ExerciseData;
+  exercises: ExerciseData[];
+  setExercises: (exercises: ExerciseData[]) => void;
 }
 
 export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
@@ -27,66 +31,176 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
   updatePlanModal,
   updateExerciseModalUpdate,
   setUpdateExerciseModalUpdate,
+  exerciseToUpdate,
+  setExercises,
+  exercises,
 }) => {
+  useEffect(() => {
+    setUpdateNameExercise(exerciseToUpdate?.nameExercise);
+    setUpdateTargetExercise(exerciseToUpdate?.target);
+    setUpdateNoteExercise(exerciseToUpdate?.note);
+    setUpdateSeriesExercise(exerciseToUpdate?.series);
+    setUpdateRepsExercise(exerciseToUpdate?.reps);
+  }, [
+    exerciseToUpdate?.nameExercise,
+    exerciseToUpdate?.target,
+    exerciseToUpdate?.note,
+    exerciseToUpdate?.series,
+    exerciseToUpdate?.reps,
+  ]);
+
+  const [buttonScale] = useState(new Animated.Value(1));
+  const [updateNameExercise, setUpdateNameExercise] = useState<string>("");
+  const [updateTargetExercise, setUpdateTargetExercise] = useState<string>("");
+  const [updateNoteExercise, setUpdateNoteExercise] = useState<string>("");
+  const [updateSeriesExercise, setUpdateSeriesExercise] = useState<string>("");
+  const [updateRepsExercise, setUpdateRepsExercise] = useState<string>("");
+  const [updateWeightExercise, setUpdateWeightExercise] = useState<string>("");
+
+  const handleSubmitUpdateExercise = (id: string) => {
+    if (
+      updateNameExercise === "" ||
+      updateTargetExercise === "" ||
+      updateSeriesExercise === "" ||
+      updateRepsExercise === ""
+    ) {
+      Vibration.vibrate([0, 50, 0, 0]);
+      Animated.sequence([
+        Animated.timing(buttonScale, {
+          toValue: 5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: -5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: 0,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      try {
+        const exerciseToChange = exercises.find(
+          (exercise) => exercise.id === id
+        );
+        if (exerciseToChange) {
+          exerciseToChange.nameExercise = updateNameExercise;
+          exerciseToChange.target = updateTargetExercise;
+          exerciseToChange.note = updateNoteExercise;
+          exerciseToChange.series = updateSeriesExercise;
+          exerciseToChange.reps = updateRepsExercise;
+        }
+        setUpdateExerciseModal(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <View>
       <Modal
         visible={
           updatePlanModal ? updateExerciseModalUpdate : updateExerciseModal
         }
-        transparent={true}
+        // transparent={true}
         animationType="slide"
       >
-        <View style={styles.modalContainer}>
-          <SafeAreaView style={globalStyles.container}>
-            <View style={globalStyles.main}>
-              <View style={styles.containerHeader}>
-                <TouchableOpacity
-                  style={[styles.flex, styles.closeModal]}
-                  activeOpacity={0.8}
-                  onPress={
-                    updatePlanModal
-                      ? () => setUpdateExerciseModalUpdate(false)
-                      : () => setUpdateExerciseModal(false)
-                  }
+        <SafeAreaView style={globalStyles.container}>
+          <View style={globalStyles.main}>
+            <View style={styles.containerHeader}>
+              <TouchableOpacity
+                style={[styles.flex, styles.closeModal]}
+                activeOpacity={0.8}
+                onPress={
+                  updatePlanModal
+                    ? () => setUpdateExerciseModalUpdate(false)
+                    : () => setUpdateExerciseModal(false)
+                }
+              >
+                <MaterialIcons
+                  name="keyboard-arrow-down"
+                  size={24}
+                  color="#3B82F7"
+                />
+                <Text style={styles.fontCloseModal}>Annulla</Text>
+              </TouchableOpacity>
+              <View style={styles.flex2}>
+                <Text style={styles.fontTextHeader}>Modifica esercizio</Text>
+              </View>
+              <View style={[styles.flex, styles.containerButton]}>
+                <Animated.View
+                  style={{ transform: [{ translateX: buttonScale }] }}
                 >
-                  <MaterialIcons
-                    name="keyboard-arrow-down"
-                    size={24}
-                    color="#3B82F7"
-                  />
-                  <Text style={styles.fontCloseModal}>Annulla</Text>
-                </TouchableOpacity>
-                <View style={styles.flex2}>
-                  <Text style={styles.fontTextHeader}>Modifica esercizio</Text>
-                </View>
-                <View style={[styles.flex, styles.containerButton]}>
-                  <Animated.View
-                  // style={{ transform: [{ translateX: buttonScale }] }}
+                  <TouchableOpacity
+                    style={styles.button}
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      handleSubmitUpdateExercise(exerciseToUpdate.id)
+                    }
                   >
-                    <TouchableOpacity
-                      style={styles.button}
-                      activeOpacity={0.8}
-                      // onPress={handleSubmit}
-                    >
-                      <Text style={styles.textButton}>Salva</Text>
-                    </TouchableOpacity>
-                  </Animated.View>
-                </View>
+                    <Text style={styles.textButton}>Salva</Text>
+                  </TouchableOpacity>
+                </Animated.View>
               </View>
             </View>
-          </SafeAreaView>
-        </View>
+            <View style={styles.containerFirstInputs}>
+              <TextInput
+                style={styles.updateInputs}
+                placeholder="Nome eserizio"
+                defaultValue={exerciseToUpdate?.nameExercise}
+                onChangeText={(value) => setUpdateNameExercise(value)}
+              />
+              <TextInput
+                style={styles.updateInputs}
+                placeholder="Target"
+                defaultValue={exerciseToUpdate?.target}
+                onChangeText={(value) => setUpdateTargetExercise(value)}
+              />
+              <TextInput
+                style={styles.inputsNote}
+                placeholder="Note"
+                defaultValue={exerciseToUpdate?.note}
+                onChangeText={(value) => setUpdateNoteExercise(value)}
+              />
+            </View>
+            <View style={styles.spacingInputs}>
+              <Text style={styles.titleValues}>VALORI</Text>
+              <View style={styles.containerSecondInputs}>
+                <TextInput
+                  style={styles.updateInputs}
+                  placeholder="Serie"
+                  keyboardType="numeric"
+                  defaultValue={exerciseToUpdate?.series}
+                  onChangeText={(value) => setUpdateSeriesExercise(value)}
+                />
+                <TextInput
+                  style={styles.updateInputs}
+                  placeholder="Ripetizioni"
+                  keyboardType="numeric"
+                  defaultValue={exerciseToUpdate?.reps}
+                  onChangeText={(value) => setUpdateRepsExercise(value)}
+                />
+                <TextInput
+                  style={styles.inputsWeight}
+                  placeholder="Peso"
+                  keyboardType="numeric"
+                  // defaultValue={exerciseToUpdate.nameExercise}
+                />
+              </View>
+            </View>
+          </View>
+        </SafeAreaView>
       </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "red",
-  },
   containerHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -129,5 +243,48 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 9,
+  },
+  //First Inputs
+  containerFirstInputs: {
+    backgroundColor: "#1C1C1E",
+    borderRadius: 9,
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    marginTop: 40,
+  },
+  containerSecondInputs: {
+    backgroundColor: "#1C1C1E",
+    borderRadius: 9,
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+  },
+  spacingInputs: {
+    marginTop: 30,
+  },
+  updateInputs: {
+    backgroundColor: "#1C1C1E",
+    paddingVertical: 10,
+    borderBottomWidth: 0.5,
+    fontSize: 16,
+    color: "white",
+    borderColor: "#38383A",
+  },
+  inputsNote: {
+    backgroundColor: "#1C1C1E",
+    paddingTop: 10,
+    fontSize: 16,
+    color: "white",
+  },
+  titleValues: {
+    color: "#CACCCD",
+    fontWeight: "500",
+    marginBottom: 10,
+    marginLeft: 15,
+  },
+  inputsWeight: {
+    backgroundColor: "#1C1C1E",
+    paddingTop: 10,
+    fontSize: 16,
+    color: "white",
   },
 });

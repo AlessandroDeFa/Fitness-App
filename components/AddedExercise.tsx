@@ -13,6 +13,7 @@ interface AddedExerciseProps {
   setNewExercises: (newExercises: ExerciseData[]) => void;
   setUpdateExerciseModal: (value: boolean) => void;
   setUpdateExerciseModalUpdate: (value: boolean) => void;
+  setExerciseToUpdate: (value: ExerciseData) => void;
 }
 
 export const AddedExercise: React.FC<AddedExerciseProps> = ({
@@ -24,6 +25,7 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
   newExercises,
   setUpdateExerciseModal,
   setUpdateExerciseModalUpdate,
+  setExerciseToUpdate,
 }) => {
   const handleRemoveExercise = (id: string) => {
     setExercises(exercises.filter((exercise) => exercise.id !== id));
@@ -31,6 +33,11 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
 
   const handleUpdateExercises = (id: string) => {
     setNewExercises(newExercises.filter((exercise) => exercise.id !== id));
+  };
+
+  const handleOpenUpdateModal = (data: ExerciseData) => {
+    setUpdateExerciseModal(true);
+    setExerciseToUpdate(data);
   };
 
   return (
@@ -46,7 +53,7 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
               onPress={
                 updatePlanModal
                   ? () => setUpdateExerciseModalUpdate(true)
-                  : () => setUpdateExerciseModal(true)
+                  : () => handleOpenUpdateModal(data)
               }
             />
             <Ionicons
@@ -64,6 +71,12 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
         <View>
           <Text style={styles.fontTarget}>{data.target}</Text>
         </View>
+        {data.note && (
+          <View style={styles.containerNote}>
+            <Text style={styles.fontNote}>{data.note}</Text>
+          </View>
+        )}
+
         <View style={styles.containerOptions}>
           <View style={styles.option}>
             <View>
@@ -118,6 +131,16 @@ const styles = StyleSheet.create({
   fontTarget: {
     color: "white",
     fontWeight: "500",
+  },
+  containerNote: {
+    marginTop: 12,
+    borderBottomWidth: 0.5,
+    borderColor: "#38383A",
+  },
+  fontNote: {
+    color: "#CACCCD",
+    fontWeight: "500",
+    paddingBottom: 6,
   },
   containerOptions: {
     flexDirection: "row",

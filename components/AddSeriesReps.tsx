@@ -14,6 +14,7 @@ interface seriesRepsProps {
   seriesRepsModal: boolean;
   setSeriesRepsModal: (seriesRepsModal: boolean) => void;
   exerciseName: string;
+  setExerciseNote: (value: string) => void;
   handleSaveExercise: () => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
@@ -36,6 +37,7 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
   setNewExerciseSeries,
   setNewExerciseReps,
   handleUpdateSaveExercise,
+  setExerciseNote,
 }) => {
   return (
     <View>
@@ -69,6 +71,18 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                     <Text style={styles.textButton}>Salva</Text>
                   </TouchableOpacity>
                 </View>
+              </View>
+              <View style={styles.containerInputNote}>
+                <TextInput
+                  placeholder="Note"
+                  maxLength={50}
+                  onChangeText={
+                    updatePlanModal
+                      ? (value) => {}
+                      : (value) => setExerciseNote(value)
+                  }
+                  style={styles.inputNoteExercise}
+                />
               </View>
               <View style={styles.containerForm}>
                 <Text style={styles.fontNameExercise}>
@@ -128,7 +142,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: "#1C1C1E",
     width: "90%",
-    height: 170,
+    height: 200,
     borderRadius: 10,
   },
   main: {
@@ -202,6 +216,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     color: "white",
+  },
+  inputNoteExercise: {
+    backgroundColor: "#323135",
+    borderRadius: 9,
+    paddingHorizontal: 8,
+    paddingVertical: Platform.OS === "ios" ? 5 : 0,
+    color: "white",
+  },
+  containerInputNote: {
+    marginTop: 25,
   },
   spacingInput: {
     marginTop: 7,

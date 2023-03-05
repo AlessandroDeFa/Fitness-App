@@ -163,6 +163,7 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
               {newExercises.map((item) => (
                 <AddedExercise
                   data={item}
+                  key={item.id}
                   updatePlanModal={updatePlanModal}
                   setNewExercises={setNewExercises}
                   newExercises={newExercises}

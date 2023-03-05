@@ -121,6 +121,7 @@ export interface ExerciseData {
   series: string;
   reps: string;
   target: string;
+  note: string;
 }
 
 export interface ExampleData {

@@ -17,6 +17,7 @@ interface AddNewExerciseProps {
   handleSaveNewExercise: () => void;
   setExerciseName: (value: string) => void;
   setExerciseTarget: (value: string) => void;
+  setExerciseNote: (value: string) => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
   setNewExerciseName: (value: string) => void;
@@ -32,6 +33,7 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
   handleSaveNewExercise,
   setExerciseName,
   setExerciseTarget,
+  setExerciseNote,
   setReps,
   setSeries,
   updatePlanModal,
@@ -113,7 +115,20 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                     style={styles.inputNewExercise}
                   />
                 </View>
+
                 <View style={styles.spacingInputNewExercise}>
+                  <View>
+                    <TextInput
+                      placeholder="Note"
+                      maxLength={50}
+                      onChangeText={
+                        updatePlanModal
+                          ? (value) => {}
+                          : (value) => setExerciseNote(value)
+                      }
+                      style={styles.inputNewExercise}
+                    />
+                  </View>
                   <View style={styles.containerInputTarget}>
                     <Text style={[styles.flex, styles.textTarget]}>
                       Parte del corpo
@@ -185,7 +200,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: "#1C1C1E",
     width: "90%",
-    height: 270,
+    height: 310,
     borderRadius: 10,
   },
   main: {
@@ -269,6 +284,7 @@ const styles = StyleSheet.create({
   containerInputTarget: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 25,
   },
   spacingInputNewExercise: {
     marginTop: 25,
