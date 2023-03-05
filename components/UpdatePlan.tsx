@@ -40,9 +40,14 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
   const [newNote, setNewNote] = useState<string>("");
   const [newExercises, setNewExercises] = useState<ExerciseData[]>([]);
   const [newExerciseName, setNewExerciseName] = useState<string>("");
+  const [newExerciseNote, setNewExerciseNote] = useState<string>("");
   const [newExerciseTarget, setNewExerciseTarget] = useState<string>("");
   const [updateExercisesForm, setUpdateExercisesForm] =
     useState<boolean>(false);
+
+  //Update exercise values
+  const [exerciseToUpdateModalUpdate, setExerciseToUpdateModalUpdate] =
+    useState<ExerciseData>();
   const [updateExerciseModalUpdate, setUpdateExerciseModalUpdate] =
     useState<boolean>(false);
 
@@ -168,6 +173,9 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   setNewExercises={setNewExercises}
                   newExercises={newExercises}
                   setUpdateExerciseModalUpdate={setUpdateExerciseModalUpdate}
+                  setExerciseToUpdateModalUpdate={
+                    setExerciseToUpdateModalUpdate
+                  }
                 />
               ))}
               <ListExerciseUpdateForm
@@ -180,14 +188,21 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                 newExerciseName={newExerciseName}
                 setNewExerciseTarget={setNewExerciseTarget}
                 newExerciseTarget={newExerciseTarget}
+                setNewExerciseNote={setNewExerciseNote}
+                newExerciseNote={newExerciseNote}
               />
             </ScrollView>
           </View>
         </SafeAreaView>
         <UpdateExercise
+          infoPlan={infoPlan}
           updatePlanModal={updatePlanModal}
           setUpdateExerciseModalUpdate={setUpdateExerciseModalUpdate}
           updateExerciseModalUpdate={updateExerciseModalUpdate}
+          exerciseToUpdateModalUpdate={exerciseToUpdateModalUpdate}
+          fecthPlansData={fecthPlansData}
+          setNewExercises={setNewExercises}
+          newExercises={newExercises}
         />
       </Modal>
     </TouchableWithoutFeedback>

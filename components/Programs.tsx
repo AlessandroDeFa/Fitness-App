@@ -120,6 +120,7 @@ export interface ExerciseData {
   nameExercise: string;
   series: string;
   reps: string;
+  weight: string;
   target: string;
   note: string;
 }

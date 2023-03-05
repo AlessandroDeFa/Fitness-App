@@ -50,6 +50,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   const [newExerciseModal, setNewExerciseModal] = useState<boolean>(false);
   const [series, setSeries] = useState<string>("");
   const [reps, setReps] = useState<string>("");
+  const [weight, setWeight] = useState<string>("");
   const uniqueId = uuidv4();
 
   const handleSaveExercise = () => {
@@ -61,6 +62,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         nameExercise: exerciseName,
         series: series,
         reps: reps,
+        weight: weight,
         target: exerciseTarget,
         note: exerciseNote,
       };
@@ -84,6 +86,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         nameExercise: exerciseName,
         series: series,
         reps: reps,
+        weight: weight,
         target: exerciseTarget,
         note: exerciseNote,
       };
@@ -92,8 +95,10 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
       setNewExerciseModal(false);
       setExerciseName("");
       setExerciseTarget("");
+      setExerciseNote("");
       setSeries("");
       setReps("");
+      setWeight("");
     }
   };
 
@@ -164,6 +169,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         setExerciseNote={setExerciseNote}
         setReps={setReps}
         setSeries={setSeries}
+        setWeight={setWeight}
       />
       <AddNewExercise
         newExerciseModal={newExerciseModal}
@@ -174,6 +180,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         setExerciseNote={setExerciseNote}
         setReps={setReps}
         setSeries={setSeries}
+        setWeight={setWeight}
       />
     </View>
   );

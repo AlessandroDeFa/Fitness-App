@@ -20,10 +20,13 @@ interface AddNewExerciseProps {
   setExerciseNote: (value: string) => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
+  setWeight: (value: string) => void;
   setNewExerciseName: (value: string) => void;
+  setNewExerciseNote: (value: string) => void;
   setNewExerciseTarget: (value: string) => void;
   setNewExerciseSeries: (value: string) => void;
   setNewExerciseReps: (value: string) => void;
+  setNewWeight: (value: string) => void;
   handleUpdateNewExercise: () => void;
 }
 
@@ -36,11 +39,14 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
   setExerciseNote,
   setReps,
   setSeries,
+  setWeight,
   updatePlanModal,
   setNewExerciseName,
+  setNewExerciseNote,
   setNewExerciseTarget,
   setNewExerciseSeries,
   setNewExerciseReps,
+  setNewWeight,
   handleUpdateNewExercise,
 }) => {
   const handleCloseNewExerciseModal = () => {
@@ -123,7 +129,7 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                       maxLength={50}
                       onChangeText={
                         updatePlanModal
-                          ? (value) => {}
+                          ? (value) => setNewExerciseNote(value)
                           : (value) => setExerciseNote(value)
                       }
                       style={styles.inputNewExercise}
@@ -176,6 +182,23 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                           updatePlanModal
                             ? (value) => setNewExerciseReps(value)
                             : (value) => setReps(value)
+                        }
+                        style={styles.inputExercise}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.spacingSeriesReps}>
+                    <View>
+                      <Text style={styles.textOptions}>Peso (kg)</Text>
+                    </View>
+                    <View style={styles.spacingInput}>
+                      <TextInput
+                        keyboardType="numeric"
+                        maxLength={3}
+                        onChangeText={
+                          updatePlanModal
+                            ? (value) => setNewWeight(value)
+                            : (value) => setWeight(value)
                         }
                         style={styles.inputExercise}
                       />

@@ -105,7 +105,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
                 renderItem={({ item }) => (
                   <View style={styles.exercisePlan}>
                     <Text style={styles.textSeriesReps}>
-                      [ {item.series} x {item.reps} ]
+                      [ {item.series} x {item.reps} ] [ {item.weight} kg ]
                     </Text>
                     <View style={styles.textExercisePlan}>
                       <Text style={styles.textExerciseName}>

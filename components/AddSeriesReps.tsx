@@ -18,9 +18,12 @@ interface seriesRepsProps {
   handleSaveExercise: () => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
+  setWeight: (value: string) => void;
   newExerciseName: string;
+  setNewExerciseNote: (value: string) => void;
   setNewExerciseSeries: (value: string) => void;
   setNewExerciseReps: (value: string) => void;
+  setNewWeight: (value: string) => void;
   updatePlanModal: boolean;
   handleUpdateSaveExercise: () => void;
 }
@@ -32,12 +35,15 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
   handleSaveExercise,
   setReps,
   setSeries,
+  setWeight,
   updatePlanModal,
   newExerciseName,
   setNewExerciseSeries,
   setNewExerciseReps,
+  setNewWeight,
   handleUpdateSaveExercise,
   setExerciseNote,
+  setNewExerciseNote,
 }) => {
   return (
     <View>
@@ -56,7 +62,9 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                   />
                 </View>
                 <View style={styles.flex2}>
-                  <Text style={styles.fontTextHeader}>Serie e Ripetizioni</Text>
+                  <Text style={styles.fontTextHeader}>
+                    {exerciseName || newExerciseName}
+                  </Text>
                 </View>
                 <View style={[styles.flex, styles.containerButton]}>
                   <TouchableOpacity
@@ -78,16 +86,14 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                   maxLength={50}
                   onChangeText={
                     updatePlanModal
-                      ? (value) => {}
+                      ? (value) => setNewExerciseNote(value)
                       : (value) => setExerciseNote(value)
                   }
                   style={styles.inputNoteExercise}
                 />
               </View>
+
               <View style={styles.containerForm}>
-                <Text style={styles.fontNameExercise}>
-                  {exerciseName || newExerciseName}
-                </Text>
                 <View style={styles.containerOptions}>
                   <View>
                     <View>
@@ -123,6 +129,23 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                       />
                     </View>
                   </View>
+                  <View>
+                    <View>
+                      <Text style={styles.textOptions}>Peso (kg)</Text>
+                    </View>
+                    <View style={styles.spacingInput}>
+                      <TextInput
+                        keyboardType="numeric"
+                        maxLength={3}
+                        onChangeText={
+                          updatePlanModal
+                            ? (value) => setNewWeight(value)
+                            : (value) => setWeight(value)
+                        }
+                        style={styles.inputExercise}
+                      />
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
@@ -142,7 +165,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: "#1C1C1E",
     width: "90%",
-    height: 200,
+    height: 210,
     borderRadius: 10,
   },
   main: {
@@ -158,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flex2: {
-    flex: 2,
+    flex: 3,
   },
   closeBtn: {
     alignSelf: "flex-start",
@@ -185,20 +208,14 @@ const styles = StyleSheet.create({
   containerInputs: {
     marginTop: 45,
   },
-  fontNameExercise: {
-    color: "white",
-    fontWeight: "500",
-    flex: 1.1,
-  },
   containerForm: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
   },
   containerOptions: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     flex: 1,
   },
   textOptions: {

@@ -14,6 +14,7 @@ interface AddedExerciseProps {
   setUpdateExerciseModal: (value: boolean) => void;
   setUpdateExerciseModalUpdate: (value: boolean) => void;
   setExerciseToUpdate: (value: ExerciseData) => void;
+  setExerciseToUpdateModalUpdate: (value: ExerciseData) => void;
 }
 
 export const AddedExercise: React.FC<AddedExerciseProps> = ({
@@ -26,6 +27,7 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
   setUpdateExerciseModal,
   setUpdateExerciseModalUpdate,
   setExerciseToUpdate,
+  setExerciseToUpdateModalUpdate,
 }) => {
   const handleRemoveExercise = (id: string) => {
     setExercises(exercises.filter((exercise) => exercise.id !== id));
@@ -33,6 +35,11 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
 
   const handleUpdateExercises = (id: string) => {
     setNewExercises(newExercises.filter((exercise) => exercise.id !== id));
+  };
+
+  const handleUpdateOpenUpdateModal = (data: ExerciseData) => {
+    setUpdateExerciseModalUpdate(true);
+    setExerciseToUpdateModalUpdate(data);
   };
 
   const handleOpenUpdateModal = (data: ExerciseData) => {
@@ -44,7 +51,9 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
     <View style={styles.containerExercise}>
       <View>
         <View style={styles.containerInfoExercise}>
-          <Text style={styles.fontTitle}>{data.nameExercise}</Text>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.fontTitle}>
+            {data.nameExercise}
+          </Text>
           <View style={styles.containerIcons}>
             <MaterialCommunityIcons
               name="square-edit-outline"
@@ -52,7 +61,7 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
               color="#3B82F7"
               onPress={
                 updatePlanModal
-                  ? () => setUpdateExerciseModalUpdate(true)
+                  ? () => handleUpdateOpenUpdateModal(data)
                   : () => handleOpenUpdateModal(data)
               }
             />
@@ -102,6 +111,18 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
               </View>
             </View>
           </View>
+          <View style={styles.option}>
+            <View>
+              <Text style={styles.textOptions}>Peso (kg)</Text>
+            </View>
+            <View style={styles.spacingInput}>
+              <View style={styles.containerSeriesReps}>
+                <View style={styles.borderRadius}>
+                  <Text style={styles.fontSeriesReps}>{data.weight}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -118,12 +139,15 @@ const styles = StyleSheet.create({
   },
   containerIcons: {
     flexDirection: "row",
+    justifyContent: "flex-end",
+    flex: 1,
   },
   removeExercise: {
     color: "#E93323",
     marginLeft: 20,
   },
   fontTitle: {
+    flex: 3,
     color: "#3B82F7",
     fontSize: 17,
     fontWeight: "bold",

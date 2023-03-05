@@ -10,9 +10,11 @@ import {
   Animated,
   Vibration,
 } from "react-native";
+import { ExampleData } from "./Programs";
 import { globalStyles } from "../components/GlobalStyles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ExerciseData } from "./Programs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface UpdateExerciseProps {
   updateExerciseModal: boolean;
@@ -23,6 +25,11 @@ interface UpdateExerciseProps {
   exerciseToUpdate: ExerciseData;
   exercises: ExerciseData[];
   setExercises: (exercises: ExerciseData[]) => void;
+  exerciseToUpdateModalUpdate: ExerciseData;
+  infoPlan: ExampleData;
+  fecthPlansData: () => void;
+  newExercises: ExerciseData[];
+  setNewExercises: (newExercises: ExerciseData[]) => void;
 }
 
 export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
@@ -31,22 +38,48 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
   updatePlanModal,
   updateExerciseModalUpdate,
   setUpdateExerciseModalUpdate,
+  exerciseToUpdateModalUpdate,
   exerciseToUpdate,
   setExercises,
   exercises,
+  infoPlan,
+  fecthPlansData,
+  newExercises,
+  setNewExercises,
 }) => {
   useEffect(() => {
-    setUpdateNameExercise(exerciseToUpdate?.nameExercise);
-    setUpdateTargetExercise(exerciseToUpdate?.target);
-    setUpdateNoteExercise(exerciseToUpdate?.note);
-    setUpdateSeriesExercise(exerciseToUpdate?.series);
-    setUpdateRepsExercise(exerciseToUpdate?.reps);
+    setUpdateNameExercise(
+      exerciseToUpdate?.nameExercise ||
+        exerciseToUpdateModalUpdate?.nameExercise
+    );
+    setUpdateTargetExercise(
+      exerciseToUpdate?.target || exerciseToUpdateModalUpdate?.target
+    );
+    setUpdateNoteExercise(
+      exerciseToUpdate?.note || exerciseToUpdateModalUpdate?.note
+    );
+    setUpdateSeriesExercise(
+      exerciseToUpdate?.series || exerciseToUpdateModalUpdate?.series
+    );
+    setUpdateRepsExercise(
+      exerciseToUpdate?.reps || exerciseToUpdateModalUpdate?.reps
+    );
+    setUpdateWeightExercise(
+      exerciseToUpdate?.weight || exerciseToUpdateModalUpdate?.weight
+    );
   }, [
     exerciseToUpdate?.nameExercise,
     exerciseToUpdate?.target,
     exerciseToUpdate?.note,
     exerciseToUpdate?.series,
     exerciseToUpdate?.reps,
+    exerciseToUpdate?.weight,
+    exerciseToUpdateModalUpdate?.nameExercise,
+    exerciseToUpdateModalUpdate?.target,
+    exerciseToUpdateModalUpdate?.note,
+    exerciseToUpdateModalUpdate?.series,
+    exerciseToUpdateModalUpdate?.reps,
+    exerciseToUpdateModalUpdate?.weight,
   ]);
 
   const [buttonScale] = useState(new Animated.Value(1));
@@ -62,7 +95,8 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateNameExercise === "" ||
       updateTargetExercise === "" ||
       updateSeriesExercise === "" ||
-      updateRepsExercise === ""
+      updateRepsExercise === "" ||
+      updateWeightExercise === ""
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -93,8 +127,57 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.note = updateNoteExercise;
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
+          exerciseToChange.weight = updateWeightExercise;
         }
         setUpdateExerciseModal(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleSubmitUpdateExerciseModalUpdate = async (id: string) => {
+    if (
+      updateNameExercise === "" ||
+      updateTargetExercise === "" ||
+      updateSeriesExercise === "" ||
+      updateRepsExercise === "" ||
+      updateWeightExercise === ""
+    ) {
+      Vibration.vibrate([0, 50, 0, 0]);
+      Animated.sequence([
+        Animated.timing(buttonScale, {
+          toValue: 5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: -5,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: 0,
+          duration: 75,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      try {
+        const exerciseToChange = newExercises.find(
+          (exercise) => exercise.id === id
+        );
+        if (exerciseToChange) {
+          exerciseToChange.nameExercise = updateNameExercise;
+          exerciseToChange.target = updateTargetExercise;
+          exerciseToChange.note = updateNoteExercise;
+          exerciseToChange.series = updateSeriesExercise;
+          exerciseToChange.reps = updateRepsExercise;
+          exerciseToChange.weight = updateWeightExercise;
+        }
+
+        fecthPlansData();
+        setUpdateExerciseModalUpdate(false);
       } catch (error) {
         console.error(error);
       }
@@ -107,7 +190,6 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
         visible={
           updatePlanModal ? updateExerciseModalUpdate : updateExerciseModal
         }
-        // transparent={true}
         animationType="slide"
       >
         <SafeAreaView style={globalStyles.container}>
@@ -139,8 +221,13 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                   <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.8}
-                    onPress={() =>
-                      handleSubmitUpdateExercise(exerciseToUpdate.id)
+                    onPress={
+                      updatePlanModal
+                        ? () =>
+                            handleSubmitUpdateExerciseModalUpdate(
+                              exerciseToUpdateModalUpdate.id
+                            )
+                        : () => handleSubmitUpdateExercise(exerciseToUpdate.id)
                     }
                   >
                     <Text style={styles.textButton}>Salva</Text>
@@ -152,19 +239,29 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
               <TextInput
                 style={styles.updateInputs}
                 placeholder="Nome eserizio"
-                defaultValue={exerciseToUpdate?.nameExercise}
+                defaultValue={
+                  exerciseToUpdate?.nameExercise ||
+                  exerciseToUpdateModalUpdate?.nameExercise
+                }
                 onChangeText={(value) => setUpdateNameExercise(value)}
               />
               <TextInput
                 style={styles.updateInputs}
                 placeholder="Target"
-                defaultValue={exerciseToUpdate?.target}
+                maxLength={25}
+                defaultValue={
+                  exerciseToUpdate?.target ||
+                  exerciseToUpdateModalUpdate?.target
+                }
                 onChangeText={(value) => setUpdateTargetExercise(value)}
               />
               <TextInput
                 style={styles.inputsNote}
                 placeholder="Note"
-                defaultValue={exerciseToUpdate?.note}
+                maxLength={70}
+                defaultValue={
+                  exerciseToUpdate?.note || exerciseToUpdateModalUpdate?.note
+                }
                 onChangeText={(value) => setUpdateNoteExercise(value)}
               />
             </View>
@@ -175,21 +272,33 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                   style={styles.updateInputs}
                   placeholder="Serie"
                   keyboardType="numeric"
-                  defaultValue={exerciseToUpdate?.series}
+                  maxLength={2}
+                  defaultValue={
+                    exerciseToUpdate?.series ||
+                    exerciseToUpdateModalUpdate?.series
+                  }
                   onChangeText={(value) => setUpdateSeriesExercise(value)}
                 />
                 <TextInput
                   style={styles.updateInputs}
                   placeholder="Ripetizioni"
                   keyboardType="numeric"
-                  defaultValue={exerciseToUpdate?.reps}
+                  maxLength={2}
+                  defaultValue={
+                    exerciseToUpdate?.reps || exerciseToUpdateModalUpdate?.reps
+                  }
                   onChangeText={(value) => setUpdateRepsExercise(value)}
                 />
                 <TextInput
                   style={styles.inputsWeight}
                   placeholder="Peso"
                   keyboardType="numeric"
-                  // defaultValue={exerciseToUpdate.nameExercise}
+                  maxLength={3}
+                  defaultValue={
+                    exerciseToUpdate?.weight ||
+                    exerciseToUpdateModalUpdate?.weight
+                  }
+                  onChangeText={(value) => setUpdateWeightExercise(value)}
                 />
               </View>
             </View>

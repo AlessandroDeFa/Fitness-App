@@ -28,6 +28,8 @@ interface ListExerciseProps {
   setNewExerciseName: (newExerciseName: string) => void;
   newExerciseTarget: string;
   setNewExerciseTarget: (newExerciseTarget: string) => void;
+  newExerciseNote: string;
+  setNewExerciseNote: (newExerciseNote: string) => void;
 }
 
 export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
@@ -36,10 +38,12 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
   setUpdateExercisesForm,
   newExerciseName,
   newExerciseTarget,
+  newExerciseNote,
   newExercises,
   setNewExercises,
   setNewExerciseTarget,
   setNewExerciseName,
+  setNewExerciseNote,
 }) => {
   const { filteredExercises, setFilteredExercises, dataApi } =
     useContext(ContextApp);
@@ -47,6 +51,7 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
   const [newExerciseModal, setNewExerciseModal] = useState<boolean>(false);
   const [newExerciseSeries, setNewExerciseSeries] = useState<string>("");
   const [newExerciseReps, setNewExerciseReps] = useState<string>("");
+  const [newWeight, setNewWeight] = useState<string>("");
   const uniqueId = uuidv4();
 
   const handleUpdateSaveExercise = () => {
@@ -58,7 +63,9 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         nameExercise: newExerciseName,
         series: newExerciseSeries,
         reps: newExerciseReps,
+        weight: newWeight,
         target: newExerciseTarget,
+        note: newExerciseNote,
       };
 
       setNewExercises([...newExercises, ObjectExercise]);
@@ -80,15 +87,19 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         nameExercise: newExerciseName,
         series: newExerciseSeries,
         reps: newExerciseReps,
+        weight: newWeight,
         target: newExerciseTarget,
+        note: newExerciseNote,
       };
 
       setNewExercises([...newExercises, ObjectNewExercise]);
       setNewExerciseModal(false);
       setNewExerciseName("");
+      setNewExerciseNote("");
       setNewExerciseTarget("");
       setNewExerciseSeries("");
       setNewExerciseReps("");
+      setNewWeight("");
     }
   };
 
@@ -163,6 +174,8 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         handleUpdateSaveExercise={handleUpdateSaveExercise}
         setNewExerciseReps={setNewExerciseReps}
         setNewExerciseSeries={setNewExerciseSeries}
+        setNewWeight={setNewWeight}
+        setNewExerciseNote={setNewExerciseNote}
       />
       <AddNewExercise
         updatePlanModal={updatePlanModal}
@@ -173,6 +186,8 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         setNewExerciseTarget={setNewExerciseTarget}
         setNewExerciseSeries={setNewExerciseSeries}
         setNewExerciseReps={setNewExerciseReps}
+        setNewWeight={setNewWeight}
+        setNewExerciseNote={setNewExerciseNote}
       />
     </View>
   );
