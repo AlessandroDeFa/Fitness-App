@@ -17,6 +17,8 @@ const ExamplePlans = [
         series: "3",
         reps: "13",
         target: "Pectorals",
+        weight: "50",
+        note: "",
       },
       {
         id: "116",
@@ -24,6 +26,8 @@ const ExamplePlans = [
         series: "4",
         reps: "12",
         target: "Upper Back",
+        weight: "30",
+        note: "",
       },
       {
         id: "117",
@@ -31,6 +35,8 @@ const ExamplePlans = [
         series: "3",
         reps: "10",
         target: "Pectorals",
+        weight: "40",
+        note: "",
       },
       {
         id: "118",
@@ -38,6 +44,8 @@ const ExamplePlans = [
         series: "3",
         reps: "8",
         target: "Biceps",
+        weight: "12",
+        note: "",
       },
       {
         id: "119",
@@ -45,6 +53,8 @@ const ExamplePlans = [
         series: "4",
         reps: "10",
         target: "Lats",
+        weight: "55",
+        note: "",
       },
     ],
   },
@@ -60,6 +70,8 @@ const ExamplePlans = [
         series: "4",
         reps: "6",
         target: "Legs",
+        weight: "70",
+        note: "",
       },
       {
         id: "121",
@@ -67,6 +79,8 @@ const ExamplePlans = [
         series: "4",
         reps: "15",
         target: "Legs",
+        weight: "25",
+        note: "",
       },
       {
         id: "122",
@@ -74,6 +88,8 @@ const ExamplePlans = [
         series: "4",
         reps: "7",
         target: "Legs",
+        weight: "90",
+        note: "",
       },
     ],
   },
@@ -89,6 +105,8 @@ const ExamplePlans = [
         series: "3",
         reps: "10",
         target: "Legs",
+        weight: "60",
+        note: "",
       },
       {
         id: "124",
@@ -96,6 +114,8 @@ const ExamplePlans = [
         series: "4",
         reps: "8",
         target: "Pectorals",
+        weight: "70",
+        note: "",
       },
       {
         id: "125",
@@ -103,6 +123,8 @@ const ExamplePlans = [
         series: "3",
         reps: "12",
         target: "Biceps",
+        weight: "10",
+        note: "",
       },
       {
         id: "126",
@@ -110,6 +132,8 @@ const ExamplePlans = [
         series: "4",
         reps: "15",
         target: "Abs",
+        weight: "0",
+        note: "",
       },
     ],
   },
@@ -166,6 +190,7 @@ export const Programs: React.FC<ProgramsProps> = ({
           renderItem={({ item }) => (
             <Plan
               data={item}
+              key={item.id}
               infoPlan={infoPlan}
               setInfoPlan={setInfoPlan}
               infoPlanModal={infoPlanModal}

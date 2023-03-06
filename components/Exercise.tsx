@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-  TouchableHighlight,
-} from "react-native";
-import { ExerciseData } from "./Programs";
+import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+
 import { MaterialIcons } from "@expo/vector-icons";
-import { useContext } from "react";
-import { ContextApp } from "../Navigation/TabNavigator";
 
 interface Data {
   bodyPart: string;
@@ -48,9 +40,7 @@ interface ExerciseProps {
 
 export const Exercise: React.FC<ExerciseProps> = ({
   data,
-  exercisesInfo,
   setExercisesInfo,
-  infoExerciseData,
   setInfoExerciseData,
   ExerciseForm,
   setExerciseForm,
@@ -62,8 +52,6 @@ export const Exercise: React.FC<ExerciseProps> = ({
   setNewExerciseTarget,
   setUpdateExercisesForm,
 }) => {
-  const { setFilteredExercises, dataApi } = useContext(ContextApp);
-
   const HandleClickExercise = () => {
     setInfoExerciseData(data);
     setExercisesInfo(true);
@@ -74,7 +62,6 @@ export const Exercise: React.FC<ExerciseProps> = ({
     setExerciseTarget(data.target);
     setSeriesRepsModal(true);
     setExerciseForm(false);
-    setFilteredExercises(dataApi);
   };
 
   const handlePressUpadateExerciseForm = () => {
@@ -82,7 +69,6 @@ export const Exercise: React.FC<ExerciseProps> = ({
     setNewExerciseTarget(data.target);
     setSeriesRepsModal(true);
     setUpdateExercisesForm(false);
-    setFilteredExercises(dataApi);
   };
 
   data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);

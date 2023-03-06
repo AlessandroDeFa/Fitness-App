@@ -111,18 +111,20 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
               </View>
             </View>
           </View>
-          <View style={styles.option}>
-            <View>
-              <Text style={styles.textOptions}>Peso (kg)</Text>
-            </View>
-            <View style={styles.spacingInput}>
-              <View style={styles.containerSeriesReps}>
-                <View style={styles.borderRadius}>
-                  <Text style={styles.fontSeriesReps}>{data.weight}</Text>
+          {data.weight && data.weight !== "0" && (
+            <View style={styles.option}>
+              <View>
+                <Text style={styles.textOptions}>Peso (kg)</Text>
+              </View>
+              <View style={styles.spacingInput}>
+                <View style={styles.containerSeriesReps}>
+                  <View style={styles.borderRadius}>
+                    <Text style={styles.fontSeriesReps}>{data.weight}</Text>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
+          )}
         </View>
       </View>
     </View>

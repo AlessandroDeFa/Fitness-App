@@ -44,8 +44,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   setExerciseNote,
   exerciseNote,
 }) => {
-  const { filteredExercises, setFilteredExercises, dataApi } =
-    useContext(ContextApp);
+  const { filteredExercises } = useContext(ContextApp);
   const [seriesRepsModal, setSeriesRepsModal] = useState<boolean>(false);
   const [newExerciseModal, setNewExerciseModal] = useState<boolean>(false);
   const [series, setSeries] = useState<string>("");
@@ -104,7 +103,6 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
 
   const handleCloseExerciseForm = () => {
     setExerciseForm(false);
-    setFilteredExercises(dataApi);
   };
 
   const handleNewExerciseForm = () => {

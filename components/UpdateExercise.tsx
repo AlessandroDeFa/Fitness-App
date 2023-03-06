@@ -95,8 +95,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateNameExercise === "" ||
       updateTargetExercise === "" ||
       updateSeriesExercise === "" ||
-      updateRepsExercise === "" ||
-      updateWeightExercise === ""
+      updateRepsExercise === ""
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -141,8 +140,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateNameExercise === "" ||
       updateTargetExercise === "" ||
       updateSeriesExercise === "" ||
-      updateRepsExercise === "" ||
-      updateWeightExercise === ""
+      updateRepsExercise === ""
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
