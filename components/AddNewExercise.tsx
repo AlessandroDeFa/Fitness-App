@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   TextInput,
   Platform,
   TouchableOpacity,
+  Switch,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -266,6 +267,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 25,
   },
   containerOptions: {
     flexDirection: "row",
@@ -318,5 +320,14 @@ const styles = StyleSheet.create({
   textTarget: {
     color: "white",
     fontWeight: "500",
+  },
+  switchContainer: {
+    marginTop: 25,
+    alignItems: "center",
+  },
+  textSwitch: {
+    color: "white",
+    fontWeight: "500",
+    marginBottom: 10,
   },
 });

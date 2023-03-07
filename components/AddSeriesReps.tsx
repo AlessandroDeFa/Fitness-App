@@ -14,12 +14,14 @@ interface seriesRepsProps {
   seriesRepsModal: boolean;
   setSeriesRepsModal: (seriesRepsModal: boolean) => void;
   exerciseName: string;
+  exerciseTarget: string;
   setExerciseNote: (value: string) => void;
   handleSaveExercise: () => void;
   setReps: (value: string) => void;
   setSeries: (value: string) => void;
   setWeight: (value: string) => void;
   newExerciseName: string;
+  newExerciseTarget: string;
   setNewExerciseNote: (value: string) => void;
   setNewExerciseSeries: (value: string) => void;
   setNewExerciseReps: (value: string) => void;
@@ -32,12 +34,14 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
   seriesRepsModal,
   setSeriesRepsModal,
   exerciseName,
+  exerciseTarget,
   handleSaveExercise,
   setReps,
   setSeries,
   setWeight,
   updatePlanModal,
   newExerciseName,
+  newExerciseTarget,
   setNewExerciseSeries,
   setNewExerciseReps,
   setNewWeight,
@@ -92,7 +96,6 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                   style={styles.inputNoteExercise}
                 />
               </View>
-
               <View style={styles.containerForm}>
                 <View style={styles.containerOptions}>
                   <View>

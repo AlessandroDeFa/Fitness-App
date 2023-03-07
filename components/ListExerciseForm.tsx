@@ -163,6 +163,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         setSeriesRepsModal={setSeriesRepsModal}
         seriesRepsModal={seriesRepsModal}
         exerciseName={exerciseName}
+        exerciseTarget={exerciseTarget}
         handleSaveExercise={handleSaveExercise}
         setExerciseNote={setExerciseNote}
         setReps={setReps}
