@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableHighlight,
-  Modal,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { ExampleData } from "./Programs";
-import { Ionicons } from "@expo/vector-icons";
 
 interface planProps {
   infoPlanModal: boolean;
