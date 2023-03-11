@@ -36,7 +36,7 @@ export const Statistics = () => {
         </SafeAreaView>
         <ScrollView>
           <View>
-            <View>
+            <View style={styles.spacingSubtitle}>
               <Text style={styles.fontSubtitle}>
                 Andamento del carico allenante
               </Text>
@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     paddingBottom: 15,
     borderColor: "#38383A",
-    marginBottom: 30,
   },
   spacingTitle: {
     marginBottom: 15,
@@ -160,6 +159,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 22,
     fontWeight: "bold",
+  },
+  spacingSubtitle: {
+    marginTop: 20,
   },
   fontSubtitle: {
     color: "white",
