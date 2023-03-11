@@ -2,10 +2,12 @@ import React, { useState, createContext, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../screens/Home";
 import { Exercises } from "../screens/Exercises";
+import { Statistics } from "../screens/Statistics";
 import { Premium } from "../screens/Premium";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 
 export const ContextApp = createContext<any>(undefined);
@@ -84,6 +86,15 @@ function BottomTabNavigator() {
                   style={{ transform: [{ scaleX: -1 }] }}
                 />
               );
+            } else if (route.name === "Statistiche") {
+              iconName = "stats-chart";
+              return (
+                <Ionicons
+                  name={iconName}
+                  size={22}
+                  color={focused ? "#3B82F7" : color}
+                />
+              );
             } else if (route.name === "Aggiorna") {
               iconName = "crown";
               return (
@@ -105,6 +116,7 @@ function BottomTabNavigator() {
       >
         <Tab.Screen name="Esercizi" component={Exercises} />
         <Tab.Screen name="Aggiungi programma" component={Home} />
+        <Tab.Screen name="Statistiche" component={Statistics} />
         <Tab.Screen name="Aggiorna" component={Premium} />
       </Tab.Navigator>
     </ContextApp.Provider>

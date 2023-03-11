@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  SafeAreaView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
@@ -33,12 +34,12 @@ export const Exercises = () => {
     <View style={globalStyles.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={globalStyles.main}>
-          <View style={styles.header}>
+          <SafeAreaView style={styles.header}>
             <View style={styles.spacingTitle}>
               <Text style={styles.textTitle}>Esercizi</Text>
             </View>
             <SearchInput />
-          </View>
+          </SafeAreaView>
           <View style={styles.containerExercises}>
             <FlatList
               data={filteredExercises}
