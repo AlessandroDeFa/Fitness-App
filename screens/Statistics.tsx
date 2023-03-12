@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -14,6 +14,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { globalStyles } from "../components/GlobalStyles";
 import { Linechart } from "../components/Linechart";
 import { ExampleData } from "../components/Programs";
+import { ExerciseData } from "../components/Programs";
 
 const dataExerciseWeight = {
   labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
@@ -40,13 +41,42 @@ const dataPersonalWeight = {
 };
 
 export const Statistics = () => {
+  const { plansData } = useContext(ContextApp);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
   const [selectedValuePersonalWeight, setSelectedValuePersonalWeight] =
     useState<number | null>(null);
   const [chartParentWidth, setChartParentWidth] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState();
+  const [selectedPlan, setSelectedPlan] = useState<string | null>();
+  const [exercisesFromSelectedPlan, setExercisesFromSelectedPlan] =
+    useState<ExerciseData[]>();
+  const [selectedExercise, setSelectedExercise] = useState<ExerciseData>();
 
-  const { plansData } = useContext(ContextApp);
+  const handlePickerPlanChange = (itemValue: string) => {
+    setSelectedPlan(itemValue);
+    const exercisesFromPlan = plansData.find(
+      (plan: ExampleData) => plan.id === itemValue
+    )?.exercises;
+    setExercisesFromSelectedPlan(exercisesFromPlan);
+  };
+
+  useEffect(() => {
+    if (plansData.length === 0) {
+      setSelectedPlan(null);
+      setExercisesFromSelectedPlan([]);
+    }
+  }, [plansData]);
+
+  useEffect(() => {
+    if (plansData.length > 0) {
+      const exerciseDefaultValue = plansData.find(
+        (plan: ExampleData) => plan.id === selectedPlan
+      )?.exercises;
+      setExercisesFromSelectedPlan(exerciseDefaultValue);
+      if (exerciseDefaultValue?.length > 0) {
+        setSelectedExercise(exerciseDefaultValue[0].id);
+      }
+    }
+  }, [selectedPlan, plansData]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -79,17 +109,22 @@ export const Statistics = () => {
                 style={styles.picker}
                 selectedValue={selectedPlan}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedPlan(itemValue)
+                  handlePickerPlanChange(itemValue)
                 }
               >
                 {plansData.map((plans: ExampleData) => (
                   <Picker.Item
                     label={plans.name}
-                    value={plans.name}
+                    value={plans.id}
                     key={plans.id}
                   />
                 ))}
               </Picker>
+              {plansData.length === 0 && (
+                <Text style={{ color: "#CACCCD", fontWeight: "500" }}>
+                  Nessuna scheda disponibile
+                </Text>
+              )}
             </View>
             <View style={styles.spacingPicker}>
               <Text style={styles.fontTextPicker}>
@@ -98,14 +133,25 @@ export const Statistics = () => {
               <Picker
                 itemStyle={styles.pickerItem}
                 style={styles.picker}
-                selectedValue={selectedPlan}
+                selectedValue={selectedExercise}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedPlan(itemValue)
+                  setSelectedExercise(itemValue)
                 }
               >
-                <Picker.Item label="Java" value="java" />
-                <Picker.Item label="JavaScript" value="js" />
+                {exercisesFromSelectedPlan?.map((exercise: ExerciseData) => (
+                  <Picker.Item
+                    label={exercise.nameExercise}
+                    value={exercise.id}
+                    key={exercise.id}
+                  />
+                ))}
               </Picker>
+              {plansData.length > 0 &&
+                exercisesFromSelectedPlan?.length === 0 && (
+                  <Text style={{ color: "#CACCCD", fontWeight: "500" }}>
+                    Nessun esercizio disponibile per questa scheda
+                  </Text>
+                )}
             </View>
             <View
               onLayout={({ nativeEvent }) =>
