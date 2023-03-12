@@ -7,24 +7,51 @@ import {
   Text,
   ScrollView,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { useFocusEffect } from "@react-navigation/native";
 import { globalStyles } from "../components/GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
+import { Linechart } from "../components/Linechart";
 
-const data = {
+const dataExerciseWeight = {
   labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
   datasets: [
     {
       data: [20, 45, 28, 80, 99, 43, 99],
-      color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`, // optional
-      strokeWidth: 2, // optional
+      color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
+      strokeWidth: 2,
     },
   ],
-  legend: ["Peso (kg)"], // optional
+  legend: ["Peso (kg)"],
+};
+
+const dataPersonalWeight = {
+  labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
+  datasets: [
+    {
+      data: [20, 59, 28, 80, 99, 43, 99],
+      color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+  legend: ["Peso corporeo (kg)"],
 };
 
 export const Statistics = () => {
-  const [selectedValue, setSelectedValue] = useState<number>(0);
+  const [selectedValue, setSelectedValue] = useState<number | null>(null);
+  const [selectedValuePersonalWeight, setSelectedValuePersonalWeight] =
+    useState<number | null>(null);
   const [chartParentWidth, setChartParentWidth] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setSelectedValue(null);
+        setSelectedValuePersonalWeight(null);
+      };
+    }, [])
+  );
 
   return (
     <View style={globalStyles.container}>
@@ -41,49 +68,32 @@ export const Statistics = () => {
                 Andamento del carico allenante
               </Text>
             </View>
+            <View style={{ backgroundColor: "white" }}>
+              <Picker
+                selectedValue={selectedLanguage}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedLanguage(itemValue)
+                }
+              >
+                <Picker.Item
+                  label="Java"
+                  value="java"
+                  style={{ color: "white" }}
+                />
+                <Picker.Item label="JavaScript" value="js" />
+              </Picker>
+            </View>
             <View
               onLayout={({ nativeEvent }) =>
                 setChartParentWidth(nativeEvent.layout.width)
               }
               style={styles.containerChart}
             >
-              <LineChart
-                onDataPointClick={({ index }) => setSelectedValue(index)}
-                renderDotContent={({ x, y, index, indexData }) =>
-                  selectedValue === index && (
-                    <View style={{ position: "absolute", top: y, left: x }}>
-                      <Text style={{ color: "white" }}>
-                        {data.datasets[0].data[index]}
-                      </Text>
-                    </View>
-                  )
-                }
-                data={data}
-                width={chartParentWidth}
-                height={200}
-                chartConfig={{
-                  backgroundColor: "#e26a00",
-                  backgroundGradientFrom: "#1C1C1E",
-                  backgroundGradientTo: "#1C1C1E",
-
-                  decimalPlaces: 0,
-                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-
-                  propsForDots: {
-                    r: "5",
-                    stroke: "#3B82F7",
-                    fill: "#3B82F7",
-                  },
-
-                  style: {
-                    borderRadius: 16,
-                  },
-                }}
-                bezier
-                style={{
-                  paddingRight: 45,
-                  borderRadius: 16,
-                }}
+              <Linechart
+                data={dataExerciseWeight}
+                chartParentWidth={chartParentWidth}
+                setValue={setSelectedValue}
+                value={selectedValue}
               />
             </View>
           </View>
@@ -93,49 +103,12 @@ export const Statistics = () => {
                 Andamento del peso corporeo
               </Text>
             </View>
-            <View
-              onLayout={({ nativeEvent }) =>
-                setChartParentWidth(nativeEvent.layout.width)
-              }
-              style={styles.containerChart}
-            >
-              <LineChart
-                onDataPointClick={({ index }) => setSelectedValue(index)}
-                renderDotContent={({ x, y, index, indexData }) =>
-                  selectedValue === index && (
-                    <View style={{ position: "absolute", top: y, left: x }}>
-                      <Text style={{ color: "white" }}>
-                        {data.datasets[0].data[index]}
-                      </Text>
-                    </View>
-                  )
-                }
-                data={data}
-                width={chartParentWidth}
-                height={200}
-                chartConfig={{
-                  backgroundColor: "#e26a00",
-                  backgroundGradientFrom: "#1C1C1E",
-                  backgroundGradientTo: "#1C1C1E",
-
-                  decimalPlaces: 0,
-                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-
-                  propsForDots: {
-                    r: "5",
-                    stroke: "#3B82F7",
-                    fill: "#3B82F7",
-                  },
-
-                  style: {
-                    borderRadius: 16,
-                  },
-                }}
-                bezier
-                style={{
-                  paddingRight: 45,
-                  borderRadius: 16,
-                }}
+            <View style={styles.containerChart}>
+              <Linechart
+                data={dataPersonalWeight}
+                chartParentWidth={chartParentWidth}
+                setValue={setSelectedValuePersonalWeight}
+                value={selectedValuePersonalWeight}
               />
             </View>
           </View>
