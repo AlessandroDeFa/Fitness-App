@@ -8,6 +8,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { ExampleData } from "../components/Programs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 
 export const ContextApp = createContext<any>(undefined);
@@ -18,6 +20,8 @@ function BottomTabNavigator() {
   let [filteredExercises, setFilteredExercises] = useState<object[]>([]);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const apiKey = Constants.manifest!.extra!.API_KEY;
+
+  //fetch exercisesData from api
 
   useEffect(() => {
     const fechData = async () => {
@@ -51,6 +55,25 @@ function BottomTabNavigator() {
     );
   };
 
+  //fecth plansData from local storage
+
+  const [plansData, setPlansData] = useState<ExampleData[]>([]);
+
+  const fecthPlansData = async () => {
+    try {
+      const data = await AsyncStorage.getItem("plansData");
+      if (data !== null) {
+        setPlansData(JSON.parse(data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fecthPlansData();
+  }, []);
+
   return (
     <ContextApp.Provider
       value={{
@@ -60,6 +83,8 @@ function BottomTabNavigator() {
         setFilteredExercises,
         setDataLoaded,
         dataLoaded,
+        plansData,
+        fecthPlansData,
       }}
     >
       <Tab.Navigator

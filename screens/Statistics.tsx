@@ -7,11 +7,13 @@ import {
   Text,
   ScrollView,
 } from "react-native";
+import { useContext } from "react";
+import { ContextApp } from "../Navigation/TabNavigator";
 import { Picker } from "@react-native-picker/picker";
 import { useFocusEffect } from "@react-navigation/native";
 import { globalStyles } from "../components/GlobalStyles";
-import { LineChart } from "react-native-chart-kit";
 import { Linechart } from "../components/Linechart";
+import { ExampleData } from "../components/Programs";
 
 const dataExerciseWeight = {
   labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
@@ -42,7 +44,9 @@ export const Statistics = () => {
   const [selectedValuePersonalWeight, setSelectedValuePersonalWeight] =
     useState<number | null>(null);
   const [chartParentWidth, setChartParentWidth] = useState(0);
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedPlan, setSelectedPlan] = useState();
+
+  const { plansData } = useContext(ContextApp);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -68,18 +72,38 @@ export const Statistics = () => {
                 Andamento del carico allenante
               </Text>
             </View>
-            <View style={{ backgroundColor: "white" }}>
+            <View style={styles.spacingPicker}>
+              <Text style={styles.fontTextPicker}>Seleziona la scheda:</Text>
               <Picker
-                selectedValue={selectedLanguage}
+                itemStyle={styles.pickerItem}
+                style={styles.picker}
+                selectedValue={selectedPlan}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedLanguage(itemValue)
+                  setSelectedPlan(itemValue)
                 }
               >
-                <Picker.Item
-                  label="Java"
-                  value="java"
-                  style={{ color: "white" }}
-                />
+                {plansData.map((plans: ExampleData) => (
+                  <Picker.Item
+                    label={plans.name}
+                    value={plans.name}
+                    key={plans.id}
+                  />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.spacingPicker}>
+              <Text style={styles.fontTextPicker}>
+                Seleziona l' esercizio che vuoi visualizzare:
+              </Text>
+              <Picker
+                itemStyle={styles.pickerItem}
+                style={styles.picker}
+                selectedValue={selectedPlan}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedPlan(itemValue)
+                }
+              >
+                <Picker.Item label="Java" value="java" />
                 <Picker.Item label="JavaScript" value="js" />
               </Picker>
             </View>
@@ -87,7 +111,6 @@ export const Statistics = () => {
               onLayout={({ nativeEvent }) =>
                 setChartParentWidth(nativeEvent.layout.width)
               }
-              style={styles.containerChart}
             >
               <Linechart
                 data={dataExerciseWeight}
@@ -149,5 +172,25 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: "#38383A",
     marginTop: 30,
+    marginBottom: 20,
+  },
+  spacingPicker: {
+    marginVertical: 20,
+  },
+  fontTextPicker: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "500",
+    marginBottom: 15,
+  },
+  picker: {
+    height: 70,
+    backgroundColor: "#010300",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  pickerItem: {
+    fontSize: 15,
+    color: "white",
   },
 });

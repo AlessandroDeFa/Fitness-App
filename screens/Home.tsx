@@ -4,27 +4,12 @@ import { globalStyles } from "../components/GlobalStyles";
 import { Header } from "../components/Header";
 import { Programs } from "../components/Programs";
 import { AddPlan } from "../components/AddPlan";
-import { ExampleData } from "../components/Programs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext } from "react";
+import { ContextApp } from "../Navigation/TabNavigator";
 
 export const Home = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [plansData, setPlansData] = useState<ExampleData[]>([]);
-
-  const fecthPlansData = async () => {
-    try {
-      const data = await AsyncStorage.getItem("plansData");
-      if (data !== null) {
-        setPlansData(JSON.parse(data));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fecthPlansData();
-  }, []);
+  const { plansData, fecthPlansData } = useContext(ContextApp);
 
   return (
     <View style={globalStyles.container}>
