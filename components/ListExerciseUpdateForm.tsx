@@ -52,11 +52,27 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
   const [newExerciseReps, setNewExerciseReps] = useState<string>("");
   const [newWeight, setNewWeight] = useState<string>("");
   const uniqueId = uuidv4();
+  let day: number | string;
+  let month: number | string;
+  let formattedDate: string;
 
   const handleUpdateSaveExercise = () => {
     if (newExerciseSeries === "" || newExerciseReps === "") {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
+      //get Date for dataChart
+      const date = new Date();
+      day = date.getDate();
+      month = date.getMonth() + 1;
+
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      formattedDate = `${day}-${month}`;
+
       let ObjectExercise = {
         id: uniqueId,
         nameExercise: newExerciseName,
@@ -65,6 +81,7 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         weight: newWeight,
         target: newExerciseTarget,
         note: newExerciseNote,
+        dataChart: [{ kg: parseInt(newWeight), date: formattedDate }],
       };
 
       setNewExercises([...newExercises, ObjectExercise]);
@@ -81,6 +98,19 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
+      //get Date for dataChart
+      const date = new Date();
+      day = date.getDate();
+      month = date.getMonth() + 1;
+
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      formattedDate = `${day}-${month}`;
+
       let ObjectNewExercise = {
         id: uniqueId,
         nameExercise: newExerciseName,
@@ -89,6 +119,7 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         weight: newWeight,
         target: newExerciseTarget,
         note: newExerciseNote,
+        dataChart: [{ kg: parseInt(newWeight), date: formattedDate }],
       };
 
       setNewExercises([...newExercises, ObjectNewExercise]);

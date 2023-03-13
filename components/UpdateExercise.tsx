@@ -14,7 +14,6 @@ import { ExampleData } from "./Programs";
 import { globalStyles } from "../components/GlobalStyles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ExerciseData } from "./Programs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface UpdateExerciseProps {
   updateExerciseModal: boolean;
@@ -89,6 +88,9 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
   const [updateSeriesExercise, setUpdateSeriesExercise] = useState<string>("");
   const [updateRepsExercise, setUpdateRepsExercise] = useState<string>("");
   const [updateWeightExercise, setUpdateWeightExercise] = useState<string>("");
+  let day: number | string;
+  let month: number | string;
+  let formattedDate: string;
 
   const handleSubmitUpdateExercise = (id: string) => {
     if (
@@ -120,6 +122,24 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
         const exerciseToChange = exercises.find(
           (exercise) => exercise.id === id
         );
+        //get Date for dataChart
+        const date = new Date();
+        day = date.getDate();
+        month = date.getMonth() + 1;
+
+        if (day < 10) {
+          day = "0" + day;
+        }
+        if (month < 10) {
+          month = "0" + month;
+        }
+        formattedDate = `${day}-${month}`;
+
+        let dataChart = {
+          kg: parseInt(updateWeightExercise),
+          date: formattedDate,
+        };
+
         if (exerciseToChange) {
           exerciseToChange.nameExercise = updateNameExercise;
           exerciseToChange.target = updateTargetExercise;
@@ -127,7 +147,9 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
           exerciseToChange.weight = updateWeightExercise;
+          exerciseToChange.dataChart.push(dataChart);
         }
+        console.log(exerciseToChange?.dataChart);
         setUpdateExerciseModal(false);
       } catch (error) {
         console.error(error);
@@ -165,6 +187,23 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
         const exerciseToChange = newExercises.find(
           (exercise) => exercise.id === id
         );
+        //get Date for dataChart
+        const date = new Date();
+        day = date.getDate();
+        month = date.getMonth() + 1;
+
+        if (day < 10) {
+          day = "0" + day;
+        }
+        if (month < 10) {
+          month = "0" + month;
+        }
+        formattedDate = `${day}-${month}`;
+
+        let dataChart = {
+          kg: parseInt(updateWeightExercise),
+          date: formattedDate,
+        };
         if (exerciseToChange) {
           exerciseToChange.nameExercise = updateNameExercise;
           exerciseToChange.target = updateTargetExercise;
@@ -172,7 +211,10 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
           exerciseToChange.weight = updateWeightExercise;
+          exerciseToChange.dataChart.push(dataChart);
         }
+
+        console.log(exerciseToChange?.dataChart);
 
         fecthPlansData();
         setUpdateExerciseModalUpdate(false);

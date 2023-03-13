@@ -19,6 +19,7 @@ const ExamplePlans = [
         target: "Pectorals",
         weight: "50",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "116",
@@ -28,6 +29,7 @@ const ExamplePlans = [
         target: "Upper Back",
         weight: "30",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "117",
@@ -37,6 +39,7 @@ const ExamplePlans = [
         target: "Pectorals",
         weight: "40",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "118",
@@ -46,6 +49,7 @@ const ExamplePlans = [
         target: "Biceps",
         weight: "12",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "119",
@@ -55,6 +59,7 @@ const ExamplePlans = [
         target: "Lats",
         weight: "55",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
     ],
   },
@@ -72,6 +77,7 @@ const ExamplePlans = [
         target: "Legs",
         weight: "70",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "121",
@@ -81,6 +87,7 @@ const ExamplePlans = [
         target: "Legs",
         weight: "25",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "122",
@@ -90,6 +97,7 @@ const ExamplePlans = [
         target: "Legs",
         weight: "90",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
     ],
   },
@@ -107,6 +115,7 @@ const ExamplePlans = [
         target: "Legs",
         weight: "60",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "124",
@@ -116,6 +125,7 @@ const ExamplePlans = [
         target: "Pectorals",
         weight: "70",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "125",
@@ -125,6 +135,7 @@ const ExamplePlans = [
         target: "Biceps",
         weight: "10",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
       {
         id: "126",
@@ -134,11 +145,16 @@ const ExamplePlans = [
         target: "Abs",
         weight: "0",
         note: "",
+        dataChart: [{ kg: 1, date: "12-03-2021" }],
       },
     ],
   },
 ];
 
+export interface dataChart {
+  kg: number;
+  date: string;
+}
 export interface ExerciseData {
   id: string;
   nameExercise: string;
@@ -147,6 +163,7 @@ export interface ExerciseData {
   weight: string;
   target: string;
   note: string;
+  dataChart: dataChart[];
 }
 
 export interface ExampleData {

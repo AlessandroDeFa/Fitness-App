@@ -51,11 +51,27 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
   const [reps, setReps] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
   const uniqueId = uuidv4();
+  let day: number | string;
+  let month: number | string;
+  let formattedDate: string;
 
   const handleSaveExercise = () => {
     if (series === "" || reps === "") {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
+      //get Date for dataChart
+      const date = new Date();
+      day = date.getDate();
+      month = date.getMonth() + 1;
+
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      formattedDate = `${day}-${month}`;
+
       let ObjectExercise = {
         id: uniqueId,
         nameExercise: exerciseName,
@@ -64,6 +80,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         weight: weight,
         target: exerciseTarget,
         note: exerciseNote,
+        dataChart: [{ kg: parseInt(weight), date: formattedDate }],
       };
 
       setExercises([...exercises, ObjectExercise]);
@@ -80,6 +97,19 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
+      //get Date for dataChart
+      const date = new Date();
+      day = date.getDate();
+      month = date.getMonth() + 1;
+
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      formattedDate = `${day}-${month}`;
+
       let ObjectNewExercise = {
         id: uniqueId,
         nameExercise: exerciseName,
@@ -88,6 +118,7 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
         weight: weight,
         target: exerciseTarget,
         note: exerciseNote,
+        dataChart: [{ kg: parseInt(weight), date: formattedDate }],
       };
 
       setExercises([...exercises, ObjectNewExercise]);

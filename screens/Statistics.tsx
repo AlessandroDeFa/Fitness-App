@@ -15,30 +15,7 @@ import { globalStyles } from "../components/GlobalStyles";
 import { Linechart } from "../components/Linechart";
 import { ExampleData } from "../components/Programs";
 import { ExerciseData } from "../components/Programs";
-
-const dataExerciseWeight = {
-  labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43, 99],
-      color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
-      strokeWidth: 2,
-    },
-  ],
-  legend: ["Peso (kg)"],
-};
-
-const dataPersonalWeight = {
-  labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
-  datasets: [
-    {
-      data: [20, 59, 28, 80, 99, 43, 99],
-      color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
-      strokeWidth: 2,
-    },
-  ],
-  legend: ["Peso corporeo (kg)"],
-};
+import { dataChart } from "../components/Programs";
 
 export const Statistics = () => {
   const { plansData } = useContext(ContextApp);
@@ -47,11 +24,14 @@ export const Statistics = () => {
     useState<number | null>(null);
   const [chartParentWidth, setChartParentWidth] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState<string | null>();
-  const [exercisesFromSelectedPlan, setExercisesFromSelectedPlan] =
-    useState<ExerciseData[]>();
-  const [selectedExercise, setSelectedExercise] = useState<ExerciseData>();
+  const [exercisesFromSelectedPlan, setExercisesFromSelectedPlan] = useState<
+    ExerciseData[]
+  >([]);
+  const [selectedExercise, setSelectedExercise] = useState<string>("");
+  const [chartWeightValues, setChartWeightValues] = useState<number[]>([]);
+  const [chartDateValues, setChartDateValues] = useState<string[]>([]);
 
-  const handlePickerPlanChange = (itemValue: string) => {
+  const handlePickerPlanChange = (itemValue: string | null) => {
     setSelectedPlan(itemValue);
     const exercisesFromPlan = plansData.find(
       (plan: ExampleData) => plan.id === itemValue
@@ -59,10 +39,24 @@ export const Statistics = () => {
     setExercisesFromSelectedPlan(exercisesFromPlan);
   };
 
+  const handlePickerExerciseChange = (itemValue: string) => {
+    setSelectedExercise(itemValue);
+    const weightValues = exercisesFromSelectedPlan?.find(
+      (exercise: ExerciseData) => exercise.id === itemValue
+    )?.dataChart;
+    setChartWeightValues(weightValues?.map((value) => value.kg) ?? []);
+    const dateValues = exercisesFromSelectedPlan?.find(
+      (exercise: ExerciseData) => exercise.id === itemValue
+    )?.dataChart;
+    setChartDateValues(dateValues?.map((value) => value.date) ?? []);
+  };
+
   useEffect(() => {
-    if (plansData.length === 0) {
+    if (!plansData) {
       setSelectedPlan(null);
       setExercisesFromSelectedPlan([]);
+      setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
+      setChartDateValues(["", "", "", "", ""]);
     }
   }, [plansData]);
 
@@ -74,6 +68,10 @@ export const Statistics = () => {
       setExercisesFromSelectedPlan(exerciseDefaultValue);
       if (exerciseDefaultValue?.length > 0) {
         setSelectedExercise(exerciseDefaultValue[0].id);
+        const weightValues = exerciseDefaultValue?.find(
+          (exercise: ExerciseData) => exercise.id === selectedExercise
+        )?.dataChart;
+        setChartWeightValues(weightValues?.map((value: dataChart) => value.kg));
       }
     }
   }, [selectedPlan, plansData]);
@@ -86,6 +84,30 @@ export const Statistics = () => {
       };
     }, [])
   );
+
+  const dataExerciseWeight = {
+    labels: chartDateValues,
+    datasets: [
+      {
+        data: chartWeightValues,
+        color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
+        strokeWidth: 2,
+      },
+    ],
+    legend: ["Peso (kg)"],
+  };
+
+  const dataPersonalWeight = {
+    labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
+    datasets: [
+      {
+        data: [20, 59, 28, 80, 99, 43, 99],
+        color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
+        strokeWidth: 2,
+      },
+    ],
+    legend: ["Peso corporeo (kg)"],
+  };
 
   return (
     <View style={globalStyles.container}>
@@ -120,11 +142,12 @@ export const Statistics = () => {
                   />
                 ))}
               </Picker>
-              {plansData.length === 0 && (
-                <Text style={{ color: "#CACCCD", fontWeight: "500" }}>
-                  Nessuna scheda disponibile
-                </Text>
-              )}
+              {plansData.length === 0 ||
+                (!plansData && (
+                  <Text style={{ color: "#CACCCD", fontWeight: "500" }}>
+                    Nessuna scheda disponibile
+                  </Text>
+                ))}
             </View>
             <View style={styles.spacingPicker}>
               <Text style={styles.fontTextPicker}>
@@ -135,7 +158,7 @@ export const Statistics = () => {
                 style={styles.picker}
                 selectedValue={selectedExercise}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedExercise(itemValue)
+                  handlePickerExerciseChange(itemValue)
                 }
               >
                 {exercisesFromSelectedPlan?.map((exercise: ExerciseData) => (
