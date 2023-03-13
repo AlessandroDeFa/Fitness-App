@@ -147,9 +147,10 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
           exerciseToChange.weight = updateWeightExercise;
-          exerciseToChange.dataChart.push(dataChart);
+          exerciseToChange.weight !== "" &&
+            exerciseToChange.dataChart.push(dataChart);
         }
-        console.log(exerciseToChange?.dataChart);
+
         setUpdateExerciseModal(false);
       } catch (error) {
         console.error(error);
@@ -211,10 +212,9 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
           exerciseToChange.weight = updateWeightExercise;
-          exerciseToChange.dataChart.push(dataChart);
+          exerciseToChange.weight !== "" &&
+            exerciseToChange.dataChart.push(dataChart);
         }
-
-        console.log(exerciseToChange?.dataChart);
 
         fecthPlansData();
         setUpdateExerciseModalUpdate(false);

@@ -55,8 +55,8 @@ export const Statistics = () => {
     if (!plansData) {
       setSelectedPlan(null);
       setExercisesFromSelectedPlan([]);
-      setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
-      setChartDateValues(["", "", "", "", ""]);
+      // setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
+      // setChartDateValues(["", "", "", "", ""]);
     }
   }, [plansData]);
 
@@ -71,7 +71,20 @@ export const Statistics = () => {
         const weightValues = exerciseDefaultValue?.find(
           (exercise: ExerciseData) => exercise.id === selectedExercise
         )?.dataChart;
-        setChartWeightValues(weightValues?.map((value: dataChart) => value.kg));
+
+        if (weightValues.length > 0) {
+          setChartWeightValues(
+            weightValues?.map((value: dataChart) => value.kg)
+          );
+          setChartDateValues(
+            weightValues?.map((value: dataChart) => value.date)
+          );
+        } else {
+          setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
+          setChartDateValues(["", "", "", "", ""]);
+        }
+
+        console.log(chartWeightValues);
       }
     }
   }, [selectedPlan, plansData]);

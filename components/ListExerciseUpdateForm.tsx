@@ -81,7 +81,10 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         weight: newWeight,
         target: newExerciseTarget,
         note: newExerciseNote,
-        dataChart: [{ kg: parseInt(newWeight), date: formattedDate }],
+        dataChart:
+          newWeight !== ""
+            ? [{ kg: parseInt(newWeight), date: formattedDate }]
+            : [],
       };
 
       setNewExercises([...newExercises, ObjectExercise]);
@@ -119,7 +122,10 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         weight: newWeight,
         target: newExerciseTarget,
         note: newExerciseNote,
-        dataChart: [{ kg: parseInt(newWeight), date: formattedDate }],
+        dataChart:
+          newWeight !== ""
+            ? [{ kg: parseInt(newWeight), date: formattedDate }]
+            : [],
       };
 
       setNewExercises([...newExercises, ObjectNewExercise]);
