@@ -59,9 +59,9 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
     if (
       series.trim() === "" ||
       reps.trim() === "" ||
-      isNaN(series) ||
-      isNaN(reps) ||
-      isNaN(weight)
+      isNaN(+series) ||
+      isNaN(+reps) ||
+      isNaN(+weight)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
@@ -101,9 +101,9 @@ export const ListExerciseForm: React.FC<ListExerciseProps> = ({
       exerciseTarget.trim() === "" ||
       series.trim() === "" ||
       reps.trim() === "" ||
-      isNaN(series) ||
-      isNaN(reps) ||
-      isNaN(weight)
+      isNaN(+series) ||
+      isNaN(+reps) ||
+      isNaN(+weight)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {

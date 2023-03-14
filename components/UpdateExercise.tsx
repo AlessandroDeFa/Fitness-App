@@ -99,9 +99,9 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateTargetExercise.trim() === "" ||
       updateSeriesExercise.trim() === "" ||
       updateRepsExercise.trim() === "" ||
-      isNaN(updateSeriesExercise) ||
-      isNaN(updateRepsExercise) ||
-      isNaN(updateWeightExercise)
+      isNaN(+updateSeriesExercise) ||
+      isNaN(+updateRepsExercise) ||
+      isNaN(+updateWeightExercise)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -168,9 +168,9 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateTargetExercise.trim() === "" ||
       updateSeriesExercise.trim() === "" ||
       updateRepsExercise.trim() === "" ||
-      isNaN(updateSeriesExercise) ||
-      isNaN(updateRepsExercise) ||
-      isNaN(updateWeightExercise)
+      isNaN(+updateSeriesExercise) ||
+      isNaN(+updateRepsExercise) ||
+      isNaN(+updateWeightExercise)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([

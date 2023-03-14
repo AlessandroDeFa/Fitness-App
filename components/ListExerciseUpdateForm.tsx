@@ -60,8 +60,8 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
     if (
       newExerciseSeries.trim() === "" ||
       newExerciseReps.trim() === "" ||
-      isNaN(newExerciseSeries) ||
-      isNaN(newExerciseReps)
+      isNaN(+newExerciseSeries) ||
+      isNaN(+newExerciseReps)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
@@ -103,8 +103,8 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
       newExerciseTarget.trim() === "" ||
       newExerciseSeries.trim() === "" ||
       newExerciseReps.trim() === "" ||
-      isNaN(newExerciseSeries) ||
-      isNaN(newExerciseReps)
+      isNaN(+newExerciseSeries) ||
+      isNaN(+newExerciseReps)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
