@@ -4,12 +4,12 @@ import { View, Text } from "react-native";
 import React from "react";
 
 interface datasetsChart {
-  data: number[] | [];
+  data: number[];
 }
 
 interface LineChartProps {
   data: {
-    labels: string[] | [];
+    labels: string[];
     datasets: datasetsChart[];
     legend: string[];
   };

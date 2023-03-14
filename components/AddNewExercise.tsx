@@ -113,6 +113,9 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                 <View>
                   <TextInput
                     placeholder="Aggiungi nome"
+                    placeholderTextColor={
+                      Platform.OS === "ios" ? "" : "#606669"
+                    }
                     maxLength={25}
                     onChangeText={
                       updatePlanModal
@@ -127,6 +130,9 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                   <View>
                     <TextInput
                       placeholder="Note"
+                      placeholderTextColor={
+                        Platform.OS === "ios" ? "" : "#606669"
+                      }
                       maxLength={50}
                       onChangeText={
                         updatePlanModal

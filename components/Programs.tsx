@@ -163,7 +163,7 @@ export interface ExerciseData {
   weight: string;
   target: string;
   note: string;
-  dataChart: dataChart[];
+  dataChart: dataChart[] | [];
 }
 
 export interface ExampleData {

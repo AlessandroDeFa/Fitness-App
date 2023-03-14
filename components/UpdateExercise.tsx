@@ -9,6 +9,7 @@ import {
   TextInput,
   Animated,
   Vibration,
+  Platform,
 } from "react-native";
 import { ExampleData } from "./Programs";
 import { globalStyles } from "../components/GlobalStyles";
@@ -94,10 +95,13 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
 
   const handleSubmitUpdateExercise = (id: string) => {
     if (
-      updateNameExercise === "" ||
-      updateTargetExercise === "" ||
-      updateSeriesExercise === "" ||
-      updateRepsExercise === ""
+      updateNameExercise.trim() === "" ||
+      updateTargetExercise.trim() === "" ||
+      updateSeriesExercise.trim() === "" ||
+      updateRepsExercise.trim() === "" ||
+      isNaN(updateSeriesExercise) ||
+      isNaN(updateRepsExercise) ||
+      isNaN(updateWeightExercise)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -146,7 +150,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.note = updateNoteExercise;
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
-          exerciseToChange.weight = updateWeightExercise;
+          exerciseToChange.weight = updateWeightExercise.trim();
           exerciseToChange.weight !== "" &&
             exerciseToChange.dataChart.push(dataChart);
         }
@@ -160,10 +164,13 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
 
   const handleSubmitUpdateExerciseModalUpdate = async (id: string) => {
     if (
-      updateNameExercise === "" ||
-      updateTargetExercise === "" ||
-      updateSeriesExercise === "" ||
-      updateRepsExercise === ""
+      updateNameExercise.trim() === "" ||
+      updateTargetExercise.trim() === "" ||
+      updateSeriesExercise.trim() === "" ||
+      updateRepsExercise.trim() === "" ||
+      isNaN(updateSeriesExercise) ||
+      isNaN(updateRepsExercise) ||
+      isNaN(updateWeightExercise)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -211,7 +218,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.note = updateNoteExercise;
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
-          exerciseToChange.weight = updateWeightExercise;
+          exerciseToChange.weight = updateWeightExercise.trim();
           exerciseToChange.weight !== "" &&
             exerciseToChange.dataChart.push(dataChart);
         }
@@ -279,6 +286,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
               <TextInput
                 style={styles.updateInputs}
                 placeholder="Nome eserizio"
+                placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                 defaultValue={
                   exerciseToUpdate?.nameExercise ||
                   exerciseToUpdateModalUpdate?.nameExercise
@@ -288,6 +296,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
               <TextInput
                 style={styles.updateInputs}
                 placeholder="Target"
+                placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                 maxLength={25}
                 defaultValue={
                   exerciseToUpdate?.target ||
@@ -298,6 +307,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
               <TextInput
                 style={styles.inputsNote}
                 placeholder="Note"
+                placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                 maxLength={70}
                 defaultValue={
                   exerciseToUpdate?.note || exerciseToUpdateModalUpdate?.note
@@ -312,6 +322,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                   style={styles.updateInputs}
                   placeholder="Serie"
                   keyboardType="numeric"
+                  placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                   maxLength={2}
                   defaultValue={
                     exerciseToUpdate?.series ||
@@ -323,6 +334,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                   style={styles.updateInputs}
                   placeholder="Ripetizioni"
                   keyboardType="numeric"
+                  placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                   maxLength={2}
                   defaultValue={
                     exerciseToUpdate?.reps || exerciseToUpdateModalUpdate?.reps
@@ -333,6 +345,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                   style={styles.inputsWeight}
                   placeholder="Peso"
                   keyboardType="numeric"
+                  placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                   maxLength={3}
                   defaultValue={
                     exerciseToUpdate?.weight ||

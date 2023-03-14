@@ -57,7 +57,12 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
   let formattedDate: string;
 
   const handleUpdateSaveExercise = () => {
-    if (newExerciseSeries === "" || newExerciseReps === "") {
+    if (
+      newExerciseSeries.trim() === "" ||
+      newExerciseReps.trim() === "" ||
+      isNaN(newExerciseSeries) ||
+      isNaN(newExerciseReps)
+    ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {
       //get Date for dataChart
@@ -94,10 +99,12 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
 
   const handleUpdateNewExercise = () => {
     if (
-      newExerciseName === "" ||
-      newExerciseTarget === "" ||
-      newExerciseSeries === "" ||
-      newExerciseReps === ""
+      newExerciseName.trim() === "" ||
+      newExerciseTarget.trim() === "" ||
+      newExerciseSeries.trim() === "" ||
+      newExerciseReps.trim() === "" ||
+      isNaN(newExerciseSeries) ||
+      isNaN(newExerciseReps)
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
     } else {

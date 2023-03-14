@@ -87,6 +87,7 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
               <View style={styles.containerInputNote}>
                 <TextInput
                   placeholder="Note"
+                  placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
                   maxLength={50}
                   onChangeText={
                     updatePlanModal
