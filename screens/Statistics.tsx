@@ -53,8 +53,8 @@ export const Statistics = () => {
       (exercise: ExerciseData) => exercise.id === itemValue
     )?.dataChart;
     if (weightValues && weightValues?.length > 0) {
-      setChartWeightValues(weightValues?.map((value) => value.kg));
-      setChartDateValues(weightValues?.map((value) => value.date));
+      setChartWeightValues(weightValues?.slice(-7).map((value) => value.kg));
+      setChartDateValues(weightValues?.slice(-7).map((value) => value.date));
     } else {
       setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
       setChartDateValues(["", "", "", "", ""]);
@@ -80,10 +80,10 @@ export const Statistics = () => {
 
         if (weightValues.length > 0) {
           setChartWeightValues(
-            weightValues?.map((value: dataChart) => value.kg)
+            weightValues?.slice(-7).map((value: dataChart) => value.kg)
           );
           setChartDateValues(
-            weightValues?.map((value: dataChart) => value.date)
+            weightValues?.slice(-7).map((value: dataChart) => value.date)
           );
         } else {
           setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
