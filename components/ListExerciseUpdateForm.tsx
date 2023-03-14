@@ -55,6 +55,11 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
   let day: number | string;
   let month: number | string;
   let formattedDate: string;
+  if (newWeight.includes(",")) {
+    const weightDecimal = parseFloat(newWeight.replace(",", "."));
+    const numToString = weightDecimal.toString();
+    setNewWeight(numToString);
+  }
 
   const handleUpdateSaveExercise = () => {
     if (
@@ -88,7 +93,7 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         note: newExerciseNote,
         dataChart:
           newWeight !== ""
-            ? [{ kg: parseInt(newWeight), date: formattedDate }]
+            ? [{ kg: parseFloat(newWeight), date: formattedDate }]
             : [],
       };
 
@@ -131,7 +136,7 @@ export const ListExerciseUpdateForm: React.FC<ListExerciseProps> = ({
         note: newExerciseNote,
         dataChart:
           newWeight !== ""
-            ? [{ kg: parseInt(newWeight), date: formattedDate }]
+            ? [{ kg: parseFloat(newWeight), date: formattedDate }]
             : [],
       };
 

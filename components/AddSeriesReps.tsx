@@ -140,7 +140,7 @@ export const AddSeriesReps: React.FC<seriesRepsProps> = ({
                     <View style={styles.spacingInput}>
                       <TextInput
                         keyboardType="numeric"
-                        maxLength={3}
+                        maxLength={4}
                         onChangeText={
                           updatePlanModal
                             ? (value) => setNewWeight(value)

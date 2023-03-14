@@ -63,10 +63,16 @@ export const Statistics = () => {
 
   useEffect(() => {
     if (plansData.length > 0) {
-      const exerciseDefaultValue = plansData.find(
-        (plan: ExampleData) => plan.id === selectedPlan
-      )?.exercises;
+      if (plansData.length === 1) {
+        setSelectedPlan(plansData[0].id);
+      }
+
+      const exerciseDefaultValue =
+        plansData.find((plan: ExampleData) => plan.id === selectedPlan)
+          ?.exercises || [];
+
       setExercisesFromSelectedPlan(exerciseDefaultValue);
+
       if (exerciseDefaultValue?.length > 0) {
         setSelectedExercise(exerciseDefaultValue[0].id);
 

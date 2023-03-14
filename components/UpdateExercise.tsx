@@ -65,7 +65,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       exerciseToUpdate?.reps || exerciseToUpdateModalUpdate?.reps
     );
     setUpdateWeightExercise(
-      exerciseToUpdate?.weight || exerciseToUpdateModalUpdate?.weight
+      exerciseToUpdate?.weight || exerciseToUpdateModalUpdate?.weight || ""
     );
   }, [
     exerciseToUpdate?.nameExercise,
@@ -94,6 +94,8 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
   let formattedDate: string;
 
   const handleSubmitUpdateExercise = (id: string) => {
+    const updatedWeight = updateWeightExercise.replace(/,/g, ".");
+
     if (
       updateNameExercise.trim() === "" ||
       updateTargetExercise.trim() === "" ||
@@ -101,7 +103,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateRepsExercise.trim() === "" ||
       isNaN(+updateSeriesExercise) ||
       isNaN(+updateRepsExercise) ||
-      isNaN(+updateWeightExercise)
+      (updatedWeight.trim() !== "" && isNaN(+updatedWeight))
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -140,7 +142,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
         formattedDate = `${day}-${month}`;
 
         let dataChart = {
-          kg: parseInt(updateWeightExercise),
+          kg: parseFloat(updatedWeight),
           date: formattedDate,
         };
 
@@ -150,7 +152,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.note = updateNoteExercise;
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
-          exerciseToChange.weight = updateWeightExercise.trim();
+          exerciseToChange.weight = updatedWeight;
           exerciseToChange.weight !== "" &&
             exerciseToChange.dataChart.push(dataChart);
         }
@@ -163,6 +165,8 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
   };
 
   const handleSubmitUpdateExerciseModalUpdate = async (id: string) => {
+    const updatedWeight = updateWeightExercise.replace(/,/g, ".");
+
     if (
       updateNameExercise.trim() === "" ||
       updateTargetExercise.trim() === "" ||
@@ -170,7 +174,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
       updateRepsExercise.trim() === "" ||
       isNaN(+updateSeriesExercise) ||
       isNaN(+updateRepsExercise) ||
-      isNaN(+updateWeightExercise)
+      (updatedWeight.trim() !== "" && isNaN(+updatedWeight))
     ) {
       Vibration.vibrate([0, 50, 0, 0]);
       Animated.sequence([
@@ -209,7 +213,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
         formattedDate = `${day}-${month}`;
 
         let dataChart = {
-          kg: parseInt(updateWeightExercise),
+          kg: parseFloat(updatedWeight),
           date: formattedDate,
         };
         if (exerciseToChange) {
@@ -218,7 +222,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
           exerciseToChange.note = updateNoteExercise;
           exerciseToChange.series = updateSeriesExercise;
           exerciseToChange.reps = updateRepsExercise;
-          exerciseToChange.weight = updateWeightExercise.trim();
+          exerciseToChange.weight = updatedWeight;
           exerciseToChange.weight !== "" &&
             exerciseToChange.dataChart.push(dataChart);
         }
@@ -346,7 +350,7 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                   placeholder="Peso"
                   keyboardType="numeric"
                   placeholderTextColor={Platform.OS === "ios" ? "" : "#606669"}
-                  maxLength={3}
+                  maxLength={4}
                   defaultValue={
                     exerciseToUpdate?.weight ||
                     exerciseToUpdateModalUpdate?.weight

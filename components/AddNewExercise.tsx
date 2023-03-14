@@ -201,7 +201,7 @@ export const AddNewExercise: React.FC<AddNewExerciseProps> = ({
                     <View style={styles.spacingInput}>
                       <TextInput
                         keyboardType="numeric"
-                        maxLength={3}
+                        maxLength={4}
                         onChangeText={
                           updatePlanModal
                             ? (value) => setNewWeight(value)
