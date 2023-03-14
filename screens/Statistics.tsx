@@ -49,12 +49,12 @@ export const Statistics = () => {
 
   const handlePickerExerciseChange = (itemValue: string) => {
     setSelectedExercise(itemValue);
-    const weightValues = exercisesFromSelectedPlan?.find(
-      (exercise: ExerciseData) => exercise.id === itemValue
-    )?.dataChart;
+    const weightValues = exercisesFromSelectedPlan
+      ?.find((exercise: ExerciseData) => exercise.id === itemValue)
+      ?.dataChart.slice(-7);
     if (weightValues && weightValues?.length > 0) {
-      setChartWeightValues(weightValues?.slice(-7).map((value) => value.kg));
-      setChartDateValues(weightValues?.slice(-7).map((value) => value.date));
+      setChartWeightValues(weightValues?.map((value) => value.kg));
+      setChartDateValues(weightValues?.map((value) => value.date));
     } else {
       setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
       setChartDateValues(["", "", "", "", ""]);
@@ -76,14 +76,14 @@ export const Statistics = () => {
       if (exerciseDefaultValue?.length > 0) {
         setSelectedExercise(exerciseDefaultValue[0].id);
 
-        const weightValues = exerciseDefaultValue[0].dataChart;
+        const weightValues = exerciseDefaultValue[0].dataChart.slice(-7);
 
         if (weightValues.length > 0) {
           setChartWeightValues(
-            weightValues?.slice(-7).map((value: dataChart) => value.kg)
+            weightValues?.map((value: dataChart) => value.kg)
           );
           setChartDateValues(
-            weightValues?.slice(-7).map((value: dataChart) => value.date)
+            weightValues?.map((value: dataChart) => value.date)
           );
         } else {
           setChartWeightValues([0, 0, 0, 0, 0, 0, 0]);
