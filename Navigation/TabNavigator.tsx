@@ -25,29 +25,29 @@ function BottomTabNavigator() {
 
   //fetch exercisesData from api
 
-  // useEffect(() => {
-  //   const fechData = async () => {
-  //     fetch("https://exercisedb.p.rapidapi.com/exercises", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "X-RapidAPI-Key": apiKey,
-  //         "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => setDataApi(data))
-  //       .catch((error) => console.error(error));
-  //   };
+  useEffect(() => {
+    const fechData = async () => {
+      fetch("https://exercisedb.p.rapidapi.com/exercises", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setDataApi(data))
+        .catch((error) => console.error(error));
+    };
 
-  //   fechData();
-  // }, []);
+    fechData();
+  }, []);
 
-  // useEffect(() => {
-  //   if (dataApi.length > 0) {
-  //     setFilteredExercises(dataApi);
-  //   }
-  // }, [dataApi]);
+  useEffect(() => {
+    if (dataApi.length > 0) {
+      setFilteredExercises(dataApi);
+    }
+  }, [dataApi]);
 
   const filterExercises = (value: string) => {
     setFilteredExercises(
@@ -132,11 +132,11 @@ function BottomTabNavigator() {
                 />
               );
             } else if (route.name === "Profilo") {
-              iconName = "person";
+              iconName = "ios-person-circle-outline";
               return (
                 <Ionicons
                   name={iconName}
-                  size={22}
+                  size={26}
                   color={focused ? "#3B82F7" : color}
                 />
               );

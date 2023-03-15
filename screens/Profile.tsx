@@ -52,7 +52,12 @@ export const Profile = () => {
         const profileData: profileDataStrocture = JSON.parse(profileDataString);
         if (profileData.personalWeightChart.length > 0) {
           profileData.personalWeightChart.pop();
-          profileData.personalWeight = "";
+          profileData.personalWeight =
+            profileData.personalWeightChart.length === 0
+              ? ""
+              : profileData.personalWeightChart[
+                  profileData.personalWeightChart.length - 1
+                ].kg.toString();
           console.log(profileData.personalWeightChart);
         }
         await AsyncStorage.setItem("profileData", JSON.stringify(profileData));
