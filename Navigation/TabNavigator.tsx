@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../screens/Home";
+import { Profile } from "../screens/Profile";
 import { Exercises } from "../screens/Exercises";
 import { Statistics } from "../screens/Statistics";
 import { Premium } from "../screens/Premium";
@@ -101,6 +102,15 @@ function BottomTabNavigator() {
                   color={focused ? "#3B82F7" : color}
                 />
               );
+            } else if (route.name === "Profilo") {
+              iconName = "person";
+              return (
+                <Ionicons
+                  name={iconName}
+                  size={22}
+                  color={focused ? "#3B82F7" : color}
+                />
+              );
             } else if (route.name === "Esercizi") {
               iconName = "dumbbell";
               return (
@@ -139,6 +149,7 @@ function BottomTabNavigator() {
         })}
         initialRouteName="Aggiungi programma"
       >
+        <Tab.Screen name="Profilo" component={Profile} />
         <Tab.Screen name="Esercizi" component={Exercises} />
         <Tab.Screen name="Aggiungi programma" component={Home} />
         <Tab.Screen name="Statistiche" component={Statistics} />

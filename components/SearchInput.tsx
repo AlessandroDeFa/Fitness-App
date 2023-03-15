@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     alignItems: "center",
     paddingHorizontal: 8,
+    marginBottom: 10,
     paddingVertical: Platform.OS === "ios" ? 10 : 0,
   },
   input: {
