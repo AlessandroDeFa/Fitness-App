@@ -18,7 +18,7 @@ import { ExerciseData } from "../components/Programs";
 import { dataChart } from "../components/Programs";
 
 export const Statistics = () => {
-  const { plansData } = useContext(ContextApp);
+  const { plansData, profileData } = useContext(ContextApp);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
   const [selectedValuePersonalWeight, setSelectedValuePersonalWeight] =
     useState<number | null>(null);
@@ -32,6 +32,17 @@ export const Statistics = () => {
     0, 0, 0, 0, 0, 0, 0,
   ]);
   const [chartDateValues, setChartDateValues] = useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+
+  const [personalWeightValues, setPersonalWeightValus] = useState<number[]>([
+    0, 0, 0, 0, 0, 0, 0,
+  ]);
+  const [personalDateValues, setPersonalDateValues] = useState<string[]>([
     "",
     "",
     "",
@@ -109,6 +120,30 @@ export const Statistics = () => {
     }, [])
   );
 
+  useEffect(() => {
+    if (profileData) {
+      if (profileData.personalWeightChart.length > 0) {
+        const personalWeigh = profileData.personalWeightChart.map(
+          (value: dataChart) => value.kg
+        );
+
+        setPersonalWeightValus(personalWeigh.slice(-7));
+
+        const personalDate = profileData.personalWeightChart.map(
+          (value: dataChart) => value.date
+        );
+
+        setPersonalDateValues(personalDate.slice(-7));
+      } else {
+        setPersonalWeightValus([0, 0, 0, 0, 0, 0, 0]);
+        setPersonalDateValues(["", "", "", "", ""]);
+      }
+    } else {
+      setPersonalWeightValus([0, 0, 0, 0, 0, 0, 0]);
+      setPersonalDateValues(["", "", "", "", ""]);
+    }
+  }, [profileData]);
+
   const dataExerciseWeight = {
     labels: chartDateValues,
     datasets: [
@@ -122,10 +157,10 @@ export const Statistics = () => {
   };
 
   const dataPersonalWeight = {
-    labels: ["Janry", "Feary", "March", "April", "May", "June", "asda"],
+    labels: personalDateValues,
     datasets: [
       {
-        data: [20, 59, 28, 80, 99, 43, 99],
+        data: personalWeightValues,
         color: (opacity = 1) => `rgba(59, 130, 247, ${opacity})`,
         strokeWidth: 2,
       },

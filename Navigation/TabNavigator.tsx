@@ -10,6 +10,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { ExampleData } from "../components/Programs";
+import { profileDataStrocture } from "../screens/Profile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 
@@ -75,6 +76,31 @@ function BottomTabNavigator() {
     fecthPlansData();
   }, []);
 
+  //fetch profileData from local storage
+
+  const [profileData, setProfileData] = useState<profileDataStrocture>({
+    id: "",
+    name: "",
+    age: "",
+    height: "",
+    personalWeight: "",
+  });
+
+  const fecthProfileData = async () => {
+    try {
+      const data = await AsyncStorage.getItem("profileData");
+      if (data !== null) {
+        setProfileData(JSON.parse(data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fecthProfileData();
+  }, []);
+
   return (
     <ContextApp.Provider
       value={{
@@ -86,6 +112,8 @@ function BottomTabNavigator() {
         dataLoaded,
         plansData,
         fecthPlansData,
+        profileData,
+        fecthProfileData,
       }}
     >
       <Tab.Navigator

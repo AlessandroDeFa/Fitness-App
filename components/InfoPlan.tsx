@@ -135,6 +135,7 @@ export const InfoPlan: React.FC<infoplanProps> = ({
 
               {infoPlan.type === "Personal Plan" && (
                 <TouchableOpacity
+                  activeOpacity={0.8}
                   style={styles.deleteButton}
                   onPress={() => deletePlan(infoPlan.id)}
                 >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -7,28 +7,42 @@ import {
   Text,
   ScrollView,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { UpdateProfileModal } from "../components/UpdateProfileModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { dataChart } from "../components/Programs";
+import { useContext } from "react";
+import { ContextApp } from "../Navigation/TabNavigator";
+
+export interface profileDataStrocture {
+  id: string;
+  name: string;
+  age: string;
+  height: string;
+  personalWeight: string;
+  personalWeightChart: dataChart[] | [];
+}
 
 export const Profile = () => {
+  const { profileData, fecthProfileData } = useContext(ContextApp);
   const [updateProfileModal, setUpdateProfileModal] = useState<boolean>(false);
-  const altezza = "190";
-  const stringNome = "Nome";
-  const nome = "alessandro";
-  const stringAltezza = "Altezza (cm)";
-  const stringEta = "Età";
-  const stringPeso = "Peso corporeo (kg)";
-  const peso = "90";
-  const eta = "20";
-  const [value, setValue] = useState<string>("");
-  const [placeholder, setPlaceholder] = useState<string>("");
 
-  const handleTouch = (value: string, string: string) => {
-    setUpdateProfileModal(true);
-    setValue(value);
-    setPlaceholder(string);
+  const RemovePersonalWeightArray = async () => {
+    try {
+      const profileDataString = await AsyncStorage.getItem("profileData");
+      if (profileDataString) {
+        const profileData: profileDataStrocture = JSON.parse(profileDataString);
+        profileData.personalWeightChart = [];
+        profileData.personalWeight = "";
+        await AsyncStorage.setItem("profileData", JSON.stringify(profileData));
+        fecthProfileData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -47,11 +61,13 @@ export const Profile = () => {
               activeOpacity={1}
               underlayColor="#323135"
               onPress={() => {
-                handleTouch(nome, stringNome);
+                setUpdateProfileModal(true);
               }}
             >
               <View style={styles.flex}>
-                <Text style={styles.textTouchable}>Nome (opzionale)</Text>
+                <Text style={styles.textTouchable}>
+                  {profileData.name ? profileData.name : "Nome"}
+                </Text>
                 <MaterialIcons
                   name="keyboard-arrow-right"
                   size={24}
@@ -68,13 +84,13 @@ export const Profile = () => {
               activeOpacity={1}
               underlayColor="#323135"
               onPress={() => {
-                handleTouch(altezza, stringAltezza);
+                setUpdateProfileModal(true);
               }}
             >
               <View style={styles.flex}>
                 <Text style={styles.textTouchable}>Altezza (cm)</Text>
                 <View style={styles.flex}>
-                  <Text style={styles.valuePofile}>180</Text>
+                  <Text style={styles.valuePofile}>{profileData.height}</Text>
                   <MaterialIcons
                     name="keyboard-arrow-right"
                     size={24}
@@ -88,13 +104,13 @@ export const Profile = () => {
               activeOpacity={1}
               underlayColor="#323135"
               onPress={() => {
-                handleTouch(eta, stringEta);
+                setUpdateProfileModal(true);
               }}
             >
               <View style={styles.flex}>
                 <Text style={styles.textTouchable}>Età</Text>
                 <View style={styles.flex}>
-                  <Text style={styles.valuePofile}>20</Text>
+                  <Text style={styles.valuePofile}>{profileData.age}</Text>
                   <MaterialIcons
                     name="keyboard-arrow-right"
                     size={24}
@@ -108,13 +124,15 @@ export const Profile = () => {
               activeOpacity={1}
               underlayColor="#323135"
               onPress={() => {
-                handleTouch(peso, stringPeso);
+                setUpdateProfileModal(true);
               }}
             >
               <View style={styles.flex}>
                 <Text style={styles.textTouchable}>Peso corporeo (kg)</Text>
                 <View style={styles.flex}>
-                  <Text style={styles.valuePofile}>90</Text>
+                  <Text style={styles.valuePofile}>
+                    {profileData.personalWeight}
+                  </Text>
                   <MaterialIcons
                     name="keyboard-arrow-right"
                     size={24}
@@ -124,11 +142,20 @@ export const Profile = () => {
               </View>
             </TouchableHighlight>
           </View>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={RemovePersonalWeightArray}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>
+              Elimina tutti i dati del peso{" "}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
       <UpdateProfileModal
-        value={value}
-        placeholder={placeholder}
+        profileData={profileData}
+        fecthProfileData={fecthProfileData}
         updateProfileModal={updateProfileModal}
         setUpdateProfileModal={setUpdateProfileModal}
       />
@@ -204,5 +231,18 @@ const styles = StyleSheet.create({
   borderBottom: {
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
+  },
+  deleteButton: {
+    backgroundColor: "#1C1C1E",
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 9,
+    marginTop: 40,
+  },
+  buttonText: {
+    color: "#E93323",
+    fontSize: 15,
+    fontWeight: "600",
   },
 });
