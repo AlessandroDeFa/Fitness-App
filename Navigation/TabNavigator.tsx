@@ -84,6 +84,7 @@ function BottomTabNavigator() {
     age: "",
     height: "",
     personalWeight: "",
+    personalWeightChart: [],
   });
 
   const fecthProfileData = async () => {

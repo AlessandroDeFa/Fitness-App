@@ -45,6 +45,24 @@ export const Profile = () => {
     }
   };
 
+  const RemoveLastValuePersonalWeight = async () => {
+    try {
+      const profileDataString = await AsyncStorage.getItem("profileData");
+      if (profileDataString) {
+        const profileData: profileDataStrocture = JSON.parse(profileDataString);
+        if (profileData.personalWeightChart.length > 0) {
+          profileData.personalWeightChart.pop();
+          profileData.personalWeight = "";
+          console.log(profileData.personalWeightChart);
+        }
+        await AsyncStorage.setItem("profileData", JSON.stringify(profileData));
+        fecthProfileData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.main}>
@@ -143,6 +161,15 @@ export const Profile = () => {
             </TouchableHighlight>
           </View>
           <TouchableOpacity
+            style={styles.deleteFirstButton}
+            onPress={RemoveLastValuePersonalWeight}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>
+              Elimina solo l'ultimo dato del peso
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={styles.deleteButton}
             onPress={RemovePersonalWeightArray}
             activeOpacity={0.8}
@@ -232,13 +259,21 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
   },
-  deleteButton: {
+  deleteFirstButton: {
     backgroundColor: "#1C1C1E",
     paddingVertical: 10,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 9,
     marginTop: 40,
+  },
+  deleteButton: {
+    backgroundColor: "#1C1C1E",
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 9,
+    marginTop: 20,
   },
   buttonText: {
     color: "#E93323",
