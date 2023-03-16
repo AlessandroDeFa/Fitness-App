@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../components/GlobalStyles";
+import ActionSheet from "react-native-actionsheet";
 import { MaterialIcons } from "@expo/vector-icons";
 import { UpdateProfileModal } from "../components/UpdateProfileModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,6 +30,25 @@ export interface profileDataStrocture {
 export const Profile = () => {
   const { profileData, fecthProfileData } = useContext(ContextApp);
   const [updateProfileModal, setUpdateProfileModal] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
+  const [action, setAction] = useState<string>("");
+  const titleLastValue: string =
+    "Sei sicuro di voler eliminare l'ultimo valore del tuo peso?\nQuesta azione non può essere annullata";
+  const titleAllValues: string =
+    "Sei sicuro di voler eliminare tutti i valori del tuo peso?\nQuesta azione non può essere annullata";
+
+  let actionsheet = useRef<ActionSheet | null>(null);
+  let optionArray = ["Elimina", "Annulla"];
+
+  const showActionSheet = (value: string, action: string) => {
+    setTitle(value);
+    setAction(action);
+    actionsheet.current &&
+      actionsheet.current.setState(
+        { options: optionArray },
+        () => actionsheet.current?.show() && actionsheet.current?.show()
+      );
+  };
 
   const RemovePersonalWeightArray = async () => {
     try {
@@ -58,7 +78,6 @@ export const Profile = () => {
               : profileData.personalWeightChart[
                   profileData.personalWeightChart.length - 1
                 ].kg.toString();
-          console.log(profileData.personalWeightChart);
         }
         await AsyncStorage.setItem("profileData", JSON.stringify(profileData));
         fecthProfileData();
@@ -167,7 +186,7 @@ export const Profile = () => {
           </View>
           <TouchableOpacity
             style={styles.deleteFirstButton}
-            onPress={RemoveLastValuePersonalWeight}
+            onPress={() => showActionSheet(titleLastValue, "ultimoDato")}
             activeOpacity={0.8}
           >
             <Text style={styles.buttonText}>
@@ -176,7 +195,7 @@ export const Profile = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.deleteButton}
-            onPress={RemovePersonalWeightArray}
+            onPress={() => showActionSheet(titleAllValues, "tuttiDato")}
             activeOpacity={0.8}
           >
             <Text style={styles.buttonText}>
@@ -190,6 +209,21 @@ export const Profile = () => {
         fecthProfileData={fecthProfileData}
         updateProfileModal={updateProfileModal}
         setUpdateProfileModal={setUpdateProfileModal}
+      />
+      <ActionSheet
+        ref={actionsheet}
+        title={title}
+        options={optionArray}
+        tintColor={"#3B82F7"}
+        cancelButtonIndex={1}
+        destructiveButtonIndex={0}
+        onPress={(index: number) => {
+          if (index === 0 && action === "tuttiDato") {
+            RemovePersonalWeightArray();
+          } else if (index === 0 && action === "ultimoDato") {
+            RemoveLastValuePersonalWeight();
+          }
+        }}
       />
     </View>
   );
