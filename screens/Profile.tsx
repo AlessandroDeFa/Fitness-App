@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -186,7 +186,7 @@ export const Profile = () => {
           </View>
           <TouchableOpacity
             style={styles.deleteFirstButton}
-            onPress={() => showActionSheet(titleLastValue, "ultimoDato")}
+            onPress={() => showActionSheet(titleLastValue, "lastValue")}
             activeOpacity={0.8}
           >
             <Text style={styles.buttonText}>
@@ -195,7 +195,7 @@ export const Profile = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.deleteButton}
-            onPress={() => showActionSheet(titleAllValues, "tuttiDato")}
+            onPress={() => showActionSheet(titleAllValues, "allValues")}
             activeOpacity={0.8}
           >
             <Text style={styles.buttonText}>
@@ -218,9 +218,9 @@ export const Profile = () => {
         cancelButtonIndex={1}
         destructiveButtonIndex={0}
         onPress={(index: number) => {
-          if (index === 0 && action === "tuttiDato") {
+          if (index === 0 && action === "allValues") {
             RemovePersonalWeightArray();
-          } else if (index === 0 && action === "ultimoDato") {
+          } else if (index === 0 && action === "lastValue") {
             RemoveLastValuePersonalWeight();
           }
         }}
