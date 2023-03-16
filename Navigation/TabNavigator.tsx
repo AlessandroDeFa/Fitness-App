@@ -122,7 +122,7 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => {
             let iconName;
-            if (route.name === "Aggiungi programma") {
+            if (route.name === "Nuovo workout") {
               iconName = "plus";
               return (
                 <FontAwesome
@@ -176,11 +176,11 @@ function BottomTabNavigator() {
             borderTopColor: "#38383A",
           },
         })}
-        initialRouteName="Aggiungi programma"
+        initialRouteName="Nuovo workout"
       >
         <Tab.Screen name="Profilo" component={Profile} />
         <Tab.Screen name="Esercizi" component={Exercises} />
-        <Tab.Screen name="Aggiungi programma" component={Home} />
+        <Tab.Screen name="Nuovo workout" component={Home} />
         <Tab.Screen name="Statistiche" component={Statistics} />
         <Tab.Screen name="Aggiorna" component={Premium} />
       </Tab.Navigator>
