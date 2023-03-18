@@ -204,12 +204,7 @@ export const Profile = () => {
           </TouchableOpacity>
         </ScrollView>
       </View>
-      <UpdateProfileModal
-        profileData={profileData}
-        fecthProfileData={fecthProfileData}
-        updateProfileModal={updateProfileModal}
-        setUpdateProfileModal={setUpdateProfileModal}
-      />
+
       <ActionSheet
         ref={actionsheet}
         title={title}
@@ -224,6 +219,12 @@ export const Profile = () => {
             RemoveLastValuePersonalWeight();
           }
         }}
+      />
+      <UpdateProfileModal
+        profileData={profileData}
+        fecthProfileData={fecthProfileData}
+        updateProfileModal={updateProfileModal}
+        setUpdateProfileModal={setUpdateProfileModal}
       />
     </View>
   );
@@ -273,7 +274,6 @@ const styles = StyleSheet.create({
   profileLastTouchable: {
     backgroundColor: "#1C1C1E",
     paddingVertical: 10,
-
     fontSize: 16,
     color: "white",
     paddingHorizontal: 15,
@@ -318,5 +318,33 @@ const styles = StyleSheet.create({
     color: "#E93323",
     fontSize: 15,
     fontWeight: "600",
+  },
+
+  popup: {
+    position: "absolute",
+    backgroundColor: "white",
+    width: "100%",
+    height: "100%",
+    // width: Dimensions.get("window").width,
+    // height: Dimensions.get("window").height,
+    // backgroundColor: "white",
+  },
+  prova: {
+    height: 87,
+    width: 200,
+
+    justifyContent: "center",
+  },
+  prova1: {
+    flex: 1,
+    backgroundColor: "#2A2A2A",
+    borderTopRightRadius: 9,
+    borderTopLeftRadius: 9,
+  },
+  prova2: {
+    flex: 1,
+    backgroundColor: "#2A2A2A",
+    borderBottomRightRadius: 9,
+    borderBottomLeftRadius: 9,
   },
 });

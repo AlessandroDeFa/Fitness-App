@@ -1,6 +1,7 @@
-import React from "react";
+import React, { createRef } from "react";
 import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { ExampleData } from "./Programs";
+import { Ionicons } from "@expo/vector-icons";
 
 interface planProps {
   infoPlanModal: boolean;
@@ -8,6 +9,10 @@ interface planProps {
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
   data: ExampleData;
+  handleButtonClick: (index: number) => void;
+  buttonRef: React.MutableRefObject<View[]>;
+  index: number;
+  visible: boolean;
 }
 
 export const Plan: React.FC<planProps> = ({
@@ -16,6 +21,10 @@ export const Plan: React.FC<planProps> = ({
   setInfoPlan,
   infoPlan,
   data,
+  handleButtonClick,
+  buttonRef,
+  index,
+  visible,
 }) => {
   const handleClickPlan = () => {
     setInfoPlanModal(true);
@@ -26,36 +35,51 @@ export const Plan: React.FC<planProps> = ({
   const exerciseNamesString = exerciseNames.join(", ");
 
   return (
-    <TouchableHighlight
-      style={styles.container}
-      activeOpacity={1}
-      underlayColor="#323135"
-      onPress={handleClickPlan}
-    >
-      <View style={styles.containerPlan}>
-        <Text
-          ellipsizeMode="tail"
-          numberOfLines={2}
-          style={data.name.length < 15 ? styles.text : styles.namePlanLong}
-        >
-          {data.name}
-        </Text>
-
-        <View style={styles.containerExercises}>
-          {data.exercises.length > 0 ? (
+    <>
+      <TouchableHighlight
+        style={styles.container}
+        activeOpacity={1}
+        underlayColor="#323135"
+        onPress={handleClickPlan}
+      >
+        <View style={styles.containerPlan}>
+          <View style={styles.containerTitle}>
             <Text
               ellipsizeMode="tail"
-              numberOfLines={3}
-              style={styles.textExercise}
+              numberOfLines={2}
+              style={data.name.length < 15 ? styles.text : styles.namePlanLong}
             >
-              {exerciseNamesString}
+              {data.name}
             </Text>
-          ) : (
-            <Text style={styles.textExercise}>Nessun esercizio</Text>
-          )}
+            <View
+              ref={(ref) => (buttonRef.current[index] = ref)}
+              style={{ paddingLeft: 5 }}
+            >
+              <Ionicons
+                name="ellipsis-horizontal-circle-outline"
+                size={24}
+                color={visible ? "#1E3E63" : "#3B82F7"}
+                onPress={() => handleButtonClick(index)}
+              />
+            </View>
+          </View>
+
+          <View style={styles.containerExercises}>
+            {data.exercises.length > 0 ? (
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={3}
+                style={styles.textExercise}
+              >
+                {exerciseNamesString}
+              </Text>
+            ) : (
+              <Text style={styles.textExercise}>Nessun esercizio</Text>
+            )}
+          </View>
         </View>
-      </View>
-    </TouchableHighlight>
+      </TouchableHighlight>
+    </>
   );
 };
 
@@ -74,17 +98,22 @@ const styles = StyleSheet.create({
     padding: 10,
     position: "relative",
   },
+  containerTitle: {
+    flexDirection: "row",
+  },
   text: {
     color: "white",
     fontWeight: "bold",
     fontSize: 18,
-    textAlign: "center",
+    textAlign: "left",
+    flex: 1,
   },
   namePlanLong: {
     color: "white",
     fontWeight: "bold",
     fontSize: 14,
-    textAlign: "center",
+    textAlign: "left",
+    flex: 1,
   },
   containerExercises: {
     marginTop: 10,

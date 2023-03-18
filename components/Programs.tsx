@@ -1,8 +1,19 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ScrollView,
+  findNodeHandle,
+  UIManager,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Plan } from "./Plan";
 import { InfoPlan } from "./InfoPlan";
 import { ExamplePlan } from "./ExamplePlan";
+import { PopUpMenu } from "../components/PopUpMenu";
 
 const ExamplePlans = [
   {
@@ -192,58 +203,100 @@ export const Programs: React.FC<ProgramsProps> = ({
     exercises: [],
   });
 
+  //popUp Menu
+
+  const [visible, setVisible] = useState(false);
+  const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
+  const buttonRef = useRef<View[]>([]);
+
+  const handleButtonClick = (index: number) => {
+    if (buttonRef.current[index]) {
+      const handle = findNodeHandle(buttonRef.current[index]);
+      if (handle) {
+        UIManager.measureInWindow(handle, (x, y, width, height) => {
+          setButtonPosition({
+            x: x,
+            y: y,
+          });
+        });
+      }
+
+      setVisible(!visible);
+    }
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.spacingTitle}>
-        <Text style={[styles.colorText, styles.textTitle]}>Schede</Text>
-      </View>
-      <View style={styles.spacingText}>
-        <Text style={styles.colorText}>Le tue schede ({plansData.length})</Text>
-        <FlatList
-          data={plansData}
-          numColumns={2}
-          scrollEnabled={false}
-          columnWrapperStyle={styles.row}
-          renderItem={({ item }) => (
-            <Plan
-              data={item}
-              key={item.id}
-              infoPlan={infoPlan}
-              setInfoPlan={setInfoPlan}
-              infoPlanModal={infoPlanModal}
-              setInfoPlanModal={setInfoPlanModal}
-            />
-          )}
+    <>
+      <ScrollView style={styles.container}>
+        <View style={styles.spacingTitle}>
+          <Text style={[styles.colorText, styles.textTitle]}>Schede</Text>
+        </View>
+        <View style={styles.spacingText}>
+          <Text style={styles.colorText}>
+            Le tue schede ({plansData.length})
+          </Text>
+          <FlatList
+            data={plansData}
+            numColumns={2}
+            scrollEnabled={false}
+            columnWrapperStyle={styles.row}
+            renderItem={({ item, index }) => (
+              <Plan
+                data={item}
+                key={item.id}
+                infoPlan={infoPlan}
+                index={index}
+                setInfoPlan={setInfoPlan}
+                infoPlanModal={infoPlanModal}
+                setInfoPlanModal={setInfoPlanModal}
+                handleButtonClick={handleButtonClick}
+                buttonRef={buttonRef}
+                visible={visible}
+              />
+            )}
+          />
+        </View>
+        <View>
+          <Text style={styles.colorText}>
+            Esempi di schede ({ExamplePlans.length})
+          </Text>
+          <FlatList
+            data={ExamplePlans}
+            numColumns={2}
+            scrollEnabled={false}
+            columnWrapperStyle={styles.row}
+            renderItem={({ item }) => (
+              <ExamplePlan
+                data={item}
+                infoPlan={infoPlan}
+                setInfoPlan={setInfoPlan}
+                infoPlanModal={infoPlanModal}
+                setInfoPlanModal={setInfoPlanModal}
+              />
+            )}
+          />
+        </View>
+        <InfoPlan
+          infoPlan={infoPlan}
+          setInfoPlan={setInfoPlan}
+          infoPlanModal={infoPlanModal}
+          setInfoPlanModal={setInfoPlanModal}
+          fecthPlansData={fecthPlansData}
         />
-      </View>
-      <View>
-        <Text style={styles.colorText}>
-          Esempi di schede ({ExamplePlans.length})
-        </Text>
-        <FlatList
-          data={ExamplePlans}
-          numColumns={2}
-          scrollEnabled={false}
-          columnWrapperStyle={styles.row}
-          renderItem={({ item }) => (
-            <ExamplePlan
-              data={item}
-              infoPlan={infoPlan}
-              setInfoPlan={setInfoPlan}
-              infoPlanModal={infoPlanModal}
-              setInfoPlanModal={setInfoPlanModal}
-            />
-          )}
-        />
-      </View>
-      <InfoPlan
-        infoPlan={infoPlan}
-        setInfoPlan={setInfoPlan}
-        infoPlanModal={infoPlanModal}
-        setInfoPlanModal={setInfoPlanModal}
-        fecthPlansData={fecthPlansData}
-      />
-    </ScrollView>
+      </ScrollView>
+      <TouchableWithoutFeedback onPress={() => setVisible(false)}>
+        <View
+          style={{
+            display: visible ? "flex" : "none",
+            backgroundColor: "transparent",
+            width: Dimensions.get("window").width,
+            height: Dimensions.get("window").height,
+            position: "absolute",
+          }}
+        ></View>
+      </TouchableWithoutFeedback>
+      <PopUpMenu visible={visible} buttonPosition={buttonPosition} />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,7 @@ import { ExampleData } from "./Programs";
 import { globalStyles } from "../components/GlobalStyles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ExerciseData } from "./Programs";
+import ActionSheet from "react-native-actionsheet";
 
 interface UpdateExerciseProps {
   updateExerciseModal: boolean;
@@ -235,6 +236,32 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
     }
   };
 
+  //remove exercise
+
+  let actionsheet = useRef<ActionSheet | null>(null);
+  let optionArray = ["Elimina", "Annulla"];
+  const [action, setAction] = useState<string>("");
+  const title: string = "Sei sicuro di voler eliminare questo esercizio?";
+
+  const showActionSheet = (action: string) => {
+    setAction(action);
+    actionsheet.current &&
+      actionsheet.current.setState(
+        { options: optionArray },
+        () => actionsheet.current?.show() && actionsheet.current?.show()
+      );
+  };
+
+  const handleRemoveExercise = (id: string) => {
+    setExercises(exercises.filter((exercise) => exercise.id !== id));
+    setUpdateExerciseModal(false);
+  };
+
+  const handleUpdateExercises = (id: string) => {
+    setNewExercises(newExercises.filter((exercise) => exercise.id !== id));
+    setUpdateExerciseModalUpdate(false);
+  };
+
   return (
     <View>
       <Modal
@@ -359,7 +386,37 @@ export const UpdateExercise: React.FC<UpdateExerciseProps> = ({
                 />
               </View>
             </View>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() =>
+                showActionSheet(
+                  `${
+                    updatePlanModal
+                      ? "updatePlanModal"
+                      : "removeExerciseNewPlan"
+                  }`
+                )
+              }
+              activeOpacity={0.8}
+            >
+              <Text style={styles.buttonText}>Elimina esercizio</Text>
+            </TouchableOpacity>
           </View>
+          <ActionSheet
+            ref={actionsheet}
+            title={title}
+            options={optionArray}
+            tintColor={"#3B82F7"}
+            cancelButtonIndex={1}
+            destructiveButtonIndex={0}
+            onPress={(index: number) => {
+              if (index === 0 && action === "updatePlanModal") {
+                handleUpdateExercises(exerciseToUpdateModalUpdate.id);
+              } else if (index === 0 && action === "removeExerciseNewPlan") {
+                handleRemoveExercise(exerciseToUpdate.id);
+              }
+            }}
+          />
         </SafeAreaView>
       </Modal>
     </View>
@@ -452,5 +509,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 16,
     color: "white",
+  },
+  deleteButton: {
+    backgroundColor: "#1C1C1E",
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 9,
+    marginTop: 40,
+  },
+  buttonText: {
+    color: "#E93323",
+    fontSize: 15,
+    fontWeight: "600",
   },
 });
