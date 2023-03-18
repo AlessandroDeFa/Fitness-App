@@ -227,12 +227,14 @@ export const Programs: React.FC<ProgramsProps> = ({
           });
         });
       }
+
       setInfoPlan(data);
       setVisible(!visible);
     }
   };
 
   //delete plan ActionSheet
+
   let actionsheet = useRef<ActionSheet | null>(null);
   let optionArray = ["Elimina", "Annulla"];
   const title: string =

@@ -54,6 +54,7 @@ export const Plan: React.FC<planProps> = ({
               {data.name}
             </Text>
             <View
+              collapsable={false}
               ref={(ref) => (buttonRef.current[index] = ref)}
               style={{ paddingLeft: 5 }}
             >

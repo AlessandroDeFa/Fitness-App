@@ -5,6 +5,7 @@ import {
   Text,
   TouchableHighlight,
   Dimensions,
+  Platform,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -36,6 +37,9 @@ export const PopUpMenu: React.FC<popUpMenuProps> = ({
   const dynamicStyle = value
     ? { left: buttonPosition.x + 30, top: buttonPosition.y + 3 }
     : { left: buttonPosition.x - 172, top: buttonPosition.y + 3 };
+  const dynamicStyleAndroid = value
+    ? { left: buttonPosition.x + 30, top: buttonPosition.y + 25 }
+    : { left: buttonPosition.x - 172, top: buttonPosition.y + 25 };
 
   const handleModifyOption = () => {
     setUpdatePlanModal(true);
@@ -44,7 +48,11 @@ export const PopUpMenu: React.FC<popUpMenuProps> = ({
 
   return (
     <Animatable.View
-      style={[styles.popUpContainer, dynamicStyle]}
+      useNativeDriver={false}
+      style={[
+        styles.popUpContainer,
+        Platform.OS === "ios" ? dynamicStyle : dynamicStyleAndroid,
+      ]}
       animation="zoomIn"
       duration={animationDuration}
     >
