@@ -258,8 +258,8 @@ export const Programs: React.FC<ProgramsProps> = ({
         );
         await AsyncStorage.setItem("plansData", JSON.stringify(updatedPlans));
       }
-      fecthPlansData();
       setVisible(false);
+      fecthPlansData();
     } catch (error) {
       console.error(error);
     }
