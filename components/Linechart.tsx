@@ -1,4 +1,3 @@
-import { globalStyles } from "../components/GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
 import { View, Text } from "react-native";
 import React from "react";

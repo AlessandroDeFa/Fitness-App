@@ -12,12 +12,18 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface popUpMenuProps {
   visible: boolean;
+  setVisible: (visible: boolean) => void;
   buttonPosition: { x: number; y: number };
+  setUpdatePlanModal: (value: boolean) => void;
+  showActionSheet: () => void;
 }
 
 export const PopUpMenu: React.FC<popUpMenuProps> = ({
   visible,
+  setVisible,
   buttonPosition,
+  setUpdatePlanModal,
+  showActionSheet,
 }) => {
   const animationDuration = 150;
 
@@ -31,6 +37,11 @@ export const PopUpMenu: React.FC<popUpMenuProps> = ({
     ? { left: buttonPosition.x + 30, top: buttonPosition.y + 3 }
     : { left: buttonPosition.x - 172, top: buttonPosition.y + 3 };
 
+  const handleModifyOption = () => {
+    setUpdatePlanModal(true);
+    setVisible(false);
+  };
+
   return (
     <Animatable.View
       style={[styles.popUpContainer, dynamicStyle]}
@@ -40,7 +51,7 @@ export const PopUpMenu: React.FC<popUpMenuProps> = ({
       <TouchableHighlight
         activeOpacity={1}
         underlayColor="#323135"
-        onPress={() => {}}
+        onPress={handleModifyOption}
         style={styles.firstTouchable}
       >
         <View style={styles.containerOprion}>
@@ -56,7 +67,7 @@ export const PopUpMenu: React.FC<popUpMenuProps> = ({
       <TouchableHighlight
         activeOpacity={1}
         underlayColor="#323135"
-        onPress={() => {}}
+        onPress={showActionSheet}
         style={styles.secondTouchable}
       >
         <View style={styles.containerOprion}>

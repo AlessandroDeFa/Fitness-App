@@ -164,7 +164,6 @@ export const UpdatePlan: React.FC<UpdatePlanProps> = ({
                   <Text style={styles.textButton}>Aggiungi esercizi</Text>
                 </TouchableOpacity>
               </View>
-              <Text></Text>
               {newExercises.map((item) => (
                 <AddedExercise
                   data={item}

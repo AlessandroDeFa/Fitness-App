@@ -14,6 +14,8 @@ import { Plan } from "./Plan";
 import { InfoPlan } from "./InfoPlan";
 import { ExamplePlan } from "./ExamplePlan";
 import { PopUpMenu } from "../components/PopUpMenu";
+import ActionSheet from "react-native-actionsheet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ExamplePlans = [
   {
@@ -195,6 +197,7 @@ export const Programs: React.FC<ProgramsProps> = ({
   fecthPlansData,
 }) => {
   const [infoPlanModal, setInfoPlanModal] = useState<boolean>(false);
+  const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
   const [infoPlan, setInfoPlan] = useState<ExampleData>({
     id: "",
     name: "",
@@ -207,10 +210,14 @@ export const Programs: React.FC<ProgramsProps> = ({
 
   const [visible, setVisible] = useState(false);
   const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState<number | null>(
+    null
+  );
   const buttonRef = useRef<View[]>([]);
 
-  const handleButtonClick = (index: number) => {
+  const handleButtonClick = (index: number, data: ExampleData) => {
     if (buttonRef.current[index]) {
+      setSelectedButtonIndex(index);
       const handle = findNodeHandle(buttonRef.current[index]);
       if (handle) {
         UIManager.measureInWindow(handle, (x, y, width, height) => {
@@ -220,8 +227,39 @@ export const Programs: React.FC<ProgramsProps> = ({
           });
         });
       }
-
+      setInfoPlan(data);
       setVisible(!visible);
+    }
+  };
+
+  //delete plan ActionSheet
+  let actionsheet = useRef<ActionSheet | null>(null);
+  let optionArray = ["Elimina", "Annulla"];
+  const title: string =
+    "Sei sicuro di voler eliminare questa scheda?\nQuesta azione non può essere annullata";
+
+  const showActionSheet = () => {
+    actionsheet.current &&
+      actionsheet.current.setState(
+        { options: optionArray },
+        () => actionsheet.current?.show() && actionsheet.current?.show()
+      );
+  };
+
+  const handleDeleteOption = async () => {
+    let plansData = await AsyncStorage.getItem("plansData");
+    try {
+      if (plansData) {
+        const plansDataParsed = JSON.parse(plansData);
+        const updatedPlans = plansDataParsed.filter(
+          (plan: any) => plan.id !== infoPlan.id
+        );
+        await AsyncStorage.setItem("plansData", JSON.stringify(updatedPlans));
+      }
+      fecthPlansData();
+      setVisible(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -252,6 +290,7 @@ export const Programs: React.FC<ProgramsProps> = ({
                 handleButtonClick={handleButtonClick}
                 buttonRef={buttonRef}
                 visible={visible}
+                selectedButtonIndex={selectedButtonIndex}
               />
             )}
           />
@@ -282,6 +321,8 @@ export const Programs: React.FC<ProgramsProps> = ({
           infoPlanModal={infoPlanModal}
           setInfoPlanModal={setInfoPlanModal}
           fecthPlansData={fecthPlansData}
+          setUpdatePlanModal={setUpdatePlanModal}
+          updatePlanModal={updatePlanModal}
         />
       </ScrollView>
       <TouchableWithoutFeedback onPress={() => setVisible(false)}>
@@ -295,7 +336,26 @@ export const Programs: React.FC<ProgramsProps> = ({
           }}
         ></View>
       </TouchableWithoutFeedback>
-      <PopUpMenu visible={visible} buttonPosition={buttonPosition} />
+      <PopUpMenu
+        visible={visible}
+        setVisible={setVisible}
+        buttonPosition={buttonPosition}
+        setUpdatePlanModal={setUpdatePlanModal}
+        showActionSheet={showActionSheet}
+      />
+      <ActionSheet
+        ref={actionsheet}
+        title={title}
+        options={optionArray}
+        tintColor={"#3B82F7"}
+        cancelButtonIndex={1}
+        destructiveButtonIndex={0}
+        onPress={(index: number) => {
+          if (index === 0) {
+            handleDeleteOption();
+          }
+        }}
+      />
     </>
   );
 };

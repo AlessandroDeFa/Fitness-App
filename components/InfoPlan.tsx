@@ -19,6 +19,8 @@ interface infoplanProps {
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
   fecthPlansData: () => void;
+  updatePlanModal: boolean;
+  setUpdatePlanModal: (updatePlanModal: boolean) => void;
 }
 
 export const InfoPlan: React.FC<infoplanProps> = ({
@@ -27,9 +29,9 @@ export const InfoPlan: React.FC<infoplanProps> = ({
   setInfoPlan,
   infoPlan,
   fecthPlansData,
+  updatePlanModal,
+  setUpdatePlanModal,
 }) => {
-  const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
-
   const handleOpenUpdateModal = () => {
     setInfoPlanModal(false);
     setUpdatePlanModal(true);

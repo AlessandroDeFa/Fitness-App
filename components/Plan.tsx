@@ -9,8 +9,9 @@ interface planProps {
   infoPlan: ExampleData;
   setInfoPlan: (infoPlan: ExampleData) => void;
   data: ExampleData;
-  handleButtonClick: (index: number) => void;
+  handleButtonClick: (index: number, data: ExampleData) => void;
   buttonRef: React.MutableRefObject<View[]>;
+  selectedButtonIndex: number | null;
   index: number;
   visible: boolean;
 }
@@ -24,6 +25,7 @@ export const Plan: React.FC<planProps> = ({
   handleButtonClick,
   buttonRef,
   index,
+  selectedButtonIndex,
   visible,
 }) => {
   const handleClickPlan = () => {
@@ -58,8 +60,12 @@ export const Plan: React.FC<planProps> = ({
               <Ionicons
                 name="ellipsis-horizontal-circle-outline"
                 size={24}
-                color={visible ? "#1E3E63" : "#3B82F7"}
-                onPress={() => handleButtonClick(index)}
+                color={
+                  selectedButtonIndex === index && visible
+                    ? "#1E3E63"
+                    : "#3B82F7"
+                }
+                onPress={() => handleButtonClick(index, data)}
               />
             </View>
           </View>
