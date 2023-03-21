@@ -121,49 +121,43 @@ function BottomTabNavigator() {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => {
-            let iconName;
             if (route.name === "Nuovo workout") {
-              iconName = "plus";
               return (
                 <FontAwesome
-                  name={iconName}
+                  name="plus"
                   size={22}
                   color={focused ? "#3B82F7" : color}
                 />
               );
             } else if (route.name === "Profilo") {
-              iconName = "ios-person-circle-outline";
               return (
                 <Ionicons
-                  name={iconName}
+                  name="ios-person-circle-outline"
                   size={26}
                   color={focused ? "#3B82F7" : color}
                 />
               );
             } else if (route.name === "Esercizi") {
-              iconName = "dumbbell";
               return (
                 <MaterialCommunityIcons
-                  name={iconName}
+                  name="dumbbell"
                   size={22}
                   color={focused ? "#3B82F7" : color}
                   style={{ transform: [{ scaleX: -1 }] }}
                 />
               );
             } else if (route.name === "Statistiche") {
-              iconName = "stats-chart";
               return (
                 <Ionicons
-                  name={iconName}
+                  name="stats-chart"
                   size={22}
                   color={focused ? "#3B82F7" : color}
                 />
               );
             } else if (route.name === "Aggiorna") {
-              iconName = "crown";
               return (
                 <FontAwesome5
-                  name={iconName}
+                  name="crown"
                   size={22}
                   color={focused ? "#3B82F7" : color}
                 />

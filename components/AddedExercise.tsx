@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Platform } from "react-native";
 import { ExerciseData } from "./Programs";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as Animatable from "react-native-animatable";
 
 interface AddedExerciseProps {
   data: ExerciseData;
@@ -48,7 +49,11 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
   };
 
   return (
-    <View style={styles.containerExercise}>
+    <Animatable.View
+      style={styles.containerExercise}
+      animation="fadeIn"
+      duration={300}
+    >
       <View>
         <View style={styles.containerInfoExercise}>
           <Text ellipsizeMode="tail" numberOfLines={1} style={styles.fontTitle}>
@@ -127,7 +132,7 @@ export const AddedExercise: React.FC<AddedExerciseProps> = ({
           )}
         </View>
       </View>
-    </View>
+    </Animatable.View>
   );
 };
 
